@@ -1,9 +1,11 @@
 package codecup2018;
 
+import codecup2018.evaluator.ExpectedValue;
+import codecup2018.movegenerator.AllMoves;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
-import codecup2018.player.ExpectedPlayer;
-import codecup2018.player.ExpectedRandomPlayer;
+import codecup2018.player.SimpleMaxPlayer;
+import codecup2018.player.RoulettePlayer;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +14,10 @@ public class Tournament {
     private static final int GAMES = 1000;
 
     public static void main(String[] args) {
-        runTournament(Arrays.asList(new RandomPlayer("Rando"), new ExpectedPlayer("Expy"), new ExpectedRandomPlayer("ExpD", 4)));
+        runTournament(Arrays.asList(
+                new RandomPlayer("Rando", new AllMoves()), 
+                new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()), 
+                new RoulettePlayer("ExpD", new ExpectedValue(), new AllMoves(), 4)));
     }
 
     public static void runTournament(List<Player> players) {
