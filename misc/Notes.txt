@@ -1,3 +1,5 @@
+Name: Messier31 (black hole at the center of the Andromeda galaxy)
+
 - Once the size of the largest connected free component is 1, the optimal strategy is obvious: fill up the worst x holes, where x is your number of pieces remaining.
 
 - Disconnected free components can be played independently, except for the fact that each remaining number can be used at most once.

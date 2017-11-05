@@ -1,5 +1,6 @@
-package codecup2018;
+package codecup2018.player;
 
+import codecup2018.Board;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
