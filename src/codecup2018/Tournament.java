@@ -3,6 +3,7 @@ package codecup2018;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.ExpectedPlayer;
+import codecup2018.player.ExpectedRandomPlayer;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,13 +12,17 @@ public class Tournament {
     private static final int GAMES = 1000;
 
     public static void main(String[] args) {
-        runTournament(Arrays.asList(new RandomPlayer("Rando"), new ExpectedPlayer("Expy")));
+        runTournament(Arrays.asList(new RandomPlayer("Rando"), new ExpectedPlayer("Expy"), new ExpectedRandomPlayer("ExpD", 4)));
     }
 
     public static void runTournament(List<Player> players) {
         int n = players.size();
         int[][] wins = new int[n][n];
         double[][] avgScore = new double[n][n];
+        
+        long totalGames = (n * (n - 1) * GAMES) / 2;
+        long currentGame = 0;
+        System.out.println("Playing all the games:");
 
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
@@ -31,6 +36,11 @@ public class Tournament {
                         wins[i][j]++;
                     } else if (score < 0) {
                         wins[j][i]++;
+                    }
+                    
+                    currentGame++;
+                    if (currentGame % 100 == 0) {
+                        System.out.printf("%10d/%d%n", currentGame, totalGames);
                     }
                 }
 
