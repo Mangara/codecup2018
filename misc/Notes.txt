@@ -1,0 +1,15 @@
+- Once the size of the largest connected free component is 1, the optimal strategy is obvious: fill up the worst x holes, where x is your number of pieces remaining.
+
+- Disconnected free components can be played independently, except for the fact that each remaining number can be used at most once.
+
+- Playing in larger free components should be favored over closing holes. (Unless you think you can trick your opponent to play sub-optimally in the larger component?)
+
+- Even in the mid-game, situations may arise where some holes can no longer contribute to the final score, because they will be filled in no matter what happens in the remaining components.
+
+- Components quickly become trees -> solving optimal play for trees may be interesting
+
+- When I create a hole that wins for me, I can assign the lowest opponent stone to that hole.
+
+- From any position, before evaluating or planning, we can assume that both players optimally fill in the already created holes.
+
+- For 2-holes, we can compute the smallest number needed to 'flip' the current winner.
