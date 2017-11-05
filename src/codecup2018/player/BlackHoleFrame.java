@@ -1,5 +1,6 @@
-package codecup2018;
+package codecup2018.player;
 
+import codecup2018.Board;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
@@ -260,7 +261,6 @@ public class BlackHoleFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Black Hole");
-        setPreferredSize(new java.awt.Dimension(800, 500));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
         pack();

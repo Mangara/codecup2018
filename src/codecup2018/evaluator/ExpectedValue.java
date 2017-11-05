@@ -1,4 +1,7 @@
-package codecup2018;
+package codecup2018.evaluator;
+
+import codecup2018.Board;
+import codecup2018.evaluator.Evaluator;
 
 public class ExpectedValue implements Evaluator {
 

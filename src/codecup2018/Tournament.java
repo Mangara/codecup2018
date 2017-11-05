@@ -1,5 +1,8 @@
 package codecup2018;
 
+import codecup2018.player.Player;
+import codecup2018.player.RandomPlayer;
+import codecup2018.player.ExpectedPlayer;
 import java.util.Arrays;
 import java.util.List;
 

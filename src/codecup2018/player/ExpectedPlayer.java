@@ -1,4 +1,8 @@
-package codecup2018;
+package codecup2018.player;
+
+import codecup2018.Board;
+import codecup2018.evaluator.Evaluator;
+import codecup2018.evaluator.ExpectedValue;
 
 public class ExpectedPlayer extends Player {
 

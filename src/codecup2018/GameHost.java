@@ -1,5 +1,8 @@
 package codecup2018;
 
+import codecup2018.player.GUIPlayer;
+import codecup2018.player.Player;
+import codecup2018.player.ExpectedPlayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
