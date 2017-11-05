@@ -2,22 +2,23 @@ package codecup2018;
 
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.movegenerator.AllMoves;
+import codecup2018.player.AlphaBetaPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.SimpleMaxPlayer;
-import codecup2018.player.RoulettePlayer;
 import java.util.Arrays;
 import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 1000;
+    private static final int GAMES = 20;
 
     public static void main(String[] args) {
         runTournament(Arrays.asList(
                 new RandomPlayer("Rando", new AllMoves()), 
                 new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()), 
-                new RoulettePlayer("ExpD", new ExpectedValue(), new AllMoves(), 4)));
+                new AlphaBetaPlayer("AB1", new ExpectedValue(), new AllMoves(), 1),
+                new AlphaBetaPlayer("AB2", new ExpectedValue(), new AllMoves(), 2)));
     }
 
     public static void runTournament(List<Player> players) {
@@ -44,7 +45,7 @@ public class Tournament {
                     }
                     
                     currentGame++;
-                    if (currentGame % 100 == 0) {
+                    if (currentGame % 10 == 0) {
                         System.out.printf("%10d/%d%n", currentGame, totalGames);
                     }
                 }
