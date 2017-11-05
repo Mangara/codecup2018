@@ -17,16 +17,16 @@ public class AllMoves implements MoveGenerator {
                 }
 
                 for (byte v = 1; v <= 15; v++) {
-                    if (board.haveIUsed(v)) {
+                    if ((player1 && board.haveIUsed(v)) || (!player1 && board.hasOppUsed(v))) {
                         continue;
                     }
 
-                    moves.add(new byte[]{a, b, v});
+                    moves.add(new byte[]{a, b, (player1 ? v : (byte) -v)});
                 }
             }
         }
-        
+
         return moves;
     }
-    
+
 }
