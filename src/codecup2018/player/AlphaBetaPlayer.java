@@ -1,14 +1,17 @@
 package codecup2018.player;
 
 import codecup2018.evaluator.Evaluator;
+import codecup2018.movegenerator.MoveGenerator;
 
 public class AlphaBetaPlayer extends Player {
 
     private final Evaluator evaluator;
+    private final MoveGenerator generator;
     
-    public AlphaBetaPlayer(String name, Evaluator evaluator) {
+    public AlphaBetaPlayer(String name, Evaluator evaluator, MoveGenerator generator) {
         super(name);
         this.evaluator = evaluator;
+        this.generator = generator;
     }
 
     @Override

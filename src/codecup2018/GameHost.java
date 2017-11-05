@@ -2,7 +2,7 @@ package codecup2018;
 
 import codecup2018.player.GUIPlayer;
 import codecup2018.player.Player;
-import codecup2018.player.ExpectedPlayer;
+import codecup2018.player.SimpleMaxPlayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,7 +17,7 @@ public class GameHost {
     private static final Random rand = new Random();
 
     public static void main(String[] args) throws IOException {
-        GameHost.runGame(new ExpectedPlayer("EXP"), new GUIPlayer("GUI"), true);
+        //GameHost.runGame(new SimpleMaxPlayer("EXP"), new GUIPlayer("GUI"), true);
         //new GameHost().runGame(new ExpectedPlayer("EXP"), new RandomPlayer("RAND"));
         //new GameHost().runGameThreaded(new RandomPlayer("RAND1"), new RandomPlayer("RAND2"));
     }

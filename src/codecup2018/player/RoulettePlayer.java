@@ -1,51 +1,35 @@
 package codecup2018.player;
 
-import codecup2018.Board;
 import codecup2018.evaluator.Evaluator;
-import codecup2018.evaluator.ExpectedValue;
-import java.util.ArrayList;
+import codecup2018.movegenerator.MoveGenerator;
 import java.util.List;
 import java.util.Random;
 
-public class ExpectedRandomPlayer extends Player {
+public class RoulettePlayer extends Player {
 
-    private static final Evaluator EXPECTED_VALUE = new ExpectedValue();
     private static final Random RAND = new Random();
+    private final Evaluator evaluator;
+    private final MoveGenerator generator;
     private final double power;
 
-    public ExpectedRandomPlayer(String name, double power) {
+    public RoulettePlayer(String name, Evaluator evaluator, MoveGenerator generator, double power) {
         super(name);
+        this.evaluator = evaluator;
+        this.generator = generator;
         this.power = power;
     }
 
     @Override
     protected byte[] selectMove() {
         // Pick a move with probability proportional to a power of its expected value
-        List<byte[]> moves = new ArrayList<>();
-
-        // Find all valid moves
-        for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) != Board.FREE) {
-                    continue;
-                }
-
-                for (byte v = 1; v <= 15; v++) {
-                    if (board.haveIUsed(v)) {
-                        continue;
-                    }
-
-                    moves.add(new byte[]{a, b, v});
-                }
-            }
-        }
+        List<byte[]> moves = generator.generateMoves(board, true);
 
         // Evaluate all moves
         double[] values = new double[moves.size()];
 
         for (int i = 0; i < moves.size(); i++) {
             board.applyMove(moves.get(i));
-            values[i] = EXPECTED_VALUE.evaluate(board);
+            values[i] = evaluator.evaluate(board);
             board.undoMove(moves.get(i));
         }
 
@@ -78,7 +62,7 @@ public class ExpectedRandomPlayer extends Player {
 
             return moves.get(index - 1);
         } else {
-            // Pick a random move
+            // All moves have value 0 - pick a random move
             return moves.get(RAND.nextInt(moves.size()));
         }
     }
