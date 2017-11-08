@@ -1,7 +1,5 @@
 package codecup2018.player;
 
-import codecup2018.player.Player;
-
 public class GUIPlayer extends Player {
 
     private final BlackHoleFrame frame = new BlackHoleFrame();
