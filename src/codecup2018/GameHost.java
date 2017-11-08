@@ -1,11 +1,12 @@
 package codecup2018;
 
 import codecup2018.evaluator.ExpectedValue;
-import codecup2018.movegenerator.AllMoves;
+import codecup2018.evaluator.MedianFree;
+import codecup2018.movegenerator.MaxInfluenceMoves;
+import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.player.AlphaBetaPlayer;
 import codecup2018.player.GUIPlayer;
 import codecup2018.player.Player;
-import codecup2018.player.SimpleMaxPlayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,7 +21,7 @@ public class GameHost {
     private static final Random rand = new Random();
 
     public static void main(String[] args) throws IOException {
-        GameHost.runGame(new AlphaBetaPlayer("AB", new ExpectedValue(), new AllMoves(), 2), new GUIPlayer("GUI"), true);
+        GameHost.runGame(new AlphaBetaPlayer("AB_MF_10", new MedianFree(), new MostFreeMax(), 10), new GUIPlayer("GUI"), true);
         //new GameHost().runGame(new ExpectedPlayer("EXP"), new RandomPlayer("RAND"));
         //new GameHost().runGameThreaded(new RandomPlayer("RAND1"), new RandomPlayer("RAND2"));
     }

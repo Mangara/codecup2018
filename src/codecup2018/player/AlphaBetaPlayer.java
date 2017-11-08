@@ -7,6 +7,8 @@ import java.util.List;
 
 public class AlphaBetaPlayer extends Player {
 
+    private static final boolean DEBUG_AB = false;
+
     private final Evaluator evaluator;
     private final MoveGenerator generator;
     private int depth;
@@ -29,17 +31,23 @@ public class AlphaBetaPlayer extends Player {
     @Override
     protected byte[] selectMove() {
         // Top-level alpha-beta
-        double bestValue = Double.NEGATIVE_INFINITY;
+        int bestValue = Integer.MIN_VALUE;
         byte[] bestMove = null;
 
         List<byte[]> moves = generator.generateMoves(board, true);
 
         for (byte[] move : moves) {
-            //System.err.println(getName() + ": Evaluating my move " + Arrays.toString(move));
+            if (DEBUG_AB) {
+                System.err.println(getName() + ": Evaluating my move " + Arrays.toString(move));
+            }
+
             board.applyMove(move);
-            double value = alphaBeta(false, depth, bestValue, Double.POSITIVE_INFINITY);
+            int value = alphaBeta(false, depth, bestValue, Integer.MAX_VALUE);
             board.undoMove(move);
-            //System.err.println(getName() + ": Value of my move " + Arrays.toString(move) + " is " + value);
+
+            if (DEBUG_AB) {
+                System.err.println(getName() + ": Value of my move " + Arrays.toString(move) + " is " + value);
+            }
 
             if (value > bestValue) {
                 bestValue = value;
@@ -50,23 +58,31 @@ public class AlphaBetaPlayer extends Player {
         return bestMove;
     }
 
-    private double alphaBeta(boolean player1, int depth, double alpha, double beta) {
-        //System.err.printf("%s:  Running alpha-beta with %d turns left, interval=[%f, %f] and board state:%n", getName(), depth, alpha, beta);
-        //board.print();
+    private int alphaBeta(boolean player1, int depth, int alpha, int beta) {
+        if (DEBUG_AB) {
+            System.err.printf("%s:  Running alpha-beta with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
+            board.print();
+        }
 
         if (depth == 0 || board.isGameOver()) {
             return evaluator.evaluate(board);
         }
 
-        double bestValue = (player1 ? Double.NEGATIVE_INFINITY : Double.POSITIVE_INFINITY);
+        int bestValue = (player1 ? Integer.MIN_VALUE : Integer.MAX_VALUE);
         List<byte[]> moves = generator.generateMoves(board, player1);
 
         for (byte[] move : moves) {
-            //System.err.printf("%s:   Evaluating move %s%n", getName(), Arrays.toString(move));
+            if (DEBUG_AB) {
+                System.err.printf("%s:   Evaluating move %s%n", getName(), Arrays.toString(move));
+            }
+
             board.applyMove(move);
-            double value = alphaBeta(!player1, depth - 1, alpha, beta);
+            int value = alphaBeta(!player1, depth - 1, alpha, beta);
             board.undoMove(move);
-            //System.err.printf("%s:   Got back a score of %f%n", getName(), value);
+
+            if (DEBUG_AB) {
+                System.err.printf("%s:   Got back a score of %d%n", getName(), value);
+            }
 
             if (player1) {
                 // Maximize

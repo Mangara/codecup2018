@@ -1,12 +1,11 @@
 package codecup2018.evaluator;
 
 import codecup2018.Board;
-import codecup2018.evaluator.Evaluator;
 
 public class ExpectedValue implements Evaluator {
 
     @Override
-    public double evaluate(Board board) {
+    public int evaluate(Board board) {
         // Compute the expected value of a free space =
         // Average value of all pieces left for both players
         int totalUnused = 0;
@@ -38,7 +37,7 @@ public class ExpectedValue implements Evaluator {
             }
         }
         
-        return totalExpectedHoleValue / nHoles;
+        return (int) (10000 * totalExpectedHoleValue / nHoles);
     }
     
 }
