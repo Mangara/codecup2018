@@ -1,7 +1,11 @@
 package codecup2018;
 
 import codecup2018.evaluator.ExpectedValue;
+import codecup2018.evaluator.MedianFree;
 import codecup2018.movegenerator.AllMoves;
+import codecup2018.movegenerator.MostFreeMax;
+import codecup2018.movegenerator.NoHoles;
+import codecup2018.movegenerator.NoHolesMax;
 import codecup2018.player.AlphaBetaPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
@@ -11,21 +15,25 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 20;
+    private static final int GAMES = 100;
 
     public static void main(String[] args) {
-        runTournament(Arrays.asList(
-                new RandomPlayer("Rando", new AllMoves()), 
-                new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()), 
-                new AlphaBetaPlayer("AB1", new ExpectedValue(), new AllMoves(), 1),
-                new AlphaBetaPlayer("AB2", new ExpectedValue(), new AllMoves(), 2)));
+        runTournament(Arrays.<Player>asList(
+                //new RandomPlayer("Rando", new AllMoves()), 
+                //new RandomPlayer("NoHolesRando", new NoHoles()),
+                //new RandomPlayer("NoHolesMaxRando", new NoHolesMax()),
+                //new RandomPlayer("MostFreeMaxRando", new MostFreeMax()),
+                new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()),
+                new AlphaBetaPlayer("AB_NH_4", new ExpectedValue(), new NoHolesMax(), 4),
+                new AlphaBetaPlayer("AB_MF_10", new ExpectedValue(), new MostFreeMax(), 10),
+                new AlphaBetaPlayer("AB_MF_10", new MedianFree(), new MostFreeMax(), 10)));
     }
 
     public static void runTournament(List<Player> players) {
         int n = players.size();
         int[][] wins = new int[n][n];
         double[][] avgScore = new double[n][n];
-        
+
         long totalGames = (n * (n - 1) * GAMES) / 2;
         long currentGame = 0;
         System.out.println("Playing all the games:");
@@ -43,7 +51,7 @@ public class Tournament {
                     } else if (score < 0) {
                         wins[j][i]++;
                     }
-                    
+
                     currentGame++;
                     if (currentGame % 10 == 0) {
                         System.out.printf("%10d/%d%n", currentGame, totalGames);
@@ -68,7 +76,7 @@ public class Tournament {
 
         // Print wins
         int WIN_CELL_WIDTH = 5;
-        
+
         System.out.println("Number of wins:");
 
         System.out.printf("%" + WIN_CELL_WIDTH + "s", "");
@@ -85,12 +93,12 @@ public class Tournament {
             System.out.println();
         }
         System.out.println();
-        
+
         // Print averages
         int AVG_CELL_WIDTH = 6;
-        
+
         System.out.println("Average score:");
-        
+
         System.out.printf("%" + AVG_CELL_WIDTH + "s", "");
         for (int i = 0; i < players.size(); i++) {
             System.out.printf("%" + AVG_CELL_WIDTH + "d", i);

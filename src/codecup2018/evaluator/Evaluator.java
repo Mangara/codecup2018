@@ -12,5 +12,5 @@ public interface Evaluator {
      * @param board
      * @return
      */
-    public abstract double evaluate(Board board);
+    public abstract int evaluate(Board board);
 }
