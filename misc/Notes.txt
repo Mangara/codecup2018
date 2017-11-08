@@ -21,3 +21,5 @@ When playing randomly:
 - The order of playing numbers does not matter
 - The locations *do* matter, even if the numbers are random
 - Playing non-holes before holes increases odds of winning
+- Playing tiles with many adjacent free tiles also increases odds of winning
+- When playing with these location constraints, playing higher numbers first *does* increase odds of winning
