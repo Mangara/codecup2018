@@ -15,18 +15,20 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 100;
+    private static final int GAMES = 20000;
 
     public static void main(String[] args) {
         runTournament(Arrays.<Player>asList(
-                //new RandomPlayer("Rando", new AllMoves()), 
+                new RandomPlayer("Rando", new AllMoves()), 
                 //new RandomPlayer("NoHolesRando", new NoHoles()),
                 //new RandomPlayer("NoHolesMaxRando", new NoHolesMax()),
                 //new RandomPlayer("MostFreeMaxRando", new MostFreeMax()),
                 new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()),
-                new AlphaBetaPlayer("AB_NH_4", new ExpectedValue(), new NoHolesMax(), 4),
-                new AlphaBetaPlayer("AB_MF_10", new ExpectedValue(), new MostFreeMax(), 10),
-                new AlphaBetaPlayer("AB_MF_10", new MedianFree(), new MostFreeMax(), 10)));
+                new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles())
+                //new AlphaBetaPlayer("AB_NH_4", new ExpectedValue(), new NoHolesMax(), 4),
+                //new AlphaBetaPlayer("AB_MF_10", new ExpectedValue(), new MostFreeMax(), 10),
+                //new AlphaBetaPlayer("AB_MF_10", new MedianFree(), new MostFreeMax(), 10)
+        ));
     }
 
     public static void runTournament(List<Player> players) {

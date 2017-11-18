@@ -7,12 +7,15 @@ Name: Messier31 (black hole at the center of the Andromeda galaxy)
 - Playing in larger free components should be favored over closing holes. (Unless you think you can trick your opponent to play sub-optimally in the larger component?)
 
 - Even in the mid-game, situations may arise where some holes can no longer contribute to the final score, because they will be filled in no matter what happens in the remaining components.
+ x This is quite restrictive, though: if you're losing, you may prefer to keep that (-1)-hole open
 
 - Components quickly become trees -> solving optimal play for trees (or even paths) may be interesting
 
 - When I create a hole that wins for me, I can assign the lowest opponent stone to that hole.
+ x Not necessarily (assuming optimal play), although it may be a good time-saving optimisation
 
 - From any position, before evaluating or planning, we can assume that both players optimally fill in the already created holes.
+ x Not necessarily: depending on the holes in the area still to be played, any of the remaining holes could be the best one for us at the end
 
 - For 2-holes, we can compute the smallest number needed to 'flip' the current winner.
 
