@@ -1,0 +1,30 @@
+== Architecture
+
+- Generate positions and values seperately?
+
+== Tournaments
+
+- Have tournament alternate player1 and player2
+- Add statistics to Tournament output: which players are *significantly* better than others? (compute p-value and present a sorted list of comparisons)
+- Add multithreading support to tournaments?
+- Play tournament: SimpleMax(MF, NH) vs Expy vs Rando vs AB(MF,NH,2) vs AB(EV,NH,2)
+
+== Players
+
+- Make a player that maintains a list of connected component boards. On each board, all free holes expect for those in its component are blocked. When a move splits a component, create new boards, etc. Each turn, find the best move in the largest component. Or in each and pick among them in some way.
+- In the GUI player, when a tile is selected, try each number and print the new expected value, the delta, the new median-free and its delta for each number.
+
+== Move generation
+
+- Separate move generators from move filters. BestMoves is a filter.
+- Make a filter that merges the output of other filters.
+- Find all moves that create a hole and play them with Max and with some intermediate value.
+- MoveGenerator for moves that create holes that win for me
+- AB should include moves that block good opponent moves
+
+
+
+=== DONE
+
+X Finish endgame test
+X Expy with NoHoles should outperform regular Expy.
