@@ -10,6 +10,33 @@ public class Board {
     private final boolean[] oppUsed = new boolean[15];
     private int nFree = 36;
 
+    public Board() {
+    }
+
+    public Board(Board board) {
+        this(board.grid);
+    }
+
+    public Board(byte[][] board) {
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                grid[a][b] = board[a][b];
+
+                if (grid[a][b] != FREE) {
+                    nFree--;
+
+                    if (grid[a][b] != BLOCKED) {
+                        if (grid[a][b] > 0) {
+                            myUsed[grid[a][b] - 1] = true;
+                        } else if (grid[a][b] < 0) {
+                            oppUsed[-grid[a][b] - 1] = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public byte get(byte a, byte b) {
         return grid[a][b];
     }
