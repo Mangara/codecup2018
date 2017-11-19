@@ -1,6 +1,8 @@
 package codecup2018.player;
 
 import codecup2018.Board;
+import codecup2018.evaluator.ExpectedValue;
+import codecup2018.evaluator.MedianFree;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
@@ -134,6 +136,26 @@ public class BlackHoleFrame extends javax.swing.JFrame {
 
     private void boardSpacePressed(byte a, byte b) {
         System.out.println("Pressed board space: (" + a + ", " + b + ") = " + Board.coordinatesToString(a, b));
+        
+        // Evaluate possible moves here
+        ExpectedValue ev = new ExpectedValue();
+        MedianFree mf = new MedianFree();
+        
+        int currentExpected = ev.evaluate(board);
+        int currentMedianFree = mf.evaluate(board);
+        
+        for (byte v = 1; v <= 15; v++) {
+            if (!board.haveIUsed(v)) {
+                byte[] move = new byte[] {a, b, v};
+                board.applyMove(move);
+                int expected = ev.evaluate(board);
+                int medianFree = mf.evaluate(board);
+                board.undoMove(move);
+                
+                System.out.printf(" %d - EV: %.4f (%+.3f)  MF: %d (%+d)%n", v, expected / (double) 10000, (expected - currentExpected) / (double) 10000, medianFree, medianFree - currentMedianFree);
+            }
+        }
+        
         if (boardButtons[a][b].isSelected()) {
             setNumbersEnabled(true);
         } else {
