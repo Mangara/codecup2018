@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -46,10 +47,10 @@ public class GameHost {
                 System.err.println("GAME: Asking player 1 for a move");
             }
 
-            String p1Move = p1.move();
+            byte[] p1Move = p1.move();
 
             if (print) {
-                System.err.println("GAME: Player 1 returned move: " + p1Move + ". Checking ...");
+                System.err.println("GAME: Player 1 returned move: " + Arrays.toString(p1Move) + ". Checking ...");
             }
 
             verifyMove(board, p1Move, true);
@@ -59,16 +60,16 @@ public class GameHost {
                 System.err.println("GAME: Sending move to player 2");
             }
 
-            p2.processMove(p1Move);
+            p2.processMove(p1Move, false);
 
             if (print) {
                 System.err.println("GAME: Asking player 2 for a move");
             }
 
-            String p2Move = p2.move();
+            byte[] p2Move = p2.move();
 
             if (print) {
-                System.err.println("GAME: Player 2 returned move: " + p2Move + ". Checking ...");
+                System.err.println("GAME: Player 2 returned move: " + Arrays.toString(p2Move) + ". Checking ...");
             }
 
             verifyMove(board, p2Move, false);
@@ -82,7 +83,7 @@ public class GameHost {
                     System.err.println("GAME: Sending move to player 1");
                 }
 
-                p1.processMove(p2Move);
+                p1.processMove(p2Move, false);
             }
         }
 
@@ -151,14 +152,14 @@ public class GameHost {
             System.err.println("GAME: Asking player 1 for a move");
             String p1Move = p1OutputReader.readLine();
             System.err.println("GAME: Player 1 returned move: " + p1Move + ". Checking ...");
-            verifyMove(board, p1Move, true);
+            verifyMove(board, Board.parseMove(p1Move), true);
             System.err.println("GAME: Sending move to player 2");
             p2InputWriter.println(p1Move);
             p2InputWriter.flush();
             System.err.println("GAME: Asking player 2 for a move");
             String p2Move = p2OutputReader.readLine();
             System.err.println("GAME: Player 2 returned move: " + p2Move + ". Checking ...");
-            verifyMove(board, p2Move, false);
+            verifyMove(board, Board.parseMove(p2Move), false);
 
             if (i < 14) {
                 System.err.println("GAME: Sending move to player 1");
@@ -230,28 +231,24 @@ public class GameHost {
             }
         }
     }
-
-    private static void verifyMove(Board board, String move, boolean player1) {
-        String location = move.substring(0, 2);
-        byte[] loc = Board.getCoordinates(location);
-        byte val = (byte) Integer.parseInt(move.substring(3));
-
+    
+    private static void verifyMove(Board board, byte[] move, boolean player1) {
         // Position is empty
-        if (loc[0] < 0 || loc[0] > 7 || loc[1] < 0 || loc[1] > 7 - loc[0]) {
+        if (move[0] < 0 || move[0] > 7 || move[1] < 0 || move[1] > 7 - move[0]) {
             throw new IllegalArgumentException("Position does not exist");
         }
 
-        if (board.get(loc[0], loc[1]) != Board.FREE) {
+        if (board.get(move[0], move[1]) != Board.FREE) {
             throw new IllegalArgumentException("Position not free");
         }
 
         // Number is unused
-        if (val < 1 || (player1 && board.haveIUsed(val)) || (!player1 && board.hasOppUsed(val))) {
+        if (move[2] < 1 || (player1 && board.haveIUsed(move[2])) || (!player1 && board.hasOppUsed(move[2]))) {
             throw new IllegalArgumentException("Value already used");
         }
 
         // Apply move
-        board.set(loc[0], loc[1], (player1 ? val : (byte) -val));
+        board.set(move[0], move[1], (player1 ? move[2] : (byte) -move[2]));
     }
 
     private static int getBlackHoleScore(Board board) {

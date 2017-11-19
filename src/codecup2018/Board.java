@@ -163,6 +163,10 @@ public class Board {
         return Character.toString((char) ('A' + a)) + Character.toString((char) ('1' + b));
     }
 
+    public static byte[] parseMove(String move) {
+        return new byte[]{(byte) (move.charAt(0) - 'A'), (byte) (move.charAt(1) - '1'), (byte) (move.charAt(3) - '1')};
+    }
+
     public void print() {
         for (int h = 0; h < 8; h++) {
             System.err.print(spaces(7 - h));
