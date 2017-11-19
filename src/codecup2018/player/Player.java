@@ -14,11 +14,11 @@ public abstract class Player {
     public Player(String name) {
         this.name = name;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public Board getBoard() {
         return board;
     }
@@ -34,17 +34,18 @@ public abstract class Player {
 
         for (String input = in.readLine(); !(input == null || "Quit".equals(input)); input = in.readLine()) {
             if (!"Start".equals(input)) {
-                processMove(input);
+                processMove(Board.parseMove(input), false);
             }
-            
-            out.println(move());
+
+            byte[] move = move();
+            out.println(Board.coordinatesToString(move[0], move[1]) + "=" + move[2]);
         }
     }
 
     public void initialize() {
         initialize(new Board());
     }
-    
+
     public void initialize(Board currentBoard) {
         board = currentBoard;
     }
@@ -53,16 +54,18 @@ public abstract class Player {
         board.set(loc, Board.BLOCKED);
     }
 
-    public void processMove(String move) {
-        String loc = move.substring(0, 2);
-        byte val = (byte) Integer.parseInt(move.substring(3));
-        board.set(loc, (byte) -val);
+    public void block(byte a, byte b) {
+        board.set(a, b, Board.BLOCKED);
     }
 
-    public String move() {
+    public void processMove(byte[] move, boolean mine) {
+        board.set(move[0], move[1], (mine ? move[2] : (byte) -move[2]));
+    }
+
+    public byte[] move() {
         byte[] move = selectMove();
-        board.set(move[0], move[1], move[2]);
-        return Board.coordinatesToString(move[0], move[1]) + "=" + move[2];
+        processMove(move, true);
+        return move;
     }
 
     protected abstract byte[] selectMove();

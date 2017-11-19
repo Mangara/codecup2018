@@ -2,7 +2,9 @@ package codecup2018;
 
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.MedianFree;
+import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHoles;
+import codecup2018.player.AlphaBetaPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.SimpleMaxPlayer;
@@ -26,7 +28,7 @@ import org.junit.runners.Parameterized.Parameters;
 public class EndgameTest {
 
     private final Board board;
-    private final Player player = new SimpleMaxPlayer("MF", new MedianFree(), new NoHoles());
+    private final Player player = new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10);
 
     public EndgameTest(Board board) throws IOException {
         this.board = board;
@@ -78,39 +80,35 @@ public class EndgameTest {
         }
 
         for (int i = 0; i < 15; i++) {
-            String p1Move = p1.move();
+            byte[] p1Move = p1.move();
 
             if (doMove(board, p1Move, true)) {
                 return board;
             }
 
-            p2.processMove(p1Move);
+            p2.processMove(p1Move, false);
 
-            String p2Move = p2.move();
+            byte[] p2Move = p2.move();
 
             if (doMove(board, p2Move, false)) {
                 return p2.getBoard();
             }
 
             if (i < 14) {
-                p1.processMove(p2Move);
+                p1.processMove(p2Move, false);
             }
         }
 
         return board;
     }
 
-    private static boolean doMove(Board board, String move, boolean player1) {
-        String location = move.substring(0, 2);
-        byte[] loc = Board.getCoordinates(location);
-        byte val = (byte) Integer.parseInt(move.substring(3));
-
-        if (board.getFreeSpotsAround(loc[0], loc[1]) == 0) {
+    private static boolean doMove(Board board, byte[] move, boolean player1) {
+        if (board.getFreeSpotsAround(move[0], move[1]) == 0) {
             return true;
         }
 
         // Apply move
-        board.set(loc[0], loc[1], (player1 ? val : (byte) -val));
+        board.set(move[0], move[1], (player1 ? move[2] : (byte) -move[2]));
 
         return false;
     }
@@ -156,13 +154,11 @@ public class EndgameTest {
         player.initialize(board);
 
         while (holesLeft > 1) {
-            String move = player.move();
-
-            byte[] loc = Board.getCoordinates(move.substring(0, 2));
+            byte[] move = player.move();
 
             for (int i = 0; i < holes.size(); i++) {
                 int[] hole = holes.get(i);
-                if (loc[0] == hole[0] && loc[1] == hole[1]) {
+                if (move[0] == hole[0] && move[1] == hole[1]) {
                     closed[i] = true;
                     playerClosed[i] = true;
                     break;
@@ -187,7 +183,7 @@ public class EndgameTest {
 
             for (byte j = 1; j <= 15; j++) {
                 if (!board.hasOppUsed(j)) {
-                    player.processMove(Board.coordinatesToString((byte) hole[0], (byte) hole[1]) + "=" + j);
+                    player.processMove(new byte[] {(byte) hole[0], (byte) hole[1], j}, false);
                     break;
                 }
             }

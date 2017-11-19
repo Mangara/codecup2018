@@ -81,14 +81,12 @@ public class BlackHoleFrame extends javax.swing.JFrame {
         button.setUI(BLOCKED_UI);
     }
 
-    public void processMove(String move) {
-        byte[] loc = Board.getCoordinates(move.substring(0, 2));
-        byte val = (byte) Integer.parseInt(move.substring(3));
-        board.set(loc[0], loc[1], (byte) -val);
-        JToggleButton button = boardButtons[loc[0]][loc[1]];
+    public void processMove(byte[] move, boolean mine) {
+        board.set(move[0], move[1], (mine ? move[2] : (byte) -move[2]));
+        JToggleButton button = boardButtons[move[0]][move[1]];
 
         button.setEnabled(false);
-        button.setText(Integer.toString(val));
+        button.setText(Integer.toString(move[2]));
         button.setBackground(OPP_BG_COLOR);
         button.setUI(OPP_UI);
     }

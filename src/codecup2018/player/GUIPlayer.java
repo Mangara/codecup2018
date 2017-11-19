@@ -1,5 +1,7 @@
 package codecup2018.player;
 
+import codecup2018.Board;
+
 public class GUIPlayer extends Player {
 
     private final BlackHoleFrame frame = new BlackHoleFrame();
@@ -22,9 +24,15 @@ public class GUIPlayer extends Player {
     }
     
     @Override
-    public void processMove(String move) {
-        super.processMove(move);
-        frame.processMove(move);
+    public void block(byte a, byte b) {
+        super.block(a, b);
+        frame.block(Board.coordinatesToString(a, b));
+    }
+
+    @Override
+    public void processMove(byte[] move, boolean mine) {
+        super.processMove(move, mine);
+        frame.processMove(move, mine);
     }
 
     @Override
