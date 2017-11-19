@@ -18,7 +18,7 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 1000;
+    private static final int GAMES = 2000;
 
     public static void main(String[] args) {
         runTournament(Arrays.<Player>asList(
@@ -29,13 +29,13 @@ public class Tournament {
                 //new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()),
                 new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
                 //new SimpleMaxPlayer("Mifi_NH", new MedianFree(), new NoHoles())
-                new AlphaBetaPlayer("AB_EV_NHM_2", new ExpectedValue(), new NoHolesMax(), 2),
-                new AlphaBetaPlayer("AB_EV_NHM_3", new ExpectedValue(), new NoHolesMax(), 3),
-                new AlphaBetaPlayer("AB_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)
-        //new AlphaBetaPlayer("AB_MF_NHM_2", new MedianFree(), new NoHolesMax(), 2)
-        //new AlphaBetaPlayer("AB_NH_4", new ExpectedValue(), new NoHolesMax(), 4),
-        //new AlphaBetaPlayer("AB_MF_10", new ExpectedValue(), new MostFreeMax(), 10),
-        //new AlphaBetaPlayer("AB_MF_10", new MedianFree(), new MostFreeMax(), 10)
+                //new AlphaBetaPlayer("AB_EV_NHM_2", new ExpectedValue(), new NoHolesMax(), 2),
+                //new AlphaBetaPlayer("AB_EV_NHM_3", new ExpectedValue(), new NoHolesMax(), 3),
+                new AlphaBetaPlayer("AB_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4),
+                //new AlphaBetaPlayer("AB_MF_NHM_2", new MedianFree(), new NoHolesMax(), 2)
+                //new AlphaBetaPlayer("AB_NH_4", new ExpectedValue(), new NoHolesMax(), 4),
+                new AlphaBetaPlayer("AB_EV_MFM_10", new ExpectedValue(), new MostFreeMax(), 10),
+                new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
         ));
     }
 
@@ -78,7 +78,7 @@ public class Tournament {
                     }
                 }
 
-                avgScore[i][j] = totalScore / GAMES;
+                avgScore[i][j] = totalScore / (double) GAMES;
                 avgScore[j][i] = -avgScore[i][j];
 
                 double squaredError = 0;
@@ -179,13 +179,13 @@ public class Tournament {
         double t = avg * Math.sqrt(GAMES) / stdDev; // test value, GAMES - 1 DoF
         double tt = t / Math.sqrt(2);
         double erftt;
-        
+
         if (t < 1) {
             erftt = (2 / Math.sqrt(Math.PI)) * (tt - Math.pow(tt, 3) / 3 + Math.pow(tt, 5) / 10 - Math.pow(tt, 7) / 42);
         } else {
             erftt = 1 - (Math.exp(-tt * tt) / Math.sqrt(Math.PI)) * (1 / tt - 0.5 / Math.pow(tt, 3) + 0.75 / Math.pow(tt, 5) - 1.875 / Math.pow(tt, 7));
         }
-        
+
         return 1 - 0.5 * (erftt + 1);
     }
 }
