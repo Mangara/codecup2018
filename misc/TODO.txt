@@ -4,12 +4,11 @@
 
 == Tournaments
 
-- Add multithreading support to tournaments?
+
 
 == Players
 
 - Make a player that maintains a list of connected component boards. On each board, all free holes expect for those in its component are blocked. When a move splits a component, create new boards, etc. Each turn, find the best move in the largest component. Or in each and pick among them in some way.
-- In the GUI player, when a tile is selected, try each number and print the new expected value, the delta, the new median-free and its delta for each number.
 - Make a NegaMax player
 - Make a UCB player
 - Make a NegaScout player?
@@ -31,3 +30,9 @@ X Expy with NoHoles should outperform regular Expy.
 X Have tournament alternate player1 and player2
 X Add statistics to Tournament output: which players are *significantly* better than others? (compute p-value and present a sorted list of comparisons)
 X Play tournament: SimpleMax(MF, NH) vs Expy vs Rando vs AB(MF,NH,2) vs AB(EV,NH,2)
+X In the GUI player, when a tile is selected, try each number and print the new expected value, the delta, the new median-free and its delta for each number.
+
+=== WONTFIX
+
+- Add multithreading support to tournaments?
+ => Too much effort (making players that work well with multi-threading) for too little gain

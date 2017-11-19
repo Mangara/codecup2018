@@ -25,7 +25,7 @@ public class GameHost {
 
     public static void main(String[] args) throws IOException {
         //GameHost.runGame(new AlphaBetaPlayer("AB_MF_10", new MedianFree(), new MostFreeMax(), 10), new GUIPlayer("GUI"), true);
-        GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new RandomPlayer("PureRand", new AllMoves()), true);
+        GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
     }
 
     public static int runGame(Player p1, Player p2, boolean print) {
