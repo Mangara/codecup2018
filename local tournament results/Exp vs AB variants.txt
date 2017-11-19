@@ -56,3 +56,76 @@ Average score:
      1  27.0  0.00-0.718  2.43
      2  26.8 0.718  0.00  3.08
      3  13.9 -2.43 -3.08  0.00
+     
+     
+Players:
+0: Rando
+1: Expy_NH
+2: AB_EV_NHM_2
+3: AB_EV_NHM_3
+4: AB_EV_NHM_4
+
+Number of wins:
+         0    1    2    3    4
+    0    0   10    6    4    2
+    1 1988    0  625  543  459
+    2 1991 1012    0  733  661
+    3 1994 1070  847    0  744
+    4 1997 1205  987  891    0
+
+Average score:
+           0     1     2     3     4
+     0  0.00 -27.3 -27.0 -26.4 -27.0
+     1  27.3  0.00-0.673-0.962 -1.30
+     2  27.0 0.673  0.00-0.214-0.559
+     3  26.4 0.962 0.214  0.00-0.287
+     4  27.0  1.30 0.559 0.287  0.00
+
+Comparisons:
+    Expy_NH > Rando with p = 0.000000
+    AB_EV_NHM_2 > Rando with p = 0.000000
+    AB_EV_NHM_3 > Rando with p = 0.000000
+    AB_EV_NHM_4 > Rando with p = 0.000000
+    AB_EV_NHM_2 > Expy_NH with p = 0.000000
+    AB_EV_NHM_3 > Expy_NH with p = 0.000000
+    AB_EV_NHM_4 > Expy_NH with p = 0.000000
+    AB_EV_NHM_4 > AB_EV_NHM_2 with p = 0.000000
+    AB_EV_NHM_4 > AB_EV_NHM_3 with p = 0.000001
+    AB_EV_NHM_3 > AB_EV_NHM_2 with p = 0.000019
+    
+    
+Players:
+0: Rando
+1: Expy_NH
+2: AB_EV_NHM_4
+3: AB_EV_MFM_10
+4: AB_MF_MFM_10
+
+Number of wins:
+         0    1    2    3    4
+    0    0    6    1    5    2
+    1 1990    0  466  320  290
+    2 1996 1194    0  964  755
+    3 1994 1446  788    0  277
+    4 1996 1458  957 1564    0
+
+Average score:
+           0     1     2     3     4
+     0  0.00 -27.1 -27.2 -28.8 -27.1
+     1  27.1  0.00 -1.31 -2.43 -2.41
+     2  27.2  1.31  0.00 0.211-0.251
+     3  28.8  2.43-0.211  0.00 -3.44
+     4  27.1  2.41 0.251  3.44  0.00
+
+Comparisons:
+    Expy_NH > Rando with p = 0.000000
+    AB_EV_NHM_4 > Rando with p = 0.000000
+    AB_EV_MFM_10 > Rando with p = 0.000000
+    AB_MF_MFM_10 > Rando with p = 0.000000
+    AB_EV_NHM_4 > Expy_NH with p = 0.000000
+    AB_EV_MFM_10 > Expy_NH with p = 0.000000
+    AB_MF_MFM_10 > Expy_NH with p = 0.000000
+    AB_MF_MFM_10 > AB_EV_MFM_10 with p = 0.000000
+    AB_MF_MFM_10 > AB_EV_NHM_4 with p = 0.000119
+    AB_EV_NHM_4 > AB_EV_MFM_10 with p = 0.001866
+    
