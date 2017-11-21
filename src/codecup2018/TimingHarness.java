@@ -5,6 +5,7 @@ import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHolesMax;
 import codecup2018.player.AlphaBetaPlayer;
+import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.SimpleMaxPlayer;
@@ -16,8 +17,9 @@ public class TimingHarness {
     public static void main(String[] args) {
         //evaluateTiming(new RandomPlayer("Rando", new AllMoves()));
         //evaluateTiming(new RandomPlayer("RandMostFreeMax", new MostFreeMax()));
-        //evaluateTiming(new AlphaBetaPlayer("AB_NH_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~1s per game
-        evaluateTiming(new AlphaBetaPlayer("AB_MF_10", new ExpectedValue(), new MostFreeMax(), 10)); // ~1s per game
+        //evaluateTiming(new AlphaBetaPlayer("AB_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~1s per game
+        evaluateTiming(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~?s per game
+        //evaluateTiming(new AlphaBetaPlayer("AB_MF_10", new ExpectedValue(), new MostFreeMax(), 10)); // ~1s per game
         //evaluateTiming(new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()));
     }
 
