@@ -7,6 +7,7 @@ import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHoles;
 import codecup2018.movegenerator.NoHolesMax;
 import codecup2018.player.AlphaBetaPlayer;
+import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.SimpleMaxPlayer;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 2000;
+    private static final int GAMES = 100;
 
     public static void main(String[] args) {
         runTournament(Arrays.<Player>asList(
@@ -32,10 +33,9 @@ public class Tournament {
                 //new AlphaBetaPlayer("AB_EV_NHM_2", new ExpectedValue(), new NoHolesMax(), 2),
                 //new AlphaBetaPlayer("AB_EV_NHM_3", new ExpectedValue(), new NoHolesMax(), 3),
                 new AlphaBetaPlayer("AB_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4),
-                //new AlphaBetaPlayer("AB_MF_NHM_2", new MedianFree(), new NoHolesMax(), 2)
-                //new AlphaBetaPlayer("AB_NH_4", new ExpectedValue(), new NoHolesMax(), 4),
-                new AlphaBetaPlayer("AB_EV_MFM_10", new ExpectedValue(), new MostFreeMax(), 10),
-                new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
+                new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)
+                //new AlphaBetaPlayer("AB_EV_MFM_10", new ExpectedValue(), new MostFreeMax(), 10),
+                //new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10) // (best so far)
         ));
     }
 

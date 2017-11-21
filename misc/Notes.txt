@@ -19,6 +19,7 @@ Name: Messier31 (black hole at the center of the Andromeda galaxy)
 
 - For 2-holes, we can compute the smallest number needed to 'flip' the current winner.
 
+- Playing a move is always better than passing (not playing anything). This means that null-move pruning should work well and not introduce any search instability. It also implies a 1st player advantage.
 
 When playing randomly:
 - The order of playing numbers does not matter
