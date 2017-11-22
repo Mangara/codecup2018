@@ -16,17 +16,11 @@ public class GUIPlayer extends Player {
             }
         });
     }
-
-    @Override
-    public void block(String loc) {
-        super.block(loc);
-        frame.block(loc);
-    }
     
     @Override
     public void block(byte a, byte b) {
         super.block(a, b);
-        frame.block(Board.coordinatesToString(a, b));
+        frame.block(a, b);
     }
 
     @Override

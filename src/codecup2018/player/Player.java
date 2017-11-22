@@ -28,8 +28,8 @@ public abstract class Player {
 
         // Read in 5 blocked fields
         for (int i = 0; i < 5; i++) {
-            String loc = in.readLine();
-            block(loc);
+            byte[] loc = Board.getCoordinates(in.readLine());
+            block(loc[0], loc[1]);
         }
 
         for (String input = in.readLine(); !(input == null || "Quit".equals(input)); input = in.readLine()) {
@@ -48,10 +48,6 @@ public abstract class Player {
 
     public void initialize(Board currentBoard) {
         board = currentBoard;
-    }
-
-    public void block(String loc) {
-        board.set(loc, Board.BLOCKED);
     }
 
     public void block(byte a, byte b) {

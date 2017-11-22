@@ -72,8 +72,8 @@ public class EndgameTest {
             for (byte b = 0; b < 8 - a; b++) {
                 if (blocked.contains(location)) {
                     board.set(a, b, Board.BLOCKED);
-                    p1.block(Board.coordinatesToString(a, b));
-                    p2.block(Board.coordinatesToString(a, b));
+                    p1.block(a, b);
+                    p2.block(a, b);
                 }
                 location++;
             }
