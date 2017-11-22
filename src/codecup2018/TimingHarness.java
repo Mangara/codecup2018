@@ -1,10 +1,13 @@
 package codecup2018;
 
 import codecup2018.evaluator.ExpectedValue;
+import codecup2018.evaluator.MedianFree;
 import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHolesMax;
 import codecup2018.player.AlphaBetaPlayer;
+import codecup2018.player.AspirationPlayer;
+import codecup2018.player.MaxComponentPlayer;
 import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
@@ -12,15 +15,37 @@ import codecup2018.player.SimpleMaxPlayer;
 
 public class TimingHarness {
 
-    private static final long GAMES = 25;
+    private static final long GAMES = 400;
 
     public static void main(String[] args) {
+        System.out.println("Player,Rando time (ms),Expy time (ms)");
+        
         //evaluateTiming(new RandomPlayer("Rando", new AllMoves()));
+        //evaluateTiming(new MaxComponentPlayer(new RandomPlayer("Rando", new AllMoves())));
         //evaluateTiming(new RandomPlayer("RandMostFreeMax", new MostFreeMax()));
         //evaluateTiming(new AlphaBetaPlayer("AB_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~1s per game
-        evaluateTiming(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~?s per game
-        //evaluateTiming(new AlphaBetaPlayer("AB_MF_10", new ExpectedValue(), new MostFreeMax(), 10)); // ~1s per game
+        //evaluateTiming(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~1s per game
+        //evaluateTiming(new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~?s per game
+        //evaluateTiming(new MaxComponentPlayer(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4))); // ~1s per game
+        //evaluateTiming(new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)); // ~1s per game
+        //evaluateTiming(new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)); // ~1s per game
         //evaluateTiming(new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()));
+
+        AspirationPlayer asp = new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4);
+        
+        for (int i = 640000; i > 100; i /= 2) {
+            AspirationPlayer.WINDOW_SIZE = i;
+            System.out.print(Integer.toString(i) + ',');
+            evaluateTiming(asp);
+        }
+        
+        AspirationPlayer asp2 = new AspirationPlayer("As_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10);
+        
+        for (int i = 640000; i > 100; i /= 2) {
+            AspirationPlayer.WINDOW_SIZE = i;
+            System.out.print(Integer.toString(i) + ',');
+            evaluateTiming(asp2);
+        }
     }
 
     private static void evaluateTiming(Player player) {
@@ -47,12 +72,8 @@ public class TimingHarness {
             }
         }
         long vsExpy = System.nanoTime() - start;
-        
-        System.out.println(player.getName());
-        System.out.println();
-        System.out.println("Average time per game versus:");
-        System.out.printf("Rando - %.5f ms%n", vsRandom / (double) (GAMES * 1000000));
-        System.out.printf("Expy  - %.5f ms%n", vsExpy / (double) (GAMES * 1000000));
+
+        System.out.printf("%s,%.3f,%.3f%n", player.getName(), vsRandom / (double) (GAMES * 1000000), vsExpy / (double) (GAMES * 1000000));
     }
 
 }
