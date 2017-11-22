@@ -3,20 +3,16 @@
 - Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for some later additions if we want to get fancy.
 - Generate positions and values seperately?
 
-
 == Tournaments
 
 
 
 == Players
 
-- Make a player that maintains a list of connected component boards. On each board, all free holes expect for those in its component are blocked. When a move splits a component, create new boards, etc. Each turn, find the best move in the largest component. Or in each and pick among them in some way.
 - Make a UCB player
 - Make a NegaScout/PVS player?
 
 - Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here.
-
-- Try aspiration search: store expected value found at the end of the previous search (or guess or eval), and run the new search with a window (guess - epsilon, guess + epsilon). If this fails, adjust the window up or down, depending on the direction of the failure.
 
 == Move generation
 
@@ -34,6 +30,8 @@ X Add statistics to Tournament output: which players are *significantly* better 
 X Play tournament: SimpleMax(MF, NH) vs Expy vs Rando vs AB(MF,NH,2) vs AB(EV,NH,2)
 X In the GUI player, when a tile is selected, try each number and print the new expected value, the delta, the new median-free and its delta for each number.
 X Make a NegaMax player: http://mediocrechess.sourceforge.net/guides/alphabetasearch.html
+X Make a player that maintains a list of connected component boards. On each board, all free holes expect for those in its component are blocked. When a move splits a component, create new boards, etc. Each turn, find the best move in the largest component. Or in each and pick among them in some way.
+X Try aspiration search: store expected value found at the end of the previous search (or guess or eval), and run the new search with a window (guess - epsilon, guess + epsilon). If this fails, adjust the window up or down, depending on the direction of the failure.
 
 === WONTFIX
 
