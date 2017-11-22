@@ -5,7 +5,8 @@
 
 == Tournaments
 
-
+- For evaluation, add something that tracks the number of positions evaluated (calls to the recursive search function?). Most optimizations aim to reduce this.
+- Make the timing test deterministic by giving a specific random generator.
 
 == Players
 
