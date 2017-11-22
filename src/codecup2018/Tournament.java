@@ -7,6 +7,8 @@ import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHoles;
 import codecup2018.movegenerator.NoHolesMax;
 import codecup2018.player.AlphaBetaPlayer;
+import codecup2018.player.AspirationPlayer;
+import codecup2018.player.MaxComponentPlayer;
 import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
@@ -19,21 +21,26 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 100;
+    private static final int GAMES = 20;
 
     public static void main(String[] args) {
         runTournament(Arrays.<Player>asList(
                 new RandomPlayer("Rando", new AllMoves()),
-                //new RandomPlayer("NoHolesRando", new NoHoles()),
-                //new RandomPlayer("NoHolesMaxRando", new NoHolesMax()),
-                //new RandomPlayer("MostFreeMaxRando", new MostFreeMax()),
-                //new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()),
-                new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
+                //new RandomPlayer("R_NH", new NoHoles()),
+                //new RandomPlayer("R_NHM", new NoHolesMax()),
+                //new RandomPlayer("R_MFM", new MostFreeMax()),
+                //new MaxComponentPlayer(new RandomPlayer("Rando", new AllMoves())),
+                //new MaxComponentPlayer(new RandomPlayer("R_NH", new NoHoles())),
+                //new MaxComponentPlayer(new RandomPlayer("R_NHM", new NoHolesMax())),
+                //new MaxComponentPlayer(new RandomPlayer("R_MFM", new MostFreeMax()))
+                new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()),
+                //new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles())
                 //new SimpleMaxPlayer("Mifi_NH", new MedianFree(), new NoHoles())
                 //new AlphaBetaPlayer("AB_EV_NHM_2", new ExpectedValue(), new NoHolesMax(), 2),
                 //new AlphaBetaPlayer("AB_EV_NHM_3", new ExpectedValue(), new NoHolesMax(), 3),
-                new AlphaBetaPlayer("AB_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4),
-                new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)
+                //new AlphaBetaPlayer("AB_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4),
+                new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4),
+                new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)
                 //new AlphaBetaPlayer("AB_EV_MFM_10", new ExpectedValue(), new MostFreeMax(), 10),
                 //new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10) // (best so far)
         ));
