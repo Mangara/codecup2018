@@ -26,9 +26,9 @@ public class Board {
                     nFree--;
 
                     if (grid[a][b] != BLOCKED) {
-                        if (grid[a][b] > 0) {
+                        if (grid[a][b] > 0 && grid[a][b] < 16) {
                             myUsed[grid[a][b] - 1] = true;
-                        } else if (grid[a][b] < 0) {
+                        } else if (grid[a][b] < 0 && grid[a][b] > -16) {
                             oppUsed[-grid[a][b] - 1] = true;
                         }
                     }
@@ -39,6 +39,10 @@ public class Board {
 
     public byte get(byte a, byte b) {
         return grid[a][b];
+    }
+    
+    public int getFreeSpots() {
+        return nFree;
     }
 
     public int getHoleValue(byte a, byte b) {
@@ -72,7 +76,7 @@ public class Board {
     }
 
     private int value(byte val) {
-        return (val == BLOCKED ? 0 : val);
+        return (val > -16 && val < 16 ? val : 0);
     }
 
     public int getFreeSpotsAround(byte a, byte b) {
@@ -106,19 +110,19 @@ public class Board {
     }
 
     public void set(byte a, byte b, byte value) {
+        if (grid[a][b] == FREE && value != FREE) {
+            nFree--;
+        } else if (grid[a][b] != FREE && value == FREE) {
+            nFree++;
+        }
+        
         grid[a][b] = value;
-        nFree--;
 
-        if (value > 0 && value != BLOCKED) {
+        if (value > 0 && value < 16) {
             myUsed[value - 1] = true;
-        } else if (value < 0) {
+        } else if (value < 0 && value > -16) {
             oppUsed[-value - 1] = true;
         }
-    }
-
-    public void set(String location, byte value) {
-        byte[] loc = getCoordinates(location);
-        set(loc[0], loc[1], value);
     }
 
     public void applyMove(byte[] move) {
@@ -179,6 +183,7 @@ public class Board {
             }
             System.err.println(spaces(7 - h));
         }
+        System.err.println("nFree: " + nFree);
     }
 
     private String spaces(int n) {

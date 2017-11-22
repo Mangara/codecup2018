@@ -1,15 +1,10 @@
 package codecup2018;
 
 import codecup2018.evaluator.ExpectedValue;
-import codecup2018.evaluator.MedianFree;
-import codecup2018.movegenerator.AllMoves;
-import codecup2018.movegenerator.BestMoves;
-import codecup2018.movegenerator.MaxInfluenceMoves;
-import codecup2018.movegenerator.MostFreeMax;
-import codecup2018.player.AlphaBetaPlayer;
-import codecup2018.player.GUIPlayer;
+import codecup2018.movegenerator.NoHolesMax;
+import codecup2018.player.AspirationPlayer;
+import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
-import codecup2018.player.RandomPlayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -26,7 +21,8 @@ public class GameHost {
 
     public static void main(String[] args) throws IOException {
         //GameHost.runGame(new AlphaBetaPlayer("AB_MF_10", new MedianFree(), new MostFreeMax(), 10), new GUIPlayer("GUI"), true);
-        GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
+        //GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
+        GameHost.runGame(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), false);
     }
 
     public static int runGame(Player p1, Player p2, boolean print) {
@@ -226,7 +222,7 @@ public class GameHost {
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 if (board.get(a, b) == Board.BLOCKED) {
-                    player.block(Board.coordinatesToString(a, b));
+                    player.block(a, b);
                 }
             }
         }

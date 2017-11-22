@@ -70,10 +70,9 @@ public class BlackHoleFrame extends javax.swing.JFrame {
         setNumbersEnabled(false);
     }
 
-    public void block(String location) {
-        board.set(location, Board.BLOCKED);
-        byte[] loc = Board.getCoordinates(location);
-        JToggleButton button = boardButtons[loc[0]][loc[1]];
+    public void block(byte a, byte b) {
+        board.set(a, b, Board.BLOCKED);
+        JToggleButton button = boardButtons[a][b];
 
         button.setEnabled(false);
         button.setText("X");
