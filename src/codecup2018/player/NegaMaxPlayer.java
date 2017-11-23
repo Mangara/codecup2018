@@ -1,5 +1,6 @@
 package codecup2018.player;
 
+import codecup2018.Util;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
@@ -61,7 +62,7 @@ public class NegaMaxPlayer extends Player {
     private int negamax(int player, int depth, int alpha, int beta) {
         if (DEBUG_AB) {
             System.err.printf("%s:  Running negamax with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
-            board.print();
+            Util.print(board);
         }
 
         if (depth == 0 || board.isGameOver()) {

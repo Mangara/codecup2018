@@ -1,6 +1,9 @@
 package codecup2018.player;
 
+import codecup2018.ArrayBoard;
+import codecup2018.BitBoard;
 import codecup2018.Board;
+import codecup2018.Util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -8,7 +11,7 @@ import java.io.PrintStream;
 public abstract class Player {
 
     protected final static boolean DEBUG = false;
-    protected Board board = new Board();
+    protected Board board;
     protected final String name;
 
     public Player(String name) {
@@ -28,22 +31,22 @@ public abstract class Player {
 
         // Read in 5 blocked fields
         for (int i = 0; i < 5; i++) {
-            byte[] loc = Board.getCoordinates(in.readLine());
+            byte[] loc = Util.getCoordinates(in.readLine());
             block(loc[0], loc[1]);
         }
 
         for (String input = in.readLine(); !(input == null || "Quit".equals(input)); input = in.readLine()) {
             if (!"Start".equals(input)) {
-                processMove(Board.parseMove(input), false);
+                processMove(Util.parseMove(input), false);
             }
 
             byte[] move = move();
-            out.println(Board.coordinatesToString(move[0], move[1]) + "=" + move[2]);
+            out.println(Util.coordinatesToString(move[0], move[1]) + "=" + move[2]);
         }
     }
 
     public void initialize() {
-        initialize(new Board());
+        initialize(new BitBoard());
     }
 
     public void initialize(Board currentBoard) {
@@ -51,11 +54,11 @@ public abstract class Player {
     }
 
     public void block(byte a, byte b) {
-        board.set(a, b, Board.BLOCKED);
+        board.block(a, b);
     }
 
     public void processMove(byte[] move, boolean mine) {
-        board.set(move[0], move[1], (mine ? move[2] : (byte) -move[2]));
+        board.applyMove(new byte[] {move[0], move[1], (mine ? move[2] : (byte) -move[2])});
     }
 
     public byte[] move() {
@@ -63,6 +66,6 @@ public abstract class Player {
         processMove(move, true);
         return move;
     }
-
+    
     protected abstract byte[] selectMove();
 }

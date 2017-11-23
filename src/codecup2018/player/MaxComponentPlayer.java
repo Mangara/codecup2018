@@ -1,6 +1,6 @@
 package codecup2018.player;
 
-import codecup2018.Board;
+import codecup2018.ArrayBoard;
 
 public class MaxComponentPlayer extends ComponentPlayer {
 
@@ -13,7 +13,7 @@ public class MaxComponentPlayer extends ComponentPlayer {
 
     @Override
     protected byte[] selectMove() {
-        Board largestComponent = components.get(0);
+        ArrayBoard largestComponent = components.get(0);
 
         if (largestComponent.getFreeSpots()> 1) {
             player.initialize(largestComponent);

@@ -54,7 +54,7 @@ public class EndgameTest {
         Player p1 = new RandomPlayer("R1", new NoHoles(), rand);
         Player p2 = new RandomPlayer("R2", new NoHoles(), rand);
 
-        Board board = new Board();
+        ArrayBoard board = new ArrayBoard();
 
         p1.initialize();
         p2.initialize();
@@ -102,7 +102,7 @@ public class EndgameTest {
         return board;
     }
 
-    private static boolean doMove(Board board, byte[] move, boolean player1) {
+    private static boolean doMove(ArrayBoard board, byte[] move, boolean player1) {
         if (board.getFreeSpotsAround(move[0], move[1]) == 0) {
             return true;
         }
@@ -116,7 +116,7 @@ public class EndgameTest {
     @Test
     public void runTest() throws IOException {
         // Copy info for debug purposes
-        Board originalBoard = new Board(board);
+        ArrayBoard originalBoard = new ArrayBoard(board);
 
         // Figure out the right moves
         List<int[]> holes = new ArrayList<>();
@@ -202,7 +202,7 @@ public class EndgameTest {
 
         if (targetScore != finalScore) {
             System.err.println("Starting board:");
-            originalBoard.print();
+            Util.print(originalBoard);
             System.err.print("Holes: ");
             for (int[] hole : holes) {
                 System.err.print(Arrays.toString(hole) + ", ");
@@ -219,7 +219,7 @@ public class EndgameTest {
             }
             System.err.println();
             System.err.println("Final board:");
-            board.print();
+            Util.print(board);
             System.err.println();
             fail("Player did not close optimal holes");
         }

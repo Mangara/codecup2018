@@ -1,5 +1,6 @@
 package codecup2018.movegenerator;
 
+import codecup2018.ArrayBoard;
 import codecup2018.Board;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ public class NoHolesMax implements MoveGenerator {
 
         for (byte a = 0; a < 8 && !anyNonHole; a++) {
             for (byte b = 0; b < 8 - a && !anyNonHole; b++) {
-                if (board.get(a, b) == Board.FREE && board.getFreeSpotsAround(a, b) > 0) {
+                if (board.isFree(a, b) && board.getFreeSpotsAround(a, b) > 0) {
                     anyNonHole = true;
                 }
             }
@@ -23,7 +24,7 @@ public class NoHolesMax implements MoveGenerator {
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) != Board.FREE || (anyNonHole && board.getFreeSpotsAround(a, b) == 0)) {
+                if (!board.isFree(a, b) || (anyNonHole && board.getFreeSpotsAround(a, b) == 0)) {
                     continue;
                 }
 

@@ -12,7 +12,7 @@ public class AllMoves implements MoveGenerator {
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) != Board.FREE) {
+                if (!board.isFree(a, b)) {
                     continue;
                 }
 

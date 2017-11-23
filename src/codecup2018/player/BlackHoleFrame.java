@@ -1,6 +1,8 @@
 package codecup2018.player;
 
+import codecup2018.ArrayBoard;
 import codecup2018.Board;
+import codecup2018.Util;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.MedianFree;
 import java.awt.Color;
@@ -55,13 +57,13 @@ public class BlackHoleFrame extends javax.swing.JFrame {
 
     private byte[] move = null;
     private boolean[] used = new boolean[15];
-    private Board board;
+    private ArrayBoard board;
 
     /**
      * Creates new form BlackHoleFrame
      */
     public BlackHoleFrame() {
-        board = new Board();
+        board = new ArrayBoard();
         
         initComponents();
         initCustomComponents();
@@ -132,7 +134,7 @@ public class BlackHoleFrame extends javax.swing.JFrame {
     }
 
     private void boardSpacePressed(byte a, byte b) {
-        System.out.println("Pressed board space: (" + a + ", " + b + ") = " + Board.coordinatesToString(a, b));
+        System.out.println("Pressed board space: (" + a + ", " + b + ") = " + Util.coordinatesToString(a, b));
         
         // Evaluate possible moves here
         ExpectedValue ev = new ExpectedValue();

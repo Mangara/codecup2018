@@ -3,6 +3,7 @@ package codecup2018;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.MedianFree;
 import codecup2018.movegenerator.AllMoves;
+import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHolesMax;
 import codecup2018.player.AlphaBetaPlayer;
@@ -15,7 +16,7 @@ import codecup2018.player.SimpleMaxPlayer;
 
 public class TimingHarness {
 
-    private static final long GAMES = 400;
+    private static final long GAMES = 200;
 
     public static void main(String[] args) {
         System.out.println("Player,Rando time (ms),Expy time (ms)");
@@ -25,12 +26,15 @@ public class TimingHarness {
         //evaluateTiming(new RandomPlayer("RandMostFreeMax", new MostFreeMax()));
         //evaluateTiming(new AlphaBetaPlayer("AB_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~1s per game
         //evaluateTiming(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~1s per game
-        //evaluateTiming(new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~?s per game
+        //evaluateTiming(new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~0.5s per game
+        evaluateTiming(new AspirationPlayer("As_EV_MI_5", new ExpectedValue(), new MaxInfluenceMoves(), 5)); // ~0.4s per game
+        evaluateTiming(new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6)); // ~2s per game
         //evaluateTiming(new MaxComponentPlayer(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4))); // ~1s per game
         //evaluateTiming(new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)); // ~1s per game
         //evaluateTiming(new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)); // ~1s per game
         //evaluateTiming(new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()));
 
+        /*/// Aspiration window search
         AspirationPlayer asp = new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4);
         
         for (int i = 640000; i > 100; i /= 2) {
@@ -46,6 +50,7 @@ public class TimingHarness {
             System.out.print(Integer.toString(i) + ',');
             evaluateTiming(asp2);
         }
+        //*/
     }
 
     private static void evaluateTiming(Player player) {

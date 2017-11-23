@@ -1,6 +1,8 @@
 package codecup2018.player;
 
+import codecup2018.ArrayBoard;
 import codecup2018.Board;
+import codecup2018.Util;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
@@ -13,7 +15,7 @@ public class AspirationPlayer extends Player {
     private static final byte[] FAIL_HIGH = new byte[0];
     private static final byte[] FAIL_LOW = new byte[0];
 
-    public static int WINDOW_SIZE = 1500;
+    public static int WINDOW_SIZE = 10000;
 
     private final Evaluator evaluator;
     private final MoveGenerator generator;
@@ -104,7 +106,7 @@ public class AspirationPlayer extends Player {
     private int negamax(int player, int depth, int alpha, int beta) {
         if (DEBUG_AB) {
             System.err.printf("%s:  Running negamax with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
-            board.print();
+            Util.print(board);
         }
 
         if (depth == 0 || board.isGameOver()) {
