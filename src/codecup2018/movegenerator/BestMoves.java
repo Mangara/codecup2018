@@ -9,9 +9,9 @@ import java.util.List;
 
 public class BestMoves implements MoveGenerator {
 
+    private final MoveGenerator generator;
     private final Evaluator evaluator;
     private final int nMoves;
-    private final MoveGenerator generator;
 
     public BestMoves(MoveGenerator generator, Evaluator evaluator, int nMoves) {
         this.generator = generator;

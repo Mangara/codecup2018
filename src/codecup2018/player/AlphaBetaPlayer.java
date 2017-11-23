@@ -1,5 +1,8 @@
 package codecup2018.player;
 
+import codecup2018.ArrayBoard;
+import codecup2018.Board;
+import codecup2018.Util;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
@@ -27,7 +30,7 @@ public class AlphaBetaPlayer extends Player {
     public void setDepth(int depth) {
         this.depth = depth;
     }
-
+    
     @Override
     protected byte[] selectMove() {
         // Top-level alpha-beta
@@ -61,7 +64,7 @@ public class AlphaBetaPlayer extends Player {
     private int alphaBeta(boolean player1, int depth, int alpha, int beta) {
         if (DEBUG_AB) {
             System.err.printf("%s:  Running alpha-beta with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
-            board.print();
+            Util.print(board);
         }
 
         if (depth == 0 || board.isGameOver()) {

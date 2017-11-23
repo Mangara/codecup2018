@@ -37,7 +37,7 @@ public class SinglePositionTest {
             }
         }
         
-        Board board = new Board(grid);
+        ArrayBoard board = new ArrayBoard(grid);
         
         player.initialize(board);
         byte[] move = player.move();

@@ -1,24 +1,23 @@
 package codecup2018.player;
 
+import codecup2018.ArrayBoard;
 import codecup2018.Board;
-import codecup2018.Pair;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.ListIterator;
 
 public abstract class ComponentPlayer extends Player {
 
     private static final byte VISITED = 119;
-    private static final Comparator<Board> COMPONENT_SIZE = new Comparator<Board>() {
+    private static final Comparator<ArrayBoard> COMPONENT_SIZE = new Comparator<ArrayBoard>() {
         @Override
-        public int compare(Board o1, Board o2) {
+        public int compare(ArrayBoard o1, ArrayBoard o2) {
             return -Integer.compare(o1.getFreeSpots(), o2.getFreeSpots());
         }
     };
 
-    protected final List<Board> components = new ArrayList<>();
+    protected final List<ArrayBoard> components = new ArrayList<>();
 
     public ComponentPlayer(String name) {
         super(name);
@@ -29,7 +28,7 @@ public abstract class ComponentPlayer extends Player {
         super.initialize(currentBoard);
         
         components.clear();
-        Board tempBoard = new Board(currentBoard);
+        ArrayBoard tempBoard = new ArrayBoard(currentBoard);
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
@@ -42,7 +41,7 @@ public abstract class ComponentPlayer extends Player {
                     tempBoard.print();
                     System.err.println();
                     ///*/
-                    Board component = extractComponentBoard(tempBoard);
+                    ArrayBoard component = extractComponentBoard(tempBoard);
 
                     /*/// DEBUG
                     System.err.println("After extracting component");
@@ -79,7 +78,7 @@ public abstract class ComponentPlayer extends Player {
     public void processMove(byte[] move, boolean mine) {
         /*/// DEBUG
         System.err.printf("Before processing move (%d, %d) = %d:%n", move[0], move[1], move[2]);
-        board.print();
+        Util.print(board);
         System.err.println("Components:");
         for (Pair<Board, Integer> c : components) {
             System.err.println("Component of size " + c.getSecond());
@@ -93,7 +92,7 @@ public abstract class ComponentPlayer extends Player {
         
         /*/// DEBUG
         System.err.printf("After processing move (%d, %d) = %d:%n", move[0], move[1], move[2]);
-        board.print();
+        Util.print(board);
         System.err.println("Components:");
         int totalFree = 0;
         for (Pair<Board, Integer> c : components) {
@@ -114,7 +113,7 @@ public abstract class ComponentPlayer extends Player {
         int playedComponent = -1;
 
         for (int i = 0; i < components.size(); i++) {
-            Board bb = components.get(i);
+            ArrayBoard bb = components.get(i);
 
             if (bb.get(a, b) == Board.FREE) {
                 playedComponent = i;
@@ -124,10 +123,10 @@ public abstract class ComponentPlayer extends Player {
         }
 
         // Find the new components after this move
-        Board component = components.remove(playedComponent);
-        List<Board> newComponents = split(component, a, b);
+        ArrayBoard component = components.remove(playedComponent);
+        List<ArrayBoard> newComponents = split(component, a, b);
 
-        for (Board c : newComponents) {
+        for (ArrayBoard c : newComponents) {
             int i = Collections.binarySearch(components, c, COMPONENT_SIZE);
 
             if (i < 0) {
@@ -147,7 +146,7 @@ public abstract class ComponentPlayer extends Player {
         ///*/
     }
 
-    private void markComponent(Board board, byte a, byte b) {
+    private void markComponent(ArrayBoard board, byte a, byte b) {
         board.set(a, b, VISITED);
 
         if (a > 0 && board.get((byte) (a - 1), b) == Board.FREE) {
@@ -175,8 +174,8 @@ public abstract class ComponentPlayer extends Player {
         }
     }
 
-    private Board extractComponentBoard(Board fullBoard) {
-        Board componentBoard = new Board(fullBoard);
+    private ArrayBoard extractComponentBoard(ArrayBoard fullBoard) {
+        ArrayBoard componentBoard = new ArrayBoard(fullBoard);
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
@@ -192,8 +191,8 @@ public abstract class ComponentPlayer extends Player {
         return componentBoard;
     }
 
-    private List<Board> split(Board cBoard, byte a, byte b) {
-        List<Board> newComponents = new ArrayList<>();
+    private List<ArrayBoard> split(ArrayBoard cBoard, byte a, byte b) {
+        List<ArrayBoard> newComponents = new ArrayList<>();
 
         if (a > 0 && cBoard.get((byte) (a - 1), b) == Board.FREE) {
             markComponent(cBoard, (byte) (a - 1), b);

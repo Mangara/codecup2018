@@ -30,7 +30,7 @@ public class ExpectedValue implements Evaluator {
         
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) == Board.FREE) {
+                if (board.isFree(a, b)) {
                     totalExpectedHoleValue += board.getHoleValue(a, b) + board.getFreeSpotsAround(a, b) * expectedFree;
                     nHoles++;
                 }

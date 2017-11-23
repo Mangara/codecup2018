@@ -1,5 +1,6 @@
 package codecup2018.movegenerator;
 
+import codecup2018.ArrayBoard;
 import codecup2018.Board;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,7 +17,7 @@ public class MaxInfluenceMoves implements MoveGenerator {
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) != Board.FREE) {
+                if (!board.isFree(a, b)) {
                     continue;
                 }
 

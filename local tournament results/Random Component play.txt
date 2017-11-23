@@ -1,0 +1,62 @@
+Players:
+0: Rando
+1: R_NH
+2: R_NHM
+3: R_MFM
+4: Co_Rando
+5: Co_R_NH
+6: Co_R_NHM
+7: Co_R_MFM
+
+Number of wins:
+         0    1    2    3    4    5    6    7
+    0    0  845  803  521  808  851  784  552
+    1 1106    0  877  587  990  968  861  623
+    2 1143 1061    0  752 1110 1081 1013  807
+    3 1427 1371 1184    0 1299 1320 1155  987
+    4 1138  950  838  660    0  958  838  652
+    5 1096  965  867  628  994    0  820  622
+    6 1168 1073  925  796 1105 1125    0  765
+    7 1407 1333 1142  976 1301 1335 1176    0
+
+Average score:
+           0     1     2     3     4     5     6     7
+     0  0.00 -2.67 -3.90 -10.6 -3.51 -2.97 -3.97 -10.6
+     1  2.67  0.00 -2.19 -9.290.0610-0.105 -2.34 -9.11
+     2  3.90  2.19  0.00 -4.77  2.57  2.34 0.649 -4.79
+     3  10.6  9.29  4.77  0.00  7.71  8.52  4.53 0.192
+     4  3.51-0.0610 -2.57 -7.71  0.00-0.373 -2.76 -8.44
+     5  2.97 0.105 -2.34 -8.52 0.373  0.00 -2.81 -8.05
+     6  3.97  2.34-0.649 -4.53  2.76  2.81  0.00 -5.42
+     7  10.6  9.11  4.79-0.192  8.44  8.05  5.42  0.00
+
+Comparisons:
+    R_NHM > Rando with p = 0.000000
+    R_MFM > Rando with p = 0.000000
+    Co_Rando > Rando with p = 0.000000
+    Co_R_NHM > Rando with p = 0.000000
+    Co_R_MFM > Rando with p = 0.000000
+    R_MFM > R_NH with p = 0.000000
+    Co_R_MFM > R_NH with p = 0.000000
+    R_MFM > R_NHM with p = 0.000000
+    Co_R_MFM > R_NHM with p = 0.000000
+    R_MFM > Co_Rando with p = 0.000000
+    R_MFM > Co_R_NH with p = 0.000000
+    R_MFM > Co_R_NHM with p = 0.000000
+    Co_R_MFM > Co_Rando with p = 0.000000
+    Co_R_MFM > Co_R_NH with p = 0.000000
+    Co_R_MFM > Co_R_NHM with p = 0.000000
+    Co_R_NH > Rando with p = 0.000000
+    Co_R_NHM > Co_R_NH with p = 0.000000
+    Co_R_NHM > Co_Rando with p = 0.000000
+    R_NH > Rando with p = 0.000000
+    R_NHM > Co_Rando with p = 0.000000
+    Co_R_NHM > R_NH with p = 0.000000
+    R_NHM > Co_R_NH with p = 0.000000
+    R_NHM > R_NH with p = 0.000000
+    R_NHM > Co_R_NHM with p = 0.014466
+    R_MFM > Co_R_MFM with p = 0.327063
+    Co_R_NH > R_NH with p = 0.387725
+    R_NH > Co_Rando with p = 0.432857
+    Co_R_NH > Co_Rando with p = -1.787575
+BUILD SUCCESSFUL (total time: 7 seconds)
