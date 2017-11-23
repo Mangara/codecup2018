@@ -1,5 +1,8 @@
 == Architecture
 
+- Speed up evaluation. Profiling shows that the majority of the time is spent here. Perhaps we can track the value as it changes and have an IterativeEvaluator that can be attached to a board or something.
+
+
 - Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for some later additions if we want to get fancy.
 - Generate positions and values seperately?
 
@@ -10,15 +13,28 @@
 
 == Players
 
+- Count (at least for debug) the total number of states evaluated / move
+
+- Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here.
+
+- Implement killer move heuristic: keep track of moves that cause beta cutoffs and try them first. Possibly per-ply? First perhaps just print moves that cause beta-cutoffs to get a sense of what they look like.
+
+- Implement iterative deepening. This will directly translate speed improvements into quality improvements. Use different aspiration windows for the first call (which uses the previous move value) and subsequent ones (which use the previous iteration value).
+
 - Make a UCB player
 - Make a NegaScout/PVS player?
 
-- Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here.
+- At top level, try moves with a medium value first? (Start at 15, 8, and 1. Move pointer down, up, and up, respectively.) Perhaps if the max move doesn't improve the value significantly, take the medium value move?
 
 == Move generation
 
 - MoveGenerator for moves that create holes that win for me
 - AB should include moves that block good opponent moves
+- Order moves by expected value. (ExpectedOrder MoveGenerator, and perhaps a general OrderBy(Evaluator)) Is there a fast way we can do just expected value?
+
+== Board state evaluation
+
+- Try total hole value (should outperform median at the start). May be a good `approximation' of expected value, as it relies only on local information.
 
 
 

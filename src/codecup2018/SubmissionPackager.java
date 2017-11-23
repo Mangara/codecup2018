@@ -19,16 +19,20 @@ public class SubmissionPackager {
     public static void main(String[] args) throws IOException {
         Path mainClass = Paths.get("src", "codecup2018", "Runner.java");
         List<Path> inputFiles = Arrays.asList(
+                Paths.get("src", "codecup2018", "Util.java"),
                 Paths.get("src", "codecup2018", "Board.java"),
+                Paths.get("src", "codecup2018", "BitBoard.java"),
                 Paths.get("src", "codecup2018", "player", "Player.java"),
-                Paths.get("src", "codecup2018", "player", "SimpleMaxPlayer.java"),
+                Paths.get("src", "codecup2018", "player", "AspirationPlayer.java"),
                 Paths.get("src", "codecup2018", "evaluator", "Evaluator.java"),
-                Paths.get("src", "codecup2018", "evaluator", "ExpectedValue.java"),
+                //Paths.get("src", "codecup2018", "evaluator", "ExpectedValue.java"),
+                Paths.get("src", "codecup2018", "evaluator", "MedianFree.java"),
                 Paths.get("src", "codecup2018", "movegenerator", "MoveGenerator.java"),
-                Paths.get("src", "codecup2018", "movegenerator", "AllMoves.java"),
+                //Paths.get("src", "codecup2018", "movegenerator", "AllMoves.java"),
+                Paths.get("src", "codecup2018", "movegenerator", "MostFreeMax.java"),
                 mainClass
         );
-        Path outputFile = Paths.get("src", "Expy.java");
+        Path outputFile = Paths.get("src", "Messier31.java");
 
         new SubmissionPackager(inputFiles, mainClass, outputFile);
     }
