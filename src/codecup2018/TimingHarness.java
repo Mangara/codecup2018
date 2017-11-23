@@ -16,7 +16,7 @@ import codecup2018.player.SimpleMaxPlayer;
 
 public class TimingHarness {
 
-    private static final long GAMES = 200;
+    private static final long GAMES = 100;
 
     public static void main(String[] args) {
         System.out.println("Player,Rando time (ms),Expy time (ms)");
@@ -27,11 +27,13 @@ public class TimingHarness {
         //evaluateTiming(new AlphaBetaPlayer("AB_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~1s per game
         //evaluateTiming(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~1s per game
         //evaluateTiming(new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~0.5s per game
-        evaluateTiming(new AspirationPlayer("As_EV_MI_5", new ExpectedValue(), new MaxInfluenceMoves(), 5)); // ~0.4s per game
-        evaluateTiming(new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6)); // ~2s per game
+        //evaluateTiming(new AspirationPlayer("As_EV_MI_5", new ExpectedValue(), new MaxInfluenceMoves(), 5)); // ~0.4s per game
+        //evaluateTiming(new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6)); // ~2s per game
         //evaluateTiming(new MaxComponentPlayer(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4))); // ~1s per game
         //evaluateTiming(new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)); // ~1s per game
         //evaluateTiming(new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)); // ~1s per game
+        //evaluateTiming(new AspirationPlayer("As_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)); // ~1s per game
+        //evaluateTiming(new AspirationPlayer("As_MF_MFM_11", new MedianFree(), new MostFreeMax(), 11)); // ~2.5s per game
         //evaluateTiming(new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()));
 
         /*/// Aspiration window search

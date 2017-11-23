@@ -25,3 +25,26 @@ Comparisons:
     As_EV_NHM_4 > Expy_NH with p = 0.000854
     As_EV_MI_4 > As_EV_NHM_4 with p = 0.001882
     As_EV_MI_4 > Expy_NH with p = 0.444864
+
+
+Players:
+0: Expy_NH
+1: As_EV_NHM_4
+2: As_EV_MI_4
+
+Number of wins:
+         0    1    2
+    0    0  143  170
+    1  279    0  131
+    2  232  276    0
+
+Average score:
+           0     1     2
+     0  0.00-0.930-0.526
+     1 0.930  0.00-0.736
+     2 0.526 0.736  0.00
+
+Comparisons:
+    As_EV_NHM_4 > Expy_NH with p = 0.000000
+    As_EV_MI_4 > As_EV_NHM_4 with p = 0.000000
+    As_EV_MI_4 > Expy_NH with p = 0.000000
