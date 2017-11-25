@@ -7,7 +7,7 @@ public class Util {
     }
 
     public static byte[] parseMove(String move) {
-        return new byte[]{(byte) (move.charAt(0) - 'A'), (byte) (move.charAt(1) - '1'), (byte) (move.charAt(3) - '1')};
+        return new byte[]{(byte) (move.charAt(0) - 'A'), (byte) (move.charAt(1) - '1'), (byte) (Integer.parseInt(move.substring(3)))};
     }
 
     public static byte[] getCoordinates(String location) {
