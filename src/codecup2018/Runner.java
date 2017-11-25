@@ -11,8 +11,9 @@ import java.io.InputStreamReader;
 public class Runner {
 
     public static void main(String[] args) throws IOException {
-        //Player p = new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()); // Played Nov 11 Test Competition
-        Player p = new AspirationPlayer("As_MF_MFM_11", new MedianFree(), new MostFreeMax(), 11);
+        //Player p = new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()); // Played Nov 11 Test Competition
+        Player p = new AspirationPlayer("As_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10);
+        Player.TIMING = true;
         
         p.play(new BufferedReader(new InputStreamReader(System.in)), System.out);
     }
