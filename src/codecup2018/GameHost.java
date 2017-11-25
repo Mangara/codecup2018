@@ -25,7 +25,8 @@ public class GameHost {
         //GameHost.runGame(new AlphaBetaPlayer("AB_MF_10", new MedianFree(), new MostFreeMax(), 10), new GUIPlayer("GUI"), true);
         //GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
         //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), false);
-        GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), false);
+        //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), false);
+        GameHost.runGameThreaded(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4));
     }
 
     public static void setRandom(Random rand) {
@@ -104,7 +105,7 @@ public class GameHost {
         return score;
     }
 
-    public void runGameThreaded(final Player p1, final Player p2) throws IOException {
+    public static void runGameThreaded(final Player p1, final Player p2) throws IOException {
         ArrayBoard board = setUpBoard();
         Util.print(board);
 
@@ -210,7 +211,7 @@ public class GameHost {
         return board;
     }
 
-    private void passBlockedCells(ArrayBoard board, PrintWriter writer) {
+    private static void passBlockedCells(ArrayBoard board, PrintWriter writer) {
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 if (board.get(a, b) == Board.BLOCKED) {
@@ -220,16 +221,6 @@ public class GameHost {
         }
 
         writer.flush();
-    }
-
-    private static void passBlockedCells(ArrayBoard board, Player player) {
-        for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) == Board.BLOCKED) {
-                    player.block(a, b);
-                }
-            }
-        }
     }
     
     private static void verifyMove(ArrayBoard board, byte[] move, boolean player1) {

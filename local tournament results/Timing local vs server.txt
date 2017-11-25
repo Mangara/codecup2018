@@ -1,0 +1,4 @@
+Player,Rando time (ms),Expy time (ms)
+As_MF_MFM_11,1456.383,2636.471
+
+CodeCup time: exceeded!
