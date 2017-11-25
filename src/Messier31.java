@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 public class Messier31 {
 public static void main(String[]args)throws IOException{
 Player p=new AspirationPlayer("As_MF_MFM_10",new MedianFree(),new MostFreeMax(),10);
+Player.TIMING=true;
 p.play(new BufferedReader(new InputStreamReader(System.in)),System.out);
 }
 }
@@ -17,7 +18,7 @@ public static String coordinatesToString(byte a,byte b){
 return Character.toString((char)('A'+a))+Character.toString((char)('1'+b));
 }
 public static byte[]parseMove(String move){
-return new byte[]{(byte)(move.charAt(0)-'A'),(byte)(move.charAt(1)-'1'),(byte)(move.charAt(3)-'1')};
+return new byte[]{(byte)(move.charAt(0)-'A'),(byte)(move.charAt(1)-'1'),(byte)(Integer.parseInt(move.substring(3)))};
 }
 public static byte[]getCoordinates(String location){
 return new byte[]{(byte)(location.charAt(0)-'A'),(byte)(location.charAt(1)-'1')};
@@ -235,6 +236,7 @@ return getFreeSpots()==1;
 }
 }
 abstract class Player {
+public static boolean TIMING=false;
 protected final static boolean DEBUG=false;
 protected Board board;
 protected final String name;
@@ -248,16 +250,29 @@ public Board getBoard(){
 return board;
 }
 public void play(BufferedReader in,PrintStream out)throws IOException{
+long start=0;
+if(TIMING){
+start=System.currentTimeMillis();
+}
 initialize();
 for(int i=0;i<5;i++){
 byte[]loc=Util.getCoordinates(in.readLine());
 block(loc[0],loc[1]);
 }
+if(TIMING){
+System.err.println("Initialization took "+(System.currentTimeMillis()-start)+" ms.");
+}
 for(String input=in.readLine();!(input==null||"Quit".equals(input));input=in.readLine()){
+if(TIMING){
+start=System.currentTimeMillis();
+}
 if(!"Start".equals(input)){
 processMove(Util.parseMove(input),false);
 }
 byte[]move=move();
+if(TIMING){
+System.err.println("Move took "+(System.currentTimeMillis()-start)+" ms.");
+}
 out.println(Util.coordinatesToString(move[0],move[1])+"="+move[2]);
 }
 }
