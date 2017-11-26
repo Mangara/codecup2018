@@ -39,5 +39,21 @@ public class ExpectedValue implements Evaluator {
         
         return (int) (10000 * totalExpectedHoleValue / nHoles);
     }
+
+    @Override
+    public void initialize(Board board) {
+    }
+
+    @Override
+    public void block(byte a, byte b) {
+    }
+
+    @Override
+    public void applyMove(byte[] move) {
+    }
+
+    @Override
+    public void undoMove(byte[] move) {
+    }
     
 }

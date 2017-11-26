@@ -13,4 +13,12 @@ public interface Evaluator {
      * @return
      */
     public abstract int evaluate(Board board);
+    
+    public void initialize(Board board);
+        
+    public void block(byte a, byte b);
+            
+    public void applyMove(byte[] move);
+
+    public void undoMove(byte[] move);
 }

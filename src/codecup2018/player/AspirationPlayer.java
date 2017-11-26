@@ -1,6 +1,5 @@
 package codecup2018.player;
 
-import codecup2018.ArrayBoard;
 import codecup2018.Board;
 import codecup2018.Util;
 import codecup2018.evaluator.Evaluator;
@@ -29,17 +28,10 @@ public class AspirationPlayer extends Player {
         this.depth = depth;
     }
 
-    public int getDepth() {
-        return depth;
-    }
-
-    public void setDepth(int depth) {
-        this.depth = depth;
-    }
-
     @Override
     public void initialize(Board currentBoard) {
         super.initialize(currentBoard);
+        evaluator.initialize(currentBoard);
         prevScore = 0;
     }
 
@@ -73,8 +65,10 @@ public class AspirationPlayer extends Player {
             }
 
             board.applyMove(move);
+            evaluator.applyMove(move);
             int value = -negamax(-1, depth, -beta, -alpha);
             board.undoMove(move);
+            evaluator.undoMove(move);
 
             if (DEBUG_AB) {
                 System.err.println(getName() + ": Value of my move " + Arrays.toString(move) + " is " + value);
@@ -122,8 +116,10 @@ public class AspirationPlayer extends Player {
             }
 
             board.applyMove(move);
+            evaluator.applyMove(move);
             int value = -negamax(-player, depth - 1, -beta, -alpha);
             board.undoMove(move);
+            evaluator.undoMove(move);
 
             if (DEBUG_AB) {
                 System.err.printf("%s:   Got back a score of %d%n", getName(), value);
