@@ -1,5 +1,7 @@
 package codecup2018;
 
+import codecup2018.data.ArrayBoard;
+import codecup2018.data.Board;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.MedianFree;
 import codecup2018.movegenerator.MostFreeMax;

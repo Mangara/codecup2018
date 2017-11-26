@@ -1,6 +1,6 @@
 package codecup2018.player;
 
-import codecup2018.ArrayBoard;
+import codecup2018.data.ArrayBoard;
 
 public class MaxComponentPlayer extends ComponentPlayer {
 

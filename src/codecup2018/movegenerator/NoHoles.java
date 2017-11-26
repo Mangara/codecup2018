@@ -1,6 +1,6 @@
 package codecup2018.movegenerator;
 
-import codecup2018.Board;
+import codecup2018.data.Board;
 import java.util.ArrayList;
 import java.util.List;
 

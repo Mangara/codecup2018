@@ -1,4 +1,4 @@
-package codecup2018;
+package codecup2018.tools;
 
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.IncrementalExpectedValue;

@@ -1,6 +1,6 @@
 package codecup2018.evaluator;
 
-import codecup2018.Board;
+import codecup2018.data.Board;
 
 public class IncrementalExpectedValue implements Evaluator {
 

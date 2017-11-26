@@ -1,4 +1,4 @@
-package codecup2018;
+package codecup2018.data;
 
 public class ArrayBoard implements Board {
 

@@ -1,7 +1,7 @@
 package codecup2018.player;
 
-import codecup2018.ArrayBoard;
-import codecup2018.Board;
+import codecup2018.data.ArrayBoard;
+import codecup2018.data.Board;
 import codecup2018.Util;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.MedianFree;
