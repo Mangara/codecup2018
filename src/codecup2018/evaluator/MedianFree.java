@@ -26,4 +26,20 @@ public class MedianFree implements Evaluator {
         return holeValues.get((holeValues.size() - 1) / 2);
     }
 
+    @Override
+    public void initialize(Board board) {
+    }
+
+    @Override
+    public void block(byte a, byte b) {
+    }
+
+    @Override
+    public void applyMove(byte[] move) {
+    }
+
+    @Override
+    public void undoMove(byte[] move) {
+    }
+
 }
