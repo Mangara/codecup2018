@@ -4,6 +4,8 @@
 
 - Generate positions and values seperately?
 
+- Have the board generate (all/all non-hole) positions, returned as moves with value 0
+- In MaximumInfluenceMoves, use the value of the move to temporarily store the number of free spaces, then sort by this and set the values correctly.
 - In bitboard, precompute neighbours for all positions
 
 == Tournaments
