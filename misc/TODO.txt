@@ -2,18 +2,22 @@
 
 - Speed up evaluation. Profiling shows that the majority of the time is spent here. Perhaps we can track the value as it changes and have an IterativeEvaluator that can be attached to a board or something.
 
-
 - Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for some later additions if we want to get fancy.
+
 - Generate positions and values seperately?
 
 == Tournaments
 
 - For evaluation, add something that tracks the number of positions evaluated (calls to the recursive search function?). Most optimizations aim to reduce this.
 - Make the timing test deterministic by giving a specific random generator.
+- In the time evaluation, give more stats: minimum, *maximum*, median, quartiles.
 
 == Players
 
 - Count (at least for debug) the total number of states evaluated / move
+- Add some debug output for the competition bot (time taken per move, final value?)
+
+- In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search.
 
 - Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here.
 
