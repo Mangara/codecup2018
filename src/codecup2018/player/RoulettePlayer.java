@@ -5,17 +5,13 @@ import codecup2018.movegenerator.MoveGenerator;
 import java.util.List;
 import java.util.Random;
 
-public class RoulettePlayer extends Player {
+public class RoulettePlayer extends StandardPlayer {
 
     private static final Random RAND = new Random();
-    private final Evaluator evaluator;
-    private final MoveGenerator generator;
     private final double power;
 
     public RoulettePlayer(String name, Evaluator evaluator, MoveGenerator generator, double power) {
-        super(name);
-        this.evaluator = evaluator;
-        this.generator = generator;
+        super(name, evaluator, generator);
         this.power = power;
     }
 

@@ -1,25 +1,19 @@
 package codecup2018.player;
 
-import codecup2018.ArrayBoard;
-import codecup2018.Board;
 import codecup2018.Util;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
 import java.util.List;
 
-public class AlphaBetaPlayer extends Player {
+public class AlphaBetaPlayer extends StandardPlayer {
 
     private static final boolean DEBUG_AB = false;
 
-    private final Evaluator evaluator;
-    private final MoveGenerator generator;
     private int depth;
 
     public AlphaBetaPlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth) {
-        super(name);
-        this.evaluator = evaluator;
-        this.generator = generator;
+        super(name, evaluator, generator);
         this.depth = depth;
     }
 

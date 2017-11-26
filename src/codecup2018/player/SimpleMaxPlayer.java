@@ -4,15 +4,10 @@ import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.List;
 
-public class SimpleMaxPlayer extends Player {
-
-    private final Evaluator evaluator;
-    private final MoveGenerator generator;
+public class SimpleMaxPlayer extends StandardPlayer {
 
     public SimpleMaxPlayer(String name, Evaluator evaluator, MoveGenerator generator) {
-        super(name);
-        this.evaluator = evaluator;
-        this.generator = generator;
+        super(name, evaluator, generator);
     }
 
     @Override

@@ -3,11 +3,12 @@ package codecup2018.player;
 import codecup2018.Board;
 import codecup2018.Util;
 import codecup2018.evaluator.Evaluator;
+import codecup2018.evaluator.ExpectedValue;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
 import java.util.List;
 
-public class AspirationPlayer extends Player {
+public class AspirationPlayer extends StandardPlayer {
 
     private static final boolean DEBUG_AB = false;
 
@@ -16,22 +17,17 @@ public class AspirationPlayer extends Player {
 
     public static int WINDOW_SIZE = 10000;
 
-    private final Evaluator evaluator;
-    private final MoveGenerator generator;
-    private int depth;
+    private final int depth;
     private int prevScore = 0;
 
     public AspirationPlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth) {
-        super(name);
-        this.evaluator = evaluator;
-        this.generator = generator;
+        super(name, evaluator, generator);
         this.depth = depth;
     }
 
     @Override
     public void initialize(Board currentBoard) {
         super.initialize(currentBoard);
-        evaluator.initialize(currentBoard);
         prevScore = 0;
     }
 
