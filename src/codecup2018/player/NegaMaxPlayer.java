@@ -6,18 +6,14 @@ import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
 import java.util.List;
 
-public class NegaMaxPlayer extends Player {
+public class NegaMaxPlayer extends StandardPlayer {
 
     private static final boolean DEBUG_AB = false;
 
-    private final Evaluator evaluator;
-    private final MoveGenerator generator;
     private int depth;
 
     public NegaMaxPlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth) {
-        super(name);
-        this.evaluator = evaluator;
-        this.generator = generator;
+        super(name, evaluator, generator);
         this.depth = depth;
     }
 

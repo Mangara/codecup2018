@@ -1,16 +1,14 @@
 == Architecture
 
-- Speed up evaluation. Profiling shows that the majority of the time is spent here. Perhaps we can track the value as it changes and have an IterativeEvaluator that can be attached to a board or something.
-
 - Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for some later additions if we want to get fancy.
 
 - Generate positions and values seperately?
 
+- In bitboard, precompute neighbours for all positions
+
 == Tournaments
 
 - For evaluation, add something that tracks the number of positions evaluated (calls to the recursive search function?). Most optimizations aim to reduce this.
-- Make the timing test deterministic by giving a specific random generator.
-- In the time evaluation, give more stats: minimum, *maximum*, median, quartiles.
 
 == Players
 
@@ -36,6 +34,7 @@
 - AB should include moves that block good opponent moves
 - Order moves by expected value. (ExpectedOrder MoveGenerator, and perhaps a general OrderBy(Evaluator)) Is there a fast way we can do just expected value?
 
+
 == Board state evaluation
 
 - Try total hole value (should outperform median at the start). May be a good `approximation' of expected value, as it relies only on local information.
@@ -53,6 +52,9 @@ X In the GUI player, when a tile is selected, try each number and print the new 
 X Make a NegaMax player: http://mediocrechess.sourceforge.net/guides/alphabetasearch.html
 X Make a player that maintains a list of connected component boards. On each board, all free holes expect for those in its component are blocked. When a move splits a component, create new boards, etc. Each turn, find the best move in the largest component. Or in each and pick among them in some way.
 X Try aspiration search: store expected value found at the end of the previous search (or guess or eval), and run the new search with a window (guess - epsilon, guess + epsilon). If this fails, adjust the window up or down, depending on the direction of the failure.
+X Speed up evaluation. Profiling shows that the majority of the time is spent here. Perhaps we can track the value as it changes and have an IterativeEvaluator that can be attached to a board or something.
+X Make the timing test deterministic by giving a specific random generator.
+X In the time evaluation, give more stats: minimum, *maximum*, median, quartiles.
 
 === WONTFIX
 

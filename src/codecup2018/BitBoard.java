@@ -22,21 +22,21 @@ public class BitBoard implements Board {
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 byte val = board.get(a, b);
-                int pos = getPos(a, b);
+                long posMask = posMask(a, b);
 
                 if (val == FREE) {
                     // Nothing
                 } else if (val == BLOCKED) {
-                    free -= (1L << pos);
+                    free -= posMask;
                 } else if (val > 0) {
-                    free -= (1L << pos);
-                    myTiles |= (1L << pos);
+                    free -= posMask;
+                    myTiles |= posMask;
                     myValues |= ((long) val) << (4 * myValIndex);
                     myUsed |= (1 << val);
                     myValIndex++;
                 } else if (val < 0) {
-                    free -= (1L << pos);
-                    oppTiles |= (1L << pos);
+                    free -= posMask;
+                    oppTiles |= posMask;
                     oppValues |= ((long) -val) << (4 * oppValIndex);
                     oppUsed |= (1 << -val);
                     oppValIndex++;
@@ -45,13 +45,13 @@ public class BitBoard implements Board {
         }
     }
 
-    private int getPos(byte a, byte b) {
-        return 8 * a + b;
+    private long posMask(byte a, byte b) {
+        return 1L << (8 * a + b);
     }
 
     @Override
     public byte get(byte a, byte b) {
-        long posMask = 1L << getPos(a, b);
+        long posMask = posMask(a, b);
 
         if ((free & posMask) > 0) {
             return FREE;
@@ -68,8 +68,9 @@ public class BitBoard implements Board {
         return BLOCKED;
     }
 
+    @Override
     public boolean isFree(byte a, byte b) {
-        return (free & (1L << getPos(a, b))) > 0;
+        return (free & posMask(a, b)) > 0;
     }
 
     @Override
@@ -81,9 +82,7 @@ public class BitBoard implements Board {
     private static final long EXCLUDE_EIGHT = ~0b10000000L;
     private static final long EXCLUDE_NINE = ~0b100000000L;
 
-    private long neighbours(int pos) {
-        long posMask = 1L << pos;
-
+    private long neighbours(long posMask) {
         return (((posMask << 1) & EXCLUDE_NINE)
                 | ((posMask >>> 1) & EXCLUDE_EIGHT)
                 | ((posMask << 7) & EXCLUDE_EIGHT)
@@ -95,12 +94,12 @@ public class BitBoard implements Board {
 
     @Override
     public int getFreeSpotsAround(byte a, byte b) {
-        return Long.bitCount(free & neighbours(getPos(a, b)));
+        return Long.bitCount(free & neighbours(posMask(a, b)));
     }
 
     @Override
     public int getHoleValue(byte a, byte b) {
-        long neighbours = neighbours(getPos(a, b));
+        long neighbours = neighbours(posMask(a, b));
         long myNeighbours = myTiles & neighbours;
         long oppNeighbours = oppTiles & neighbours;
 
@@ -122,12 +121,12 @@ public class BitBoard implements Board {
     }
 
     public void block(byte a, byte b) {
-        free &= ~(1L << getPos(a, b));
+        free &= ~posMask(a, b);
     }
 
     @Override
     public void applyMove(byte[] move) {
-        long posMask = (1L << getPos(move[0], move[1]));
+        long posMask = posMask(move[0], move[1]);
         free &= ~posMask;
 
         byte value = move[2];
@@ -145,7 +144,7 @@ public class BitBoard implements Board {
 
     @Override
     public void undoMove(byte[] move) {
-        long posMask = (1L << getPos(move[0], move[1]));
+        long posMask = posMask(move[0], move[1]);
         free |= posMask;
 
         byte value = move[2];

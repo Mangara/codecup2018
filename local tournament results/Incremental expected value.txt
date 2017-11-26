@@ -1,0 +1,3 @@
+Player,Average Rando time (ms),Min Rando time (ms),1st Quartile Rando time (ms),Median Rando time (ms),3rd Quartile Rando time (ms),Max Rando time (ms),Average Expy time (ms),Min Expy time (ms),1st Quartile Expy time (ms),Median Expy time (ms),3rd Quartile Expy time (ms),Max Expy time (ms)
+As_EV_MI_5,376.605,280.551,346.012,371.286,410.780,515.934,398.991,288.652,361.685,392.723,440.918,538.628
+As_IV_MI_5,281.314,214.939,256.833,277.096,298.226,401.095,330.269,222.881,299.672,326.039,356.352,464.383
