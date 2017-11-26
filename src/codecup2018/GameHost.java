@@ -1,11 +1,10 @@
 package codecup2018;
 
 import codecup2018.evaluator.ExpectedValue;
-import codecup2018.movegenerator.NoHoles;
-import codecup2018.movegenerator.NoHolesMax;
-import codecup2018.player.AspirationPlayer;
+import codecup2018.movegenerator.BestMoves;
+import codecup2018.player.GUIPlayer;
 import codecup2018.player.Player;
-import codecup2018.player.SimpleMaxPlayer;
+import codecup2018.player.RandomPlayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,10 +22,10 @@ public class GameHost {
     public static void main(String[] args) throws IOException {
         setRandom(new Random(614944651));
         //GameHost.runGame(new AlphaBetaPlayer("AB_MF_10", new MedianFree(), new MostFreeMax(), 10), new GUIPlayer("GUI"), true);
-        //GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
+        GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
         //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), false);
         //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), false);
-        GameHost.runGameThreaded(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4));
+        //GameHost.runGameThreaded(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4));
     }
 
     public static void setRandom(Random rand) {
