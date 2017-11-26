@@ -88,8 +88,8 @@ public class BlackHoleFrame extends javax.swing.JFrame {
 
         button.setEnabled(false);
         button.setText(Integer.toString(move[2]));
-        button.setBackground(OPP_BG_COLOR);
-        button.setUI(OPP_UI);
+        button.setBackground(mine ? MY_BG_COLOR : OPP_BG_COLOR);
+        button.setUI(mine ? MY_UI : OPP_UI);
     }
 
     public void requestMove() {

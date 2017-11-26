@@ -1,6 +1,6 @@
 package codecup2018.player;
 
-import codecup2018.ArrayBoard;
+import codecup2018.Board;
 
 public class GUIPlayer extends Player {
 
@@ -15,6 +15,23 @@ public class GUIPlayer extends Player {
                 frame.setVisible(true);
             }
         });
+    }
+
+    @Override
+    public void initialize(Board currentBoard) {
+        super.initialize(currentBoard);
+        
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                byte val = board.get(a, b);
+                
+                if (val == Board.BLOCKED) {
+                    frame.block(a, b);
+                } else if (val != Board.FREE) {
+                    frame.processMove(new byte[] {a, b, (val > 0 ? val : (byte) -val)}, val > 0);
+                }
+            }
+        }
     }
     
     @Override
