@@ -15,7 +15,7 @@
  *
  * See LICENSE.txt for details.
  */
-package codecup2018;
+package codecup2018.tools;
  
 import java.io.*;
  

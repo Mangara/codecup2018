@@ -1,4 +1,4 @@
-package codecup2018;
+package codecup2018.tools;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

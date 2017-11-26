@@ -1,5 +1,9 @@
-package codecup2018;
+package codecup2018.tools;
 
+import codecup2018.Util;
+import codecup2018.data.BitBoard;
+import codecup2018.data.ArrayBoard;
+import codecup2018.data.Board;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.movegenerator.MaxInfluenceMoves;

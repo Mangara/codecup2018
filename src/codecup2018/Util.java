@@ -1,5 +1,7 @@
 package codecup2018;
 
+import codecup2018.data.Board;
+
 public class Util {
 
     public static String coordinatesToString(byte a, byte b) {
