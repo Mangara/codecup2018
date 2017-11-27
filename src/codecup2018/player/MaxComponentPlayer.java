@@ -15,7 +15,7 @@ public class MaxComponentPlayer extends ComponentPlayer {
     protected byte[] selectMove() {
         ArrayBoard largestComponent = components.get(0);
 
-        if (largestComponent.getFreeSpots()> 1) {
+        if (largestComponent.getNFreeSpots()> 1) {
             player.initialize(largestComponent);
         } else {
             player.initialize(board);

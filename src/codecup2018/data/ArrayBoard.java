@@ -1,5 +1,8 @@
 package codecup2018.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ArrayBoard implements Board {
 
     private final byte[][] grid = new byte[8][8];
@@ -32,13 +35,28 @@ public class ArrayBoard implements Board {
     }
     
     @Override
-    public int getFreeSpots() {
+    public int getNFreeSpots() {
         return nFree;
     }
 
     @Override
     public boolean isFree(byte a, byte b) {
         return grid[a][b] == FREE;
+    }
+    
+    @Override
+    public List<byte[]> getFreeSpots() {
+        List<byte[]> free = new ArrayList<>(nFree);
+        
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                if (grid[a][b] == FREE) {
+                    free.add(new byte[] {a, b, 0});
+                }
+            }
+        }
+        
+        return free;
     }
 
     @Override

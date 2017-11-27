@@ -13,7 +13,7 @@ public abstract class ComponentPlayer extends Player {
     private static final Comparator<ArrayBoard> COMPONENT_SIZE = new Comparator<ArrayBoard>() {
         @Override
         public int compare(ArrayBoard o1, ArrayBoard o2) {
-            return -Integer.compare(o1.getFreeSpots(), o2.getFreeSpots());
+            return -Integer.compare(o1.getNFreeSpots(), o2.getNFreeSpots());
         }
     };
 

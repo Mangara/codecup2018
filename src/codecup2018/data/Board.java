@@ -1,5 +1,7 @@
 package codecup2018.data;
 
+import java.util.List;
+
 public interface Board {
 
     public static final byte BLOCKED = 120;
@@ -11,11 +13,13 @@ public interface Board {
 
     public boolean isFree(byte a, byte b);
     
-    public int getFreeSpots();
+    public int getNFreeSpots();
 
     public int getHoleValue(byte a, byte b);
 
     public int getFreeSpotsAround(byte a, byte b);
+    
+    public List<byte[]> getFreeSpots();
 
     public void applyMove(byte[] move);
 
