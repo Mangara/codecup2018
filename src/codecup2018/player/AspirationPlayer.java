@@ -3,14 +3,16 @@ package codecup2018.player;
 import codecup2018.data.Board;
 import codecup2018.Util;
 import codecup2018.evaluator.Evaluator;
-import codecup2018.evaluator.ExpectedValue;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
 import java.util.List;
 
 public class AspirationPlayer extends StandardPlayer {
 
+    public static boolean DEBUG_FINAL_VALUE = true;
+    
     private static final boolean DEBUG_AB = false;
+    private static final boolean DEBUG_COUNT_LEAVES = true;
 
     private static final byte[] FAIL_HIGH = new byte[0];
     private static final byte[] FAIL_LOW = new byte[0];
@@ -19,6 +21,8 @@ public class AspirationPlayer extends StandardPlayer {
 
     private final int depth;
     private int prevScore = 0;
+
+    private int nLeaves = 0; // For evaluating different heuristics
 
     public AspirationPlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth) {
         super(name, evaluator, generator);
@@ -33,20 +37,32 @@ public class AspirationPlayer extends StandardPlayer {
 
     @Override
     protected byte[] selectMove() {
+        if (DEBUG_COUNT_LEAVES) {
+            nLeaves = 0;
+        }
+
         byte[] move = topLevelSearch(prevScore - WINDOW_SIZE, prevScore + WINDOW_SIZE);
 
         if (move == FAIL_HIGH) {
-            return topLevelSearch(prevScore + WINDOW_SIZE, Integer.MAX_VALUE);
+            move = topLevelSearch(prevScore + WINDOW_SIZE, Integer.MAX_VALUE);
         } else if (move == FAIL_LOW) {
-            return topLevelSearch(Integer.MIN_VALUE + 1, prevScore - WINDOW_SIZE);
-        } else {
-            return move;
+            move = topLevelSearch(Integer.MIN_VALUE + 1, prevScore - WINDOW_SIZE);
         }
+
+        if (DEBUG_COUNT_LEAVES) {
+            System.err.println("Evals: " + nLeaves);
+        }
+
+        if (move == FAIL_HIGH || move == FAIL_LOW) {
+            throw new InternalError("Search is unstable: failed " + (move == FAIL_HIGH ? "high" : "low") + " after first failing " + (move == FAIL_HIGH ? "low" : "high"));
+        }
+
+        return move;
     }
 
     private byte[] topLevelSearch(int alpha, int beta) {
-        if (DEBUG_AB) {
-            System.err.printf(getName() + ": Starting search with interval=[%d, %d]%n", alpha, beta);
+        if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+            System.err.printf("Starting search in [%d, %d]%n", alpha, beta);
         }
 
         // Top-level alpha-beta
@@ -78,16 +94,19 @@ public class AspirationPlayer extends StandardPlayer {
                     alpha = value;
 
                     if (beta <= alpha) {
-                        return FAIL_HIGH;
+                        return FAIL_HIGH; // TODO: double-check if this should really be <= or <
                     }
                 }
             }
         }
 
         if (bestValue < alpha) {
-            return FAIL_LOW;
+            return FAIL_LOW; // TODO: double-check if this should really be <= or <
         } else {
-            //System.err.println("Final score: " + bestValue);
+            if (DEBUG_FINAL_VALUE) {
+                System.err.println("Final: " + bestValue);
+            }
+            
             prevScore = bestValue;
             return bestMove;
         }
@@ -100,6 +119,10 @@ public class AspirationPlayer extends StandardPlayer {
         }
 
         if (depth == 0 || board.isGameOver()) {
+            if (DEBUG_COUNT_LEAVES) {
+                nLeaves++;
+            }
+            
             return player * evaluator.evaluate(board);
         }
 
