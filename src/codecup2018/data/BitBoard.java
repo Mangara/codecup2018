@@ -1,5 +1,8 @@
 package codecup2018.data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BitBoard implements Board {
 
     private static final long BOARD = 0b0000000100000011000001110000111100011111001111110111111111111111L;
@@ -53,15 +56,15 @@ public class BitBoard implements Board {
     public byte get(byte a, byte b) {
         long posMask = posMask(a, b);
 
-        if ((free & posMask) > 0) {
+        if ((free & posMask) != 0) {
             return FREE;
         }
 
-        if ((myTiles & posMask) > 0) {
+        if ((myTiles & posMask) != 0) {
             return getValue(posMask, myTiles, myValues);
         }
 
-        if ((oppTiles & posMask) > 0) {
+        if ((oppTiles & posMask) != 0) {
             return (byte) -getValue(posMask, oppTiles, oppValues);
         }
 
@@ -70,12 +73,26 @@ public class BitBoard implements Board {
 
     @Override
     public boolean isFree(byte a, byte b) {
-        return (free & posMask(a, b)) > 0;
+        return (free & posMask(a, b)) != 0;
     }
 
     @Override
-    public int getFreeSpots() {
+    public int getNFreeSpots() {
         return Long.bitCount(free);
+    }
+    
+    @Override
+    public List<byte[]> getFreeSpots() {
+        List<byte[]> result = new ArrayList<>();
+        long tempFree = free;
+
+        while (tempFree != 0) {
+            int pos = Long.numberOfTrailingZeros(tempFree);
+            result.add(new byte[] {(byte) (pos / 8), (byte) (pos % 8), 0});
+            tempFree &= (tempFree - 1); // Clear lowest bit
+        }
+        
+        return result;
     }
 
     private static final long EXCLUDE_ONE = ~0b1L;
@@ -105,13 +122,13 @@ public class BitBoard implements Board {
 
         int total = 0;
 
-        while (myNeighbours > 0) {
+        while (myNeighbours != 0) {
             long posMask = Long.lowestOneBit(myNeighbours);
             total += getValue(posMask, myTiles, myValues);
             myNeighbours ^= posMask;
         }
 
-        while (oppNeighbours > 0) {
+        while (oppNeighbours != 0) {
             long posMask = Long.lowestOneBit(oppNeighbours);
             total -= getValue(posMask, oppTiles, oppValues);
             oppNeighbours ^= posMask;
@@ -185,16 +202,16 @@ public class BitBoard implements Board {
 
     @Override
     public boolean haveIUsed(byte value) {
-        return (myUsed & (1 << value)) > 0;
+        return (myUsed & (1 << value)) != 0;
     }
 
     @Override
     public boolean hasOppUsed(byte value) {
-        return (oppUsed & (1 << value)) > 0;
+        return (oppUsed & (1 << value)) != 0;
     }
 
     @Override
     public boolean isGameOver() {
-        return getFreeSpots() == 1;
+        return getNFreeSpots() == 1;
     }
 }

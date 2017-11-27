@@ -30,7 +30,7 @@ public class Util {
             }
             System.err.println(spaces(7 - h));
         }
-        System.err.println("nFree: " + board.getFreeSpots());
+        System.err.println("nFree: " + board.getNFreeSpots());
     }
 
     private static String spaces(int n) {
