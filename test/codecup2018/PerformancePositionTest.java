@@ -3,7 +3,9 @@ package codecup2018;
 import codecup2018.evaluator.CountingEvaluator;
 import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
+import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.MedianFree;
+import codecup2018.movegenerator.EvaluationOrder;
 import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.player.AlphaBetaPlayer;
 import codecup2018.player.AspirationPlayer;
@@ -31,15 +33,16 @@ public class PerformancePositionTest {
         //CountingEvaluator eval = new CountingEvaluator(new IncrementalExpectedValue());
         //CountingEvaluator eval = new CountingEvaluator(new ExpectedValue());
         
-        Player unoptimized = new AlphaBetaPlayer("NM_MF_MFM_10", eval, new MostFreeMax(), 10);
+        //Player unoptimized = new NegaMaxPlayer("NM_MF_MFM_11", eval, new MostFreeMax(), 11);
         //Player unoptimized = new NegaMaxPlayer("NM_IEV_MI_4", eval, new MaxInfluenceMoves(), 4);
+        Player unoptimized = new AspirationPlayer("Unordered", eval, new MostFreeMax(), 10);
         unoptimized.initialize(new BitBoard(board));
         byte[] move1 = unoptimized.move();
         int unoptimizedEvaluations = eval.getnEvaluations();
         
-        Player optimized = new AspirationPlayer("As_MF_MFM_10", eval, new MostFreeMax(), 10);
+        //Player optimized = new AspirationPlayer("As_MF_MFM_11", eval, new MostFreeMax(), 11);
         //Player optimized = new AspirationPlayer("As_IEV_MI_4", eval, new MaxInfluenceMoves(), 4);
-        AspirationPlayer.WINDOW_SIZE = 1;
+        Player optimized = new AspirationPlayer("EV_Ordered", eval, new EvaluationOrder(new ExpectedValue(), new MostFreeMax()), 10);
         optimized.initialize(new BitBoard(board));
         byte[] move2 = optimized.move();
         int optimizedEvaluations = eval.getnEvaluations();
