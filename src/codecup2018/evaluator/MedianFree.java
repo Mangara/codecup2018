@@ -23,7 +23,7 @@ public class MedianFree implements Evaluator {
         // Return the one that wouldnt be filled in if the players just took
         // turns filling in free spaces with 0
         Collections.sort(holeValues);
-        return holeValues.get((holeValues.size() - 1) / 2);
+        return 10000 * holeValues.get((holeValues.size() - 1) / 2);
     }
 
     @Override

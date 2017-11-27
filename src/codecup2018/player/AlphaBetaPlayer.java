@@ -39,8 +39,10 @@ public class AlphaBetaPlayer extends StandardPlayer {
             }
 
             board.applyMove(move);
+            evaluator.applyMove(move);
             int value = alphaBeta(false, depth, bestValue, Integer.MAX_VALUE);
             board.undoMove(move);
+            evaluator.undoMove(move);
 
             if (DEBUG_AB) {
                 System.err.println(getName() + ": Value of my move " + Arrays.toString(move) + " is " + value);
