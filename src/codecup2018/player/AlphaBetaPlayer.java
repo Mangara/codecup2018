@@ -74,8 +74,10 @@ public class AlphaBetaPlayer extends StandardPlayer {
             }
 
             board.applyMove(move);
+            evaluator.applyMove(move);
             int value = alphaBeta(!player1, depth - 1, alpha, beta);
             board.undoMove(move);
+            evaluator.undoMove(move);
 
             if (DEBUG_AB) {
                 System.err.printf("%s:   Got back a score of %d%n", getName(), value);

@@ -120,6 +120,7 @@ public class BitBoard implements Board {
         return total;
     }
 
+    @Override
     public void block(byte a, byte b) {
         free &= ~posMask(a, b);
     }

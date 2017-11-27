@@ -39,8 +39,10 @@ public class NegaMaxPlayer extends StandardPlayer {
             }
 
             board.applyMove(move);
+            evaluator.applyMove(move);
             int value = -negamax(-1, depth, Integer.MIN_VALUE + 1, -bestValue);
             board.undoMove(move);
+            evaluator.undoMove(move);
 
             if (DEBUG_AB) {
                 System.err.println(getName() + ": Value of my move " + Arrays.toString(move) + " is " + value);
