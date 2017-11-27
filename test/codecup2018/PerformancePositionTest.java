@@ -3,20 +3,15 @@ package codecup2018;
 import codecup2018.evaluator.CountingEvaluator;
 import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
-import codecup2018.evaluator.Evaluator;
-import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.evaluator.MedianFree;
-import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.player.AlphaBetaPlayer;
 import codecup2018.player.AspirationPlayer;
-import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -32,19 +27,19 @@ public class PerformancePositionTest {
     
     @Test
     public void runTest() throws IOException {
-        //CountingEvaluator eval = new CountingEvaluator(new MedianFree());
-        CountingEvaluator eval = new CountingEvaluator(new IncrementalExpectedValue());
+        CountingEvaluator eval = new CountingEvaluator(new MedianFree());
+        //CountingEvaluator eval = new CountingEvaluator(new IncrementalExpectedValue());
+        //CountingEvaluator eval = new CountingEvaluator(new ExpectedValue());
         
-        //Player unoptimized = new AlphaBetaPlayer("NM_MF_MFM_10", eval, new MostFreeMax(), 10);
-        Player unoptimized = new NegaMaxPlayer("NM_IEV_MI_6", eval, new MaxInfluenceMoves(), 6);
+        Player unoptimized = new AlphaBetaPlayer("NM_MF_MFM_10", eval, new MostFreeMax(), 10);
+        //Player unoptimized = new NegaMaxPlayer("NM_IEV_MI_4", eval, new MaxInfluenceMoves(), 4);
         unoptimized.initialize(new BitBoard(board));
         byte[] move1 = unoptimized.move();
         int unoptimizedEvaluations = eval.getnEvaluations();
         
-        //Player optimized = new AspirationPlayer("As_MF_MFM_10", eval, new MostFreeMax(), 10);
-        //AspirationPlayer.WINDOW_SIZE = 2;
-        Player optimized = new AspirationPlayer("As_IEV_MI_6", eval, new MaxInfluenceMoves(), 6);
-        AspirationPlayer.WINDOW_SIZE = 5400000;
+        Player optimized = new AspirationPlayer("As_MF_MFM_10", eval, new MostFreeMax(), 10);
+        //Player optimized = new AspirationPlayer("As_IEV_MI_4", eval, new MaxInfluenceMoves(), 4);
+        AspirationPlayer.WINDOW_SIZE = 1;
         optimized.initialize(new BitBoard(board));
         byte[] move2 = optimized.move();
         int optimizedEvaluations = eval.getnEvaluations();

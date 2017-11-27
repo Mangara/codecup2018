@@ -12,7 +12,7 @@ public class AspirationPlayer extends StandardPlayer {
     public static boolean DEBUG_FINAL_VALUE = true;
     
     private static final boolean DEBUG_AB = false;
-    private static final boolean DEBUG_COUNT_LEAVES = true;
+    private static final boolean DEBUG_COUNT_LEAVES = false;
 
     private static final byte[] FAIL_HIGH = new byte[0];
     private static final byte[] FAIL_LOW = new byte[0];
