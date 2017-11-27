@@ -27,3 +27,11 @@ When playing randomly:
 - Playing non-holes before holes increases odds of winning
 - Playing tiles with many adjacent free tiles also increases odds of winning
 - When playing with these location constraints, playing higher numbers first *does* increase odds of winning
+
+At the top level, giving an alpha-beta window of [alpha, +infinity] means "I already know how to get alpha. I'm only intersted in doing strictly better."
+
+When calling alpha-beta with a window of [alpha, beta], the result X should be interpreted as:
+X <= alpha       ---> the true score is <= alpha
+alpha < X < beta ---> the true score is X
+X >= beta        ---> the true score is >= beta
+This means that a result of alpha or beta, by itself, is never enough.

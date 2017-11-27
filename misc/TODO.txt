@@ -1,5 +1,7 @@
 == Architecture
 
+- Add a transposition table. This will really help speed up researching when the aspiration window wasn't right.
+
 - Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for some later additions if we want to get fancy.
 
 - Generate positions and values seperately?
@@ -19,7 +21,7 @@
 
 - In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search.
 
-- Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here.
+- Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here. Not quite: if you wait until your opponent has placed all their stones, it is trivial to win. We should only allow null moves when the opponent won't run out of moves before we reach the max depth.
 
 - Implement killer move heuristic: keep track of moves that cause beta cutoffs and try them first. Possibly per-ply? First perhaps just print moves that cause beta-cutoffs to get a sense of what they look like.
 

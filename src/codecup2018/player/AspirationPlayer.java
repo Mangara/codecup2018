@@ -10,19 +10,15 @@ import java.util.List;
 public class AspirationPlayer extends StandardPlayer {
 
     public static boolean DEBUG_FINAL_VALUE = true;
-    
     private static final boolean DEBUG_AB = false;
-    private static final boolean DEBUG_COUNT_LEAVES = false;
 
     private static final byte[] FAIL_HIGH = new byte[0];
     private static final byte[] FAIL_LOW = new byte[0];
 
-    public static int WINDOW_SIZE = 10000;
+    public static int WINDOW_SIZE = 10001;
 
     private final int depth;
     private int prevScore = 0;
-
-    private int nLeaves = 0; // For evaluating different heuristics
 
     public AspirationPlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth) {
         super(name, evaluator, generator);
@@ -37,20 +33,12 @@ public class AspirationPlayer extends StandardPlayer {
 
     @Override
     protected byte[] selectMove() {
-        if (DEBUG_COUNT_LEAVES) {
-            nLeaves = 0;
-        }
-
         byte[] move = topLevelSearch(prevScore - WINDOW_SIZE, prevScore + WINDOW_SIZE);
 
         if (move == FAIL_HIGH) {
-            move = topLevelSearch(prevScore + WINDOW_SIZE, Integer.MAX_VALUE);
+            move = topLevelSearch(prevScore + WINDOW_SIZE - 1, Integer.MAX_VALUE);
         } else if (move == FAIL_LOW) {
-            move = topLevelSearch(Integer.MIN_VALUE + 1, prevScore - WINDOW_SIZE);
-        }
-
-        if (DEBUG_COUNT_LEAVES) {
-            System.err.println("Evals: " + nLeaves);
+            move = topLevelSearch(Integer.MIN_VALUE + 1, prevScore - WINDOW_SIZE + 1);
         }
 
         if (move == FAIL_HIGH || move == FAIL_LOW) {
@@ -62,7 +50,7 @@ public class AspirationPlayer extends StandardPlayer {
 
     private byte[] topLevelSearch(int alpha, int beta) {
         if (DEBUG_AB || DEBUG_FINAL_VALUE) {
-            System.err.printf("Starting search in [%d, %d]%n", alpha, beta);
+            System.err.printf("Searching [%d, %d]%n", alpha, beta);
         }
 
         // Top-level alpha-beta
@@ -78,7 +66,7 @@ public class AspirationPlayer extends StandardPlayer {
 
             board.applyMove(move);
             evaluator.applyMove(move);
-            int value = -negamax(-1, depth, -beta, -alpha);
+            int value = -negamax(-1, depth, -beta, -Math.max(alpha, bestValue));
             board.undoMove(move);
             evaluator.undoMove(move);
 
@@ -90,23 +78,19 @@ public class AspirationPlayer extends StandardPlayer {
                 bestValue = value;
                 bestMove = move;
 
-                if (value > alpha) {
-                    alpha = value;
-
-                    if (beta <= alpha) {
-                        return FAIL_HIGH; // TODO: double-check if this should really be <= or <
-                    }
+                if (bestValue >= beta) {
+                    return FAIL_HIGH;
                 }
             }
         }
 
-        if (bestValue < alpha) {
-            return FAIL_LOW; // TODO: double-check if this should really be <= or <
+        if (bestValue <= alpha) {
+            return FAIL_LOW;
         } else {
             if (DEBUG_FINAL_VALUE) {
                 System.err.println("Final: " + bestValue);
             }
-            
+
             prevScore = bestValue;
             return bestMove;
         }
@@ -119,10 +103,6 @@ public class AspirationPlayer extends StandardPlayer {
         }
 
         if (depth == 0 || board.isGameOver()) {
-            if (DEBUG_COUNT_LEAVES) {
-                nLeaves++;
-            }
-            
             return player * evaluator.evaluate(board);
         }
 
