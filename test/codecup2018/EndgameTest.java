@@ -2,11 +2,13 @@ package codecup2018;
 
 import codecup2018.data.ArrayBoard;
 import codecup2018.data.Board;
-import codecup2018.evaluator.ExpectedValue;
+import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.evaluator.MedianFree;
+import codecup2018.movegenerator.AllMoves;
+import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHoles;
-import codecup2018.player.AlphaBetaPlayer;
+import codecup2018.player.AspirationPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.SimpleMaxPlayer;
@@ -30,7 +32,9 @@ import org.junit.runners.Parameterized.Parameters;
 public class EndgameTest {
 
     private final Board board;
-    private final Player player = new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10);
+    //private final Player player = new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10);
+    //private final Player player = new SimpleMaxPlayer("Mifi", new MedianFree(), new AllMoves());
+    private final Player player = new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5);
 
     public EndgameTest(Board board) throws IOException {
         this.board = board;

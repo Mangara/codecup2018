@@ -1,6 +1,15 @@
 == Architecture
 
 - Add a transposition table. This will really help speed up researching when the aspiration window wasn't right.
+ x Hash: generate a random number for each board spot. Make sure the numbers chosen don't have small subsets that xor to 0. For each position, xor together the (spot number * value). This is easy to update incrementally.
+ x Generate a second random number set of X bits to compute the hash table key (table size = 2^X) in the same way.
+ x In the table, store: full hash, best move, depth this position has been searched to, score, type (exact, LB, UB), age?
+ x Replacement scheme: if we want to store a position, but its table entry already contains another position, replace if: the other is old, or has been searched to less depth.
+ x Possibly do not store positions searched to low depth
+ x David Eppstein has pseudo-code: https://www.ics.uci.edu/~eppstein/180a/970424.html
+ x Remember that evaluations should be from player1's POV and should be multiplied by the player variable
+ 
+- Once we have a transposition table, re-do aspiration search with slowly widening windows.
 
 - Use a single integer (long) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for some later additions if we want to get fancy.
 
@@ -15,7 +24,7 @@
 - Count (at least for debug) the total number of states evaluated / move
 - Add some debug output for the competition bot (time taken per move, final value?)
 
-- In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search.
+- In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search. This would be easy in IEV, since we maintain the number of connections between free nodes. I'm not sure it would make the program stronger, but it's worth a shot.
 
 - Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here. Not quite: if you wait until your opponent has placed all their stones, it is trivial to win. We should only allow null moves when the opponent won't run out of moves before we reach the max depth.
 
@@ -24,7 +33,8 @@
 - Implement iterative deepening. This will directly translate speed improvements into quality improvements. Use different aspiration windows for the first call (which uses the previous move value) and subsequent ones (which use the previous iteration value).
 
 - Make a UCB player
-- Make a NegaScout/PVS player?
+- Make a NegaScout/PVS player
+ x David Eppstein has a good resource: https://www.ics.uci.edu/~eppstein/180a/990202b.html
 
 - At top level, try moves with a medium value first? (Start at 15, 8, and 1. Move pointer down, up, and up, respectively.) Perhaps if the max move doesn't improve the value significantly, take the medium value move?
 
