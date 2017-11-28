@@ -1,21 +1,22 @@
 package codecup2018;
 
 import codecup2018.data.ArrayBoard;
+import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
 import codecup2018.evaluator.ExpectedValue;
+import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.NoHolesMax;
-import codecup2018.player.AlphaBetaPlayer;
 import codecup2018.player.AspirationPlayer;
-import codecup2018.player.MaxComponentPlayer;
-import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
+import codecup2018.player.SimpleMaxPlayer;
 import java.util.Arrays;
 import org.junit.Test;
 
 public class SinglePositionTest {
 
-    private Player player = new AspirationPlayer("NM_EV_NHM_2", new ExpectedValue(), new NoHolesMax(), 2);
+    //private Player player = new AspirationPlayer("NM_EV_NHM_2", new ExpectedValue(), new NoHolesMax(), 2);
     //private Player player = new NegaMaxPlayer("NM_EV_NHM_2", new ExpectedValue(), new NoHolesMax(), 2);
+    private Player player = new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves());
     
     @Test
     public void runTest() {
@@ -39,8 +40,9 @@ public class SinglePositionTest {
             }
         }
         
-        ArrayBoard board = new ArrayBoard(grid);
+        Board board = new BitBoard(new ArrayBoard(grid));
         
+        Player.DEBUG = true;
         player.initialize(board);
         byte[] move = player.move();
         

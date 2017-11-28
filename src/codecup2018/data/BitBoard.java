@@ -6,6 +6,28 @@ import java.util.List;
 public class BitBoard implements Board {
 
     private static final long BOARD = 0b0000000100000011000001110000111100011111001111110111111111111111L;
+    private static final long EXCLUDE_ONE = ~0b1L;
+    private static final long EXCLUDE_EIGHT = ~0b10000000L;
+    private static final long EXCLUDE_NINE = ~0b100000000L;
+    private static final long[] NEIGHBOURS = new long[64];
+
+    static {
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                int pos = pos(a, b);
+                long posMask = posMask(a, b);
+
+                NEIGHBOURS[pos]
+                        = (((posMask << 1) & EXCLUDE_NINE)
+                        | ((posMask >>> 1) & EXCLUDE_EIGHT)
+                        | ((posMask << 7) & EXCLUDE_EIGHT)
+                        | ((posMask >>> 7) & EXCLUDE_ONE)
+                        | (posMask << 8)
+                        | (posMask >>> 8))
+                        & BOARD;
+            }
+        }
+    }
 
     private long free = BOARD;
     private long myTiles = 0;
@@ -48,7 +70,11 @@ public class BitBoard implements Board {
         }
     }
 
-    private long posMask(byte a, byte b) {
+    private static int pos(byte a, byte b) {
+        return 8 * a + b;
+    }
+
+    private static long posMask(byte a, byte b) {
         return 1L << (8 * a + b);
     }
 
@@ -80,7 +106,7 @@ public class BitBoard implements Board {
     public int getNFreeSpots() {
         return Long.bitCount(free);
     }
-    
+
     @Override
     public List<byte[]> getFreeSpots() {
         List<byte[]> result = new ArrayList<>();
@@ -88,35 +114,21 @@ public class BitBoard implements Board {
 
         while (tempFree != 0) {
             int pos = Long.numberOfTrailingZeros(tempFree);
-            result.add(new byte[] {(byte) (pos / 8), (byte) (pos % 8), 0});
+            result.add(new byte[]{(byte) (pos / 8), (byte) (pos % 8), 0});
             tempFree &= (tempFree - 1); // Clear lowest bit
         }
-        
+
         return result;
-    }
-
-    private static final long EXCLUDE_ONE = ~0b1L;
-    private static final long EXCLUDE_EIGHT = ~0b10000000L;
-    private static final long EXCLUDE_NINE = ~0b100000000L;
-
-    private long neighbours(long posMask) {
-        return (((posMask << 1) & EXCLUDE_NINE)
-                | ((posMask >>> 1) & EXCLUDE_EIGHT)
-                | ((posMask << 7) & EXCLUDE_EIGHT)
-                | ((posMask >>> 7) & EXCLUDE_ONE)
-                | (posMask << 8)
-                | (posMask >>> 8))
-                & BOARD;
     }
 
     @Override
     public int getFreeSpotsAround(byte a, byte b) {
-        return Long.bitCount(free & neighbours(posMask(a, b)));
+        return Long.bitCount(free & NEIGHBOURS[pos(a, b)]);
     }
 
     @Override
     public int getHoleValue(byte a, byte b) {
-        long neighbours = neighbours(posMask(a, b));
+        long neighbours = NEIGHBOURS[pos(a, b)];
         long myNeighbours = myTiles & neighbours;
         long oppNeighbours = oppTiles & neighbours;
 
@@ -177,22 +189,22 @@ public class BitBoard implements Board {
             oppValues = removeValue(posMask, oppTiles, oppValues);
         }
     }
-    
+
     private int getValueIndex(long posMask, long tiles) {
         return 4 * Long.bitCount(tiles & (posMask - 1));
     }
-    
+
     private byte getValue(long posMask, long tiles, long values) {
         return (byte) ((values >>> getValueIndex(posMask, tiles)) & 0b1111);
     }
-    
+
     private long insertValue(long posMask, long tiles, long values, int value) {
         int index = getValueIndex(posMask, tiles);
         return (values & ((1L << index) - 1)) // values that should be kept
                 | ((values << 4) & ~((1L << (index + 4)) - 1)) // values that should be shifted
                 | ((long) value) << index; // new value
     }
-    
+
     private long removeValue(long posMask, long tiles, long values) {
         int index = getValueIndex(posMask, tiles);
         long preIndexMask = (1L << index) - 1;

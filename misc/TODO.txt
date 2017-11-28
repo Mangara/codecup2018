@@ -6,8 +6,6 @@
 
 - Generate positions and values seperately?
 
-- In bitboard, precompute neighbours for all positions
-
 == Tournaments
 
 - For evaluation, add something that tracks the number of positions evaluated (calls to the recursive search function?). Most optimizations aim to reduce this.
@@ -59,6 +57,7 @@ X Make the timing test deterministic by giving a specific random generator.
 X In the time evaluation, give more stats: minimum, *maximum*, median, quartiles.
 X Have the board generate (all/all non-hole) positions, returned as moves with value 0
 X In MaximumInfluenceMoves, use the value of the move to temporarily store the number of free spaces, then sort by this and set the values correctly.
+X In bitboard, precompute neighbours for all positions
 
 === WONTFIX
 
