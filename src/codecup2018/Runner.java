@@ -1,9 +1,7 @@
 package codecup2018;
 
 import codecup2018.evaluator.IncrementalExpectedValue;
-import codecup2018.evaluator.MedianFree;
 import codecup2018.movegenerator.MaxInfluenceMoves;
-import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.player.AspirationPlayer;
 import codecup2018.player.Player;
 import java.io.BufferedReader;
@@ -13,7 +11,6 @@ import java.io.InputStreamReader;
 public class Runner {
 
     public static void main(String[] args) throws IOException {
-        
         Player p = getPlayer();
         Player.TIMING = true;
         

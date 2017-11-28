@@ -1,8 +1,7 @@
 package codecup2018.evaluator;
 
 import codecup2018.data.Board;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class MedianFree implements Evaluator {
@@ -10,20 +9,18 @@ public class MedianFree implements Evaluator {
     @Override
     public int evaluate(Board board) {
         // Find the value of all free spaces
-        List<Integer> holeValues = new ArrayList<>();
+        List<byte[]> free = board.getFreeSpots();
+        int[] holeValues = new int[free.size()];
 
-        for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (board.isFree(a, b)) {
-                    holeValues.add(board.getHoleValue(a, b));
-                }
-            }
+        for (int i = 0; i < free.size(); i++) {
+            byte[] spot = free.get(i);
+            holeValues[i] = board.getHoleValue(spot[0], spot[1]);
         }
 
         // Return the one that wouldnt be filled in if the players just took
         // turns filling in free spaces with 0
-        Collections.sort(holeValues);
-        return 10000 * holeValues.get((holeValues.size() - 1) / 2);
+        Arrays.sort(holeValues);
+        return 10000 * holeValues[(holeValues.length - 1) / 2];
     }
 
     @Override
