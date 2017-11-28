@@ -28,7 +28,7 @@ public class AspirationPlayer extends StandardPlayer {
     @Override
     public void initialize(Board currentBoard) {
         super.initialize(currentBoard);
-        prevScore = 0;
+        prevScore = evaluator.evaluate(board);
     }
 
     @Override
@@ -42,7 +42,8 @@ public class AspirationPlayer extends StandardPlayer {
         }
 
         if (move == FAIL_HIGH || move == FAIL_LOW) {
-            throw new InternalError("Search is unstable: failed " + (move == FAIL_HIGH ? "high" : "low") + " after first failing " + (move == FAIL_HIGH ? "low" : "high"));
+            System.err.println("Search is unstable: failed " + (move == FAIL_HIGH ? "high" : "low") + " after first failing " + (move == FAIL_HIGH ? "low" : "high"));
+            return topLevelSearch(Integer.MIN_VALUE + 1, Integer.MAX_VALUE);
         }
 
         return move;

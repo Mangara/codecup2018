@@ -17,12 +17,11 @@
 
 == Tournaments
 
-- For evaluation, add something that tracks the number of positions evaluated (calls to the recursive search function?). Most optimizations aim to reduce this.
+
 
 == Players
 
-- Count (at least for debug) the total number of states evaluated / move
-- Add some debug output for the competition bot (time taken per move, final value?)
+- Add more useful debug output for the competition bot (time taken per move, final value?)
 
 - In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search. This would be easy in IEV, since we maintain the number of connections between free nodes. I'm not sure it would make the program stronger, but it's worth a shot.
 
@@ -36,10 +35,10 @@
 - Make a NegaScout/PVS player
  x David Eppstein has a good resource: https://www.ics.uci.edu/~eppstein/180a/990202b.html
 
-- At top level, try moves with a medium value first? (Start at 15, 8, and 1. Move pointer down, up, and up, respectively.) Perhaps if the max move doesn't improve the value significantly, take the medium value move?
 
 == Move generation
 
+- At top level, try moves with a medium value first? (Start at 15, 8, and 1. Move pointer down, up, and up, respectively.) Perhaps if the max move doesn't improve the value significantly, take the medium value move?
 - MoveGenerator for moves that create holes that win for me
 - AB should include moves that block good opponent moves
 - Order moves by expected value. (ExpectedOrder MoveGenerator, and perhaps a general OrderBy(Evaluator)) Is there a fast way we can do just expected value?
@@ -68,6 +67,8 @@ X In the time evaluation, give more stats: minimum, *maximum*, median, quartiles
 X Have the board generate (all/all non-hole) positions, returned as moves with value 0
 X In MaximumInfluenceMoves, use the value of the move to temporarily store the number of free spaces, then sort by this and set the values correctly.
 X In bitboard, precompute neighbours for all positions
+X For evaluation, add something that tracks the number of positions evaluated (calls to the recursive search function?). Most optimizations aim to reduce this.
+X Count (at least for debug) the total number of states evaluated / move
 
 === WONTFIX
 
