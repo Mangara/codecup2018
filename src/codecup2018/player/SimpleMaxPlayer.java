@@ -2,6 +2,7 @@ package codecup2018.player;
 
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
+import java.util.Arrays;
 import java.util.List;
 
 public class SimpleMaxPlayer extends StandardPlayer {
@@ -22,6 +23,10 @@ public class SimpleMaxPlayer extends StandardPlayer {
             double value = evaluator.evaluate(board);
             board.undoMove(move);
 
+            if (DEBUG) {
+                System.err.println(getName() + ": Move " + Arrays.toString(move) + " has value " + value);
+            }
+            
             if (value > bestValue) {
                 bestValue = value;
                 bestMove = move;

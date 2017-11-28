@@ -10,7 +10,7 @@ import java.io.PrintStream;
 public abstract class Player {
 
     public static boolean TIMING = false;
-    protected final static boolean DEBUG = false;
+    public static boolean DEBUG = false;
     protected Board board;
     protected final String name;
 
