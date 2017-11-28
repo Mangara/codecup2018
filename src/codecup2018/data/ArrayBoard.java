@@ -3,7 +3,7 @@ package codecup2018.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArrayBoard implements Board {
+public class ArrayBoard extends Board {
 
     private final byte[][] grid = new byte[8][8];
     private final boolean[] myUsed = new boolean[15];
@@ -183,5 +183,33 @@ public class ArrayBoard implements Board {
     @Override
     public boolean isGameOver() {
         return nFree == 1;
+    }
+    
+    @Override
+    public int getTranspositionTableKey() {
+        // TODO: incremental updates
+        int key = 0;
+
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                key ^= get(a, b) * KEY_POSITION_NUMBERS[8 * a + b];
+            }
+        }
+
+        return key;
+    }
+
+    @Override
+    public long getHash() {
+        // TODO: incremental updates
+        long hash = 0;
+
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                hash ^= get(a, b) * HASH_POSITION_NUMBERS[8 * a + b];
+            }
+        }
+
+        return hash;
     }
 }

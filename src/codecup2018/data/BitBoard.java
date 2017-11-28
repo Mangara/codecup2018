@@ -3,7 +3,7 @@ package codecup2018.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BitBoard implements Board {
+public class BitBoard extends Board {
 
     private static final long BOARD = 0b0000000100000011000001110000111100011111001111110111111111111111L;
     private static final long EXCLUDE_ONE = ~0b1L;
@@ -225,5 +225,33 @@ public class BitBoard implements Board {
     @Override
     public boolean isGameOver() {
         return getNFreeSpots() == 1;
+    }
+
+    @Override
+    public int getTranspositionTableKey() {
+        // TODO: incremental updates
+        int key = 0;
+
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                key ^= get(a, b) * KEY_POSITION_NUMBERS[pos(a, b)];
+            }
+        }
+
+        return key;
+    }
+
+    @Override
+    public long getHash() {
+        // TODO: incremental updates
+        long hash = 0;
+
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                hash ^= get(a, b) * HASH_POSITION_NUMBERS[pos(a, b)];
+            }
+        }
+
+        return hash;
     }
 }
