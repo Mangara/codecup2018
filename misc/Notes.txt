@@ -35,3 +35,7 @@ X <= alpha       ---> the true score is <= alpha
 alpha < X < beta ---> the true score is X
 X >= beta        ---> the true score is >= beta
 This means that a result of alpha or beta, by itself, is never enough.
+
+- There are (36 choose 5) = 376992 possible boards. It may be possible to pre-compute a good first move for all of these.
+
+- I expect each TranspositionEntry to take 24 bytes (8 (class) + 8 (long) + 1 (byte) + 4 (int) + 1 (byte) + 1 (byte) = 23 => (alignment) 24 bytes). If that is correct, I could use 20-22 bit keys to store ~1-4 million entries in 24-96 MB.
