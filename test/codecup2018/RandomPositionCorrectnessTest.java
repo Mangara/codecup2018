@@ -4,7 +4,7 @@ import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
 import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.movegenerator.MaxInfluenceMoves;
-import codecup2018.player.AspirationPlayer;
+import codecup2018.player.AspirationTablePlayer;
 import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class RandomPositionCorrectnessTest {
     private final Board board;
     private final List<Player> players = Arrays.<Player>asList(
             new NegaMaxPlayer("NM_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-            new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)
+            new AspirationTablePlayer("AsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)
     );
 
     public RandomPositionCorrectnessTest(Board board) {

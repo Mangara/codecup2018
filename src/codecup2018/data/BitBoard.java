@@ -234,7 +234,17 @@ public class BitBoard extends Board {
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
-                key ^= get(a, b) * KEY_POSITION_NUMBERS[pos(a, b)];
+                byte v = get(a, b);
+                
+                if (v == FREE) {
+                    v = 0;
+                } else if (v == BLOCKED) {
+                    v = 31;
+                } else if (v < 0) {
+                    v += 31;
+                }
+                
+                key ^= KEY_POSITION_NUMBERS[32 * pos(a, b) + v];
             }
         }
 
@@ -248,7 +258,17 @@ public class BitBoard extends Board {
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
-                hash ^= get(a, b) * HASH_POSITION_NUMBERS[pos(a, b)];
+                byte v = get(a, b);
+                
+                if (v == FREE) {
+                    v = 0;
+                } else if (v == BLOCKED) {
+                    v = 31;
+                } else if (v < 0) {
+                    v += 31;
+                }
+                
+                hash ^= HASH_POSITION_NUMBERS[32 * pos(a, b) + v];
             }
         }
 

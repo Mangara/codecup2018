@@ -2,7 +2,6 @@ package codecup2018.player;
 
 import codecup2018.data.Board;
 import codecup2018.Util;
-import codecup2018.data.BitBoard;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public class AspirationTablePlayer extends StandardPlayer {
 
-    public static boolean DEBUG_FINAL_VALUE = true;
+    public static boolean DEBUG_FINAL_VALUE = false;
     private static final boolean DEBUG_AB = false;
 
     private static final byte[] FAIL_HIGH = new byte[0];
@@ -18,7 +17,7 @@ public class AspirationTablePlayer extends StandardPlayer {
 
     public static int WINDOW_SIZE = 10001;
 
-    private final int depth;
+    private final byte maxDepth;
 
     private final static int TABLE_SIZE_POWER = 20;
     private final static int TABLE_SIZE = 1 << TABLE_SIZE_POWER;
@@ -30,13 +29,13 @@ public class AspirationTablePlayer extends StandardPlayer {
 
     public AspirationTablePlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth) {
         super(name, evaluator, generator);
-        this.depth = depth;
+        this.maxDepth = (byte) depth;
     }
 
     @Override
     public void initialize(Board currentBoard) {
         super.initialize(currentBoard);
-        prevScore = 0;
+        prevScore = evaluator.evaluate(board);
         turn = 0;
         Arrays.fill(transpositionTable, null);
     }
@@ -58,14 +57,6 @@ public class AspirationTablePlayer extends StandardPlayer {
 
         turn++;
 
-        System.err.println("Stats:");
-        System.err.println(" New positions stored: " + store);
-        System.err.println(" Old positions overwritten: " + overwrite);
-        System.err.println(" Same positions same turn: " + samePosSameTurn);
-        System.err.println(" Same positions previous turn: " + samePosPrevTurn);
-        System.err.println(" Different positions same turn: " + diffPosSameTurn);
-        System.err.println(" Different positions previous turn: " + diffPosPrevTurn);
-
         return move;
     }
 
@@ -77,6 +68,7 @@ public class AspirationTablePlayer extends StandardPlayer {
         // Top-level alpha-beta
         int bestValue = Integer.MIN_VALUE + 1;
         byte[] bestMove = null;
+        int myAlpha = alpha;
 
         List<byte[]> moves = generator.generateMoves(board, true);
 
@@ -87,7 +79,7 @@ public class AspirationTablePlayer extends StandardPlayer {
 
             board.applyMove(move);
             evaluator.applyMove(move);
-            int value = -negamax(-1, depth, -beta, -Math.max(alpha, bestValue));
+            int value = -negamax((byte) -1, maxDepth, -beta, -myAlpha);
             board.undoMove(move);
             evaluator.undoMove(move);
 
@@ -99,16 +91,28 @@ public class AspirationTablePlayer extends StandardPlayer {
                 bestValue = value;
                 bestMove = move;
 
-                if (bestValue >= beta) {
-                    return FAIL_HIGH;
+                if (value > myAlpha) {
+                    myAlpha = value;
+
+                    if (myAlpha >= beta) {
+                        if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+                            System.err.println("FAIL HIGH");
+                        }
+
+                        return FAIL_HIGH;
+                    }
                 }
             }
         }
 
         if (bestValue <= alpha) {
+            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+                System.err.println("FAIL LOW");
+            }
+
             return FAIL_LOW;
         } else {
-            if (DEBUG_FINAL_VALUE) {
+            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
                 System.err.println("Final: " + bestValue);
             }
 
@@ -117,56 +121,77 @@ public class AspirationTablePlayer extends StandardPlayer {
         }
     }
 
-    private int store = 0;
-    private int overwrite = 0;
-    private int samePosPrevTurn = 0;
-    private int samePosSameTurn = 0;
-    private int diffPosPrevTurn = 0;
-    private int diffPosSameTurn = 0;
-
-    private int negamax(int player, int depth, int alpha, int beta) {
+    private int negamax(byte player, byte depth, int alpha, int beta) {
         if (DEBUG_AB) {
-            System.err.printf("%s:  Running negamax with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
+            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "sRunning negamax with %d plies left, interval=[%d, %d] and board state:%n", getName(), "", depth, alpha, beta);
             Util.print(board);
         }
-
-        ////DEBUG
-        checkTable();
-        //*/
 
         if (depth == 0 || board.isGameOver()) {
             return player * evaluator.evaluate(board);
         }
 
+        // Check the transposition table
+        TranspositionEntry entry = transpositionTable[board.getTranspositionTableKey() & TABLE_KEY_MASK];
+        if (entry != null && entry.hash == board.getHash() && entry.depthSearched >= depth && entry.type == TranspositionEntry.EXACT) {
+            if (DEBUG_AB) {
+                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "sExact transposition table result: %d%n", getName(), "", entry.value);
+            }
+            return entry.value;
+        }
+
         int bestValue = Integer.MIN_VALUE + 1;
+        byte[] bestMove = null;
+        int myAlpha = alpha;
+
         List<byte[]> moves = generator.generateMoves(board, player > 0);
 
         for (byte[] move : moves) {
             if (DEBUG_AB) {
-                System.err.printf("%s:   Evaluating move %s%n", getName(), Arrays.toString(move));
+                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sEvaluating move %s%n", getName(), "", Arrays.toString(move));
             }
 
             board.applyMove(move);
             evaluator.applyMove(move);
-            int value = -negamax(-player, depth - 1, -beta, -alpha);
+            int value = -negamax((byte) -player, (byte) (depth - 1), -beta, -myAlpha);
             board.undoMove(move);
             evaluator.undoMove(move);
 
             if (DEBUG_AB) {
-                System.err.printf("%s:   Got back a score of %d%n", getName(), value);
+                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sGot back a score of %d%n", getName(), "", value);
             }
 
             if (value > bestValue) {
                 bestValue = value;
+                bestMove = move;
 
-                if (value > alpha) {
-                    alpha = value;
+                if (value > myAlpha) {
+                    myAlpha = value;
 
-                    if (beta <= alpha) {
+                    if (beta <= myAlpha) {
+                        if (DEBUG_AB) {
+                            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta-cutoff%n", getName(), "", value);
+                        }
+
                         break;
                     }
                 }
             }
+        }
+
+        // Add to the transposition table
+        if (entry == null) {
+            entry = new TranspositionEntry();
+            transpositionTable[board.getTranspositionTableKey() & TABLE_KEY_MASK] = entry;
+        }
+
+        if (entry.turn < turn || entry.depthSearched < depth) {
+            entry.hash = board.getHash();
+            entry.bestMove = bestMove;
+            entry.depthSearched = depth;
+            entry.value = bestValue;
+            entry.type = (bestValue > alpha ? (bestValue < beta ? TranspositionEntry.EXACT : TranspositionEntry.LOWER_BOUND) : TranspositionEntry.UPPER_BOUND);
+            entry.turn = turn;
         }
 
         return bestValue;
@@ -180,42 +205,7 @@ public class AspirationTablePlayer extends StandardPlayer {
         byte[] bestMove; // Best move found from this position
         byte depthSearched; // The depth this position was searched to
         int value; // The value returned for this position
-        byte type; // Whether the value was exact (between alpha and beta) or an upper bound (= alpha) or a lower bound (= beta)
+        byte type; // Whether the value was exact (between alpha and beta) or an upper bound (<= alpha) or a lower bound (>= beta)
         byte turn; // In which turn this entry was stored
-        
-        ////DEBUG
-        Board b;
-    }
-    
-    void checkTable() {
-        int key = board.getTranspositionTableKey() & TABLE_KEY_MASK;
-        TranspositionEntry e = transpositionTable[key];
-
-        if (e == null || e.turn < turn) {
-            TranspositionEntry entry = new TranspositionEntry();
-            entry.hash = board.getHash();
-            entry.turn = turn;
-            entry.b = new BitBoard(board);
-            transpositionTable[key] = entry;
-
-            if (e == null) {
-                store++;
-            } else {
-                overwrite++;
-
-                if (e.hash == entry.hash) {
-                    if (e.b )
-                    samePosPrevTurn++;
-                } else {
-                    diffPosPrevTurn++;
-                }
-            }
-        } else {
-            if (e.hash == board.getHash()) {
-                samePosSameTurn++;
-            } else {
-                diffPosSameTurn++;
-            }
-        }
     }
 }

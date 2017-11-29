@@ -9,7 +9,7 @@ import java.util.List;
 
 public class AspirationPlayer extends StandardPlayer {
 
-    public static boolean DEBUG_FINAL_VALUE = true;
+    public static boolean DEBUG_FINAL_VALUE = false;
     private static final boolean DEBUG_AB = false;
 
     private static final byte[] FAIL_HIGH = new byte[0];
@@ -132,6 +132,10 @@ public class AspirationPlayer extends StandardPlayer {
                     alpha = value;
 
                     if (beta <= alpha) {
+                        if (DEBUG_AB) {
+                            System.err.printf("%s:   Beta-cutoff%n", getName(), value);
+                        }
+                        
                         break;
                     }
                 }
