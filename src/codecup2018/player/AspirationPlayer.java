@@ -104,7 +104,7 @@ public class AspirationPlayer extends StandardPlayer {
         
         if (DEBUG_AB) {
             System.err.printf("%s:  Running negamax with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
-            Util.print(board);
+            Board.print(board);
         }
 
         int bestValue = Integer.MIN_VALUE + 1;

@@ -14,7 +14,7 @@ public class MedianFree implements Evaluator {
 
         for (int i = 0; i < free.size(); i++) {
             byte[] spot = free.get(i);
-            holeValues[i] = board.getHoleValue(spot[0], spot[1]);
+            holeValues[i] = board.getHoleValue(Board.getPos(spot[0], spot[1]));
         }
 
         // Return the one that wouldnt be filled in if the players just took
@@ -28,7 +28,7 @@ public class MedianFree implements Evaluator {
     }
 
     @Override
-    public void block(byte a, byte b) {
+    public void block(byte pos) {
     }
 
     @Override

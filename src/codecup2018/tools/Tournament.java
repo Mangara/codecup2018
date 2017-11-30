@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 1000;
+    private static final int GAMES = 50;
 
     public static void main(String[] args) {
         runTournament(Arrays.<Player>asList(

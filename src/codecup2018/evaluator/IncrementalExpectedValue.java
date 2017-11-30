@@ -22,13 +22,13 @@ public class IncrementalExpectedValue implements Evaluator {
         totalFreeDegree = 0;
 
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                byte v = board.get(a, b);
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                byte v = board.get(pos);
 
                 if (v == Board.FREE) {
                     nFree++;
-                    totalHoleValue += board.getHoleValue(a, b);
-                    totalFreeDegree += board.getFreeSpotsAround(a, b);
+                    totalHoleValue += board.getHoleValue(pos);
+                    totalFreeDegree += board.getFreeSpotsAround(pos);
                 }
             }
         }
@@ -46,9 +46,9 @@ public class IncrementalExpectedValue implements Evaluator {
     }
 
     @Override
-    public void block(byte a, byte b) {
-        int holeValue = board.getHoleValue(a, b);
-        int freeDegree = board.getFreeSpotsAround(a, b);
+    public void block(byte pos) {
+        int holeValue = board.getHoleValue(pos);
+        int freeDegree = board.getFreeSpotsAround(pos);
 
         nFree--;
         totalHoleValue -= holeValue;
@@ -57,8 +57,8 @@ public class IncrementalExpectedValue implements Evaluator {
 
     @Override
     public void applyMove(byte[] move) {
-        int holeValue = board.getHoleValue(move[0], move[1]);
-        int freeDegree = board.getFreeSpotsAround(move[0], move[1]);
+        int holeValue = board.getHoleValue(Board.getPos(move[0], move[1]));
+        int freeDegree = board.getFreeSpotsAround(Board.getPos(move[0], move[1]));
 
         nFree--;
         totalHoleValue = totalHoleValue - holeValue + freeDegree * move[2];
@@ -70,8 +70,8 @@ public class IncrementalExpectedValue implements Evaluator {
 
     @Override
     public void undoMove(byte[] move) {
-        int holeValue = board.getHoleValue(move[0], move[1]);
-        int freeDegree = board.getFreeSpotsAround(move[0], move[1]);
+        int holeValue = board.getHoleValue(Board.getPos(move[0], move[1]));
+        int freeDegree = board.getFreeSpotsAround(Board.getPos(move[0], move[1]));
 
         nFree++;
         totalHoleValue = totalHoleValue + holeValue - freeDegree * move[2];

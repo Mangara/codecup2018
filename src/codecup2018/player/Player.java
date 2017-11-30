@@ -2,7 +2,6 @@ package codecup2018.player;
 
 import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
-import codecup2018.Util;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -37,8 +36,8 @@ public abstract class Player {
 
         // Read in 5 blocked fields
         for (int i = 0; i < 5; i++) {
-            byte[] loc = Util.getCoordinates(in.readLine());
-            block(loc[0], loc[1]);
+            byte pos = Board.getPos(in.readLine());
+            block(pos);
         }
 
         if (TIMING) {
@@ -51,7 +50,7 @@ public abstract class Player {
             }
 
             if (!"Start".equals(input)) {
-                processMove(Util.parseMove(input), false);
+                processMove(Board.parseMove(input), false);
             }
 
             byte[] move = move();
@@ -60,7 +59,7 @@ public abstract class Player {
                 System.err.println("Move took " + (System.currentTimeMillis() - start) + " ms.");
             }
 
-            out.println(Util.coordinatesToString(move[0], move[1]) + "=" + move[2]);
+            out.println(Board.coordinatesToString(move[0], move[1]) + "=" + move[2]);
         }
     }
 
@@ -72,8 +71,8 @@ public abstract class Player {
         board = currentBoard;
     }
 
-    public void block(byte a, byte b) {
-        board.block(a, b);
+    public void block(byte pos) {
+        board.block(pos);
     }
 
     public void processMove(byte[] move, boolean mine) {

@@ -22,22 +22,22 @@ public class GUIPlayer extends Player {
         super.initialize(currentBoard);
         
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                byte val = board.get(a, b);
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                byte val = board.get(pos);
                 
                 if (val == Board.BLOCKED) {
-                    frame.block(a, b);
+                    frame.block(a, (byte) (pos % 8));
                 } else if (val != Board.FREE) {
-                    frame.processMove(new byte[] {a, b, (val > 0 ? val : (byte) -val)}, val > 0);
+                    frame.processMove(new byte[] {a, (byte) (pos % 8), (val > 0 ? val : (byte) -val)}, val > 0);
                 }
             }
         }
     }
     
     @Override
-    public void block(byte a, byte b) {
-        super.block(a, b);
-        frame.block(a, b);
+    public void block(byte pos) {
+        super.block(pos);
+        frame.block((byte) (pos / 8), (byte) (pos % 8));
     }
 
     @Override

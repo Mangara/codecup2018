@@ -65,9 +65,9 @@ public class RandomPostionGenerator {
 
         int location = 0;
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
                 if (blocked.contains(location)) {
-                    board.block(a, b);
+                    board.block(pos);
                 }
                 location++;
             }
