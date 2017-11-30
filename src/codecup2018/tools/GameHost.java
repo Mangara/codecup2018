@@ -32,7 +32,7 @@ public class GameHost {
         //GameHost.runGame(new SimpleMaxPlayer("Expy_MI", new ExpectedValue(), new MaxInfluenceMoves()), new NegaMaxPlayer("NM_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4), false);
         //GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
         //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), false);
-        GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationTablePlayer("As_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4), false);
+        GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationTablePlayer("AsT_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3), false);
         //GameHost.runGameThreaded(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4));
     }
 

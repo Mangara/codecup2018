@@ -98,13 +98,13 @@ public class AspirationPlayer extends StandardPlayer {
     }
 
     private int negamax(int player, int depth, int alpha, int beta) {
+        if (depth == 0 || board.isGameOver()) {
+            return player * evaluator.evaluate(board);
+        }
+        
         if (DEBUG_AB) {
             System.err.printf("%s:  Running negamax with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
             Util.print(board);
-        }
-
-        if (depth == 0 || board.isGameOver()) {
-            return player * evaluator.evaluate(board);
         }
 
         int bestValue = Integer.MIN_VALUE + 1;

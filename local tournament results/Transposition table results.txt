@@ -1,0 +1,24 @@
+Player: NM_IEV_MI_5
+Average evaluations: 25941
+Quartiles: 2 - 1421 - 15681 - 44110 - 154863
+Average time (ms): 13.297
+Quartiles: 0.001 - 0.407 - 5.749 - 22.683 - 118.547
+
+Player: As_IEV_MI_5
+Average evaluations: 27131
+Quartiles: 3 - 1661 - 17873 - 45894 - 168145
+Average time (ms): 13.307
+Quartiles: 0.001 - 0.447 - 6.502 - 22.854 - 71.367
+
+Player: AsT_IEV_MI_5 (just values)
+Average evaluations: 25160
+Quartiles: 3 - 1353 - 15625 - 42780 - 155437
+Average time (ms): 21.988
+Quartiles: 0.002 - 1.260 - 12.143 - 39.197 - 112.791
+
+Player: AsT_IEV_MI_5 (values and best move)
+Player: AsT_IEV_MI_5
+Average evaluations: 25452
+Quartiles: 3 - 1410 - 16140 - 42823 - 155642
+Average time (ms): 20.637
+Quartiles: 0.002 - 1.218 - 11.582 - 36.097 - 123.100

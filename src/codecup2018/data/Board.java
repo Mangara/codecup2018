@@ -47,6 +47,8 @@ public abstract class Board {
     public abstract List<byte[]> getFreeSpots();
 
     public abstract boolean isGameOver();
+    
+    public abstract boolean isLegalMove(byte[] move);
 
     public abstract int getTranspositionTableKey();
 
