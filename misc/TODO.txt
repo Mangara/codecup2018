@@ -1,35 +1,34 @@
 == Architecture
 
-- Add a transposition table. This will really help speed up researching when the aspiration window wasn't right.
- x Hash: generate a random number for each board spot. Make sure the numbers chosen don't have small subsets that xor to 0. For each position, xor together the (spot number * value). This is easy to update incrementally.
- x Generate a second random number set of X bits to compute the hash table key (table size = 2^X) in the same way.
- x In the table, store: full hash, best move, depth this position has been searched to, score, type (exact, LB, UB), age?
- x Replacement scheme: if we want to store a position, but its table entry already contains another position, replace if: the other is old, or has been searched to less depth.
- x Possibly do not store positions searched to low depth
- x David Eppstein has pseudo-code: https://www.ics.uci.edu/~eppstein/180a/970424.html
- x Remember that evaluations should be from player1's POV and should be multiplied by the player variable
+- Use a single integer (byte) to represent a location: 0-64, corresponding to 8 * a + b. This way we can use single-dimensional arrays for the board and don't need to transform back and forth all the time.
  
-- Once we have a transposition table, re-do aspiration search with slowly widening windows.
+- Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for a sorting score in the top 22 bits. Then, to sort the moves by some score, we just set their top 22 bits appropriately and then use the default numeric sorting algorithm. This also lets the minimax return both a move and its evaluation in one return value. Make sure that all evaluations fit in 22 bits and make utility functions (in util?) to get/set this.
 
-- Use a single integer (long) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for some later additions if we want to get fancy.
+- Make sure all possible values for the board make up a contiguous set of 32 numbers. That way computing the hash is much easier. I think all that needs to be done for this is setting 'blocked' to 16.
 
-- Generate positions and values seperately?
+- Make Board track the number of free-free connections. This allows us to detect the endgame.
+
+- Make a new board that uses bitboards for free positions, my tiles, and opponent tiles, but a 1D array for values.
+
+- Make the board maintain/update the holevalues and free spots around each free tile. We need these often enough that this is worth it.
 
 == Tournaments
 
-
+- PerformanceTest that plays full games versus identical opponents. If we keep generating the same moves, this will give a fair comparison of number of positions evaluated.
 
 == Players
 
 - Add more useful debug output for the competition bot (time taken per move, final value?)
 
-- In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search. This would be easy in IEV, since we maintain the number of connections between free nodes. I'm not sure it would make the program stronger, but it's worth a shot.
+- Re-do aspiration search with slowly widening windows.
 
-- Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here. Not quite: if you wait until your opponent has placed all their stones, it is trivial to win. We should only allow null moves when the opponent won't run out of moves before we reach the max depth.
+- Implement iterative deepening. This will directly translate speed improvements into quality improvements. Use different aspiration windows for the first call (which uses the previous move value) and subsequent ones (which use the previous iteration value).
+
+- In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search. This would be easy in IEV, since we maintain the number of connections between free nodes. I'm not sure it would make the program stronger, but it's worth a shot.
 
 - Implement killer move heuristic: keep track of moves that cause beta cutoffs and try them first. Possibly per-ply? First perhaps just print moves that cause beta-cutoffs to get a sense of what they look like.
 
-- Implement iterative deepening. This will directly translate speed improvements into quality improvements. Use different aspiration windows for the first call (which uses the previous move value) and subsequent ones (which use the previous iteration value).
+- Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here. Not quite: if you wait until your opponent has placed all their stones, it is trivial to win. We should only allow null moves when the opponent won't run out of moves before we reach the max depth.
 
 - Make a UCB player
 - Make a NegaScout/PVS player
@@ -38,10 +37,11 @@
 
 == Move generation
 
-- At top level, try moves with a medium value first? (Start at 15, 8, and 1. Move pointer down, up, and up, respectively.) Perhaps if the max move doesn't improve the value significantly, take the medium value move?
-- MoveGenerator for moves that create holes that win for me
-- AB should include moves that block good opponent moves
-- Order moves by expected value. (ExpectedOrder MoveGenerator, and perhaps a general OrderBy(Evaluator)) Is there a fast way we can do just expected value?
+- Don't just use the maximum value. Start at 15, 8, and 1. Move pointer down, up, and up, respectively. For player1, try medium-valued moves first, so that these are preferred in case of a tie. Only try holes with the lowest value move.
+
+- Sort moves that generate holes closer to the front. Perhaps include something like "the lowest number of free spots around a neighbouring free spot"?
+
+- Order moves by expected value? (ExpectedOrder MoveGenerator, and perhaps a general OrderBy(Evaluator)) Is there a fast way we can do just expected value?
 
 
 == Board state evaluation
@@ -69,6 +69,13 @@ X In MaximumInfluenceMoves, use the value of the move to temporarily store the n
 X In bitboard, precompute neighbours for all positions
 X For evaluation, add something that tracks the number of positions evaluated (calls to the recursive search function?). Most optimizations aim to reduce this.
 X Count (at least for debug) the total number of states evaluated / move
+X Add a transposition table. This will really help speed up researching when the aspiration window wasn't right.
+ x Hash: generate a random number for each board spot. Make sure the numbers chosen don't have small subsets that xor to 0. For each position and possible value, xor together the (spot number * value). This is easy to update incrementally.
+ x Generate a second random number set of X bits to compute the hash table key (table size = 2^X) in the same way.
+ x In the table, store: full hash, best move, depth this position has been searched to, score, type (exact, LB, UB), age?
+ x Replacement scheme: if we want to store a position, but its table entry already contains another position, replace if: the other is old, or has been searched to less depth.
+ x David Eppstein has pseudo-code: https://www.ics.uci.edu/~eppstein/180a/970424.html
+X Generate positions and values seperately?
 
 === WONTFIX
 
