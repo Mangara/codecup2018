@@ -33,7 +33,7 @@ public class ArrayBoard extends Board {
     public byte get(byte a, byte b) {
         return grid[a][b];
     }
-    
+
     @Override
     public int getNFreeSpots() {
         return nFree;
@@ -43,19 +43,19 @@ public class ArrayBoard extends Board {
     public boolean isFree(byte a, byte b) {
         return grid[a][b] == FREE;
     }
-    
+
     @Override
     public List<byte[]> getFreeSpots() {
         List<byte[]> free = new ArrayList<>(nFree);
-        
+
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 if (grid[a][b] == FREE) {
-                    free.add(new byte[] {a, b, 0});
+                    free.add(new byte[]{a, b, 0});
                 }
             }
         }
-        
+
         return free;
     }
 
@@ -129,14 +129,14 @@ public class ArrayBoard extends Board {
     public void block(byte a, byte b) {
         set(a, b, BLOCKED);
     }
-    
+
     public void set(byte a, byte b, byte value) {
         if (grid[a][b] == FREE && value != FREE) {
             nFree--;
         } else if (grid[a][b] != FREE && value == FREE) {
             nFree++;
         }
-        
+
         grid[a][b] = value;
 
         if (value > 0 && value < 16) {
@@ -184,7 +184,12 @@ public class ArrayBoard extends Board {
     public boolean isGameOver() {
         return nFree == 1;
     }
-    
+
+    @Override
+    public boolean isLegalMove(byte[] move) {
+        return isFree(move[0], move[1]) && ((move[2] > 0 && !haveIUsed(move[2])) || (move[2] < 0 && !hasOppUsed(move[2])));
+    }
+
     @Override
     public int getTranspositionTableKey() {
         // TODO: incremental updates
@@ -193,7 +198,7 @@ public class ArrayBoard extends Board {
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 byte v = get(a, b);
-                
+
                 if (v == FREE) {
                     v = 0;
                 } else if (v == BLOCKED) {
@@ -201,7 +206,7 @@ public class ArrayBoard extends Board {
                 } else if (v < 0) {
                     v += 31;
                 }
-                
+
                 key ^= KEY_POSITION_NUMBERS[32 * (8 * a + b) + v];
             }
         }
@@ -217,7 +222,7 @@ public class ArrayBoard extends Board {
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 byte v = get(a, b);
-                
+
                 if (v == FREE) {
                     v = 0;
                 } else if (v == BLOCKED) {
@@ -225,7 +230,7 @@ public class ArrayBoard extends Board {
                 } else if (v < 0) {
                     v += 31;
                 }
-                
+
                 hash ^= HASH_POSITION_NUMBERS[32 * (8 * a + b) + v];
             }
         }

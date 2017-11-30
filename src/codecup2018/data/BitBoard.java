@@ -228,6 +228,11 @@ public class BitBoard extends Board {
     }
 
     @Override
+    public boolean isLegalMove(byte[] move) {
+        return isFree(move[0], move[1]) && ((move[2] > 0 && !haveIUsed(move[2])) || (move[2] < 0 && !hasOppUsed(move[2])));
+    }
+
+    @Override
     public int getTranspositionTableKey() {
         // TODO: incremental updates
         int key = 0;
