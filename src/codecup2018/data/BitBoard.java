@@ -13,9 +13,8 @@ public class BitBoard extends Board {
 
     static {
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                int pos = pos(a, b);
-                long posMask = posMask(a, b);
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                long posMask = posMask(pos);
 
                 NEIGHBOURS[pos]
                         = (((posMask << 1) & EXCLUDE_NINE)
@@ -37,7 +36,12 @@ public class BitBoard extends Board {
     private short myUsed = 0;
     private short oppUsed = 0;
 
+    // Transposition table cached values
+    private int key;
+    private long hash;
+
     public BitBoard() {
+        initializeTranspositionTableValues();
     }
 
     public BitBoard(Board board) {
@@ -45,9 +49,9 @@ public class BitBoard extends Board {
         int oppValIndex = 0;
 
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                byte val = board.get(a, b);
-                long posMask = posMask(a, b);
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                byte val = board.get(pos);
+                long posMask = posMask(pos);
 
                 if (val == FREE) {
                     // Nothing
@@ -68,19 +72,17 @@ public class BitBoard extends Board {
                 }
             }
         }
+
+        initializeTranspositionTableValues();
     }
 
-    private static int pos(byte a, byte b) {
-        return 8 * a + b;
-    }
-
-    private static long posMask(byte a, byte b) {
-        return 1L << (8 * a + b);
+    private static long posMask(byte pos) {
+        return 1L << pos;
     }
 
     @Override
-    public byte get(byte a, byte b) {
-        long posMask = posMask(a, b);
+    public byte get(byte pos) {
+        long posMask = posMask(pos);
 
         if ((free & posMask) != 0) {
             return FREE;
@@ -98,8 +100,8 @@ public class BitBoard extends Board {
     }
 
     @Override
-    public boolean isFree(byte a, byte b) {
-        return (free & posMask(a, b)) != 0;
+    public boolean isFree(byte pos) {
+        return (free & posMask(pos)) != 0;
     }
 
     @Override
@@ -122,13 +124,13 @@ public class BitBoard extends Board {
     }
 
     @Override
-    public int getFreeSpotsAround(byte a, byte b) {
-        return Long.bitCount(free & NEIGHBOURS[pos(a, b)]);
+    public int getFreeSpotsAround(byte pos) {
+        return Long.bitCount(free & NEIGHBOURS[pos]);
     }
 
     @Override
-    public int getHoleValue(byte a, byte b) {
-        long neighbours = NEIGHBOURS[pos(a, b)];
+    public int getHoleValue(byte pos) {
+        long neighbours = NEIGHBOURS[pos];
         long myNeighbours = myTiles & neighbours;
         long oppNeighbours = oppTiles & neighbours;
 
@@ -150,16 +152,17 @@ public class BitBoard extends Board {
     }
 
     @Override
-    public void block(byte a, byte b) {
-        free &= ~posMask(a, b);
+    public void block(byte pos) {
+        free &= ~posMask(pos);
     }
 
     @Override
     public void applyMove(byte[] move) {
-        long posMask = posMask(move[0], move[1]);
-        free &= ~posMask;
-
+        byte pos = getPos(move[0], move[1]);
+        long posMask = posMask(pos);
         byte value = move[2];
+
+        free &= ~posMask;
 
         if (value > 0) {
             myTiles |= posMask;
@@ -170,14 +173,21 @@ public class BitBoard extends Board {
             oppUsed |= (1 << -value);
             oppValues = insertValue(posMask, oppTiles, oppValues, -value);
         }
+        
+        // Update hash values
+        int index = 32 * pos + FREE + 15;
+        int newIndex = index - FREE + value;
+        key ^= KEY_POSITION_NUMBERS[index] ^ KEY_POSITION_NUMBERS[newIndex];
+        hash ^= HASH_POSITION_NUMBERS[index] ^ HASH_POSITION_NUMBERS[newIndex];
     }
 
     @Override
     public void undoMove(byte[] move) {
-        long posMask = posMask(move[0], move[1]);
-        free |= posMask;
-
+        byte pos = getPos(move[0], move[1]);
+        long posMask = posMask(pos);
         byte value = move[2];
+        
+        free |= posMask;
 
         if (value > 0) {
             myTiles &= ~posMask;
@@ -188,6 +198,12 @@ public class BitBoard extends Board {
             oppUsed &= ~(1 << -value);
             oppValues = removeValue(posMask, oppTiles, oppValues);
         }
+        
+        // Update hash values
+        int index = 32 * pos + value + 15;
+        int newIndex = index - value + FREE;
+        key ^= KEY_POSITION_NUMBERS[index] ^ KEY_POSITION_NUMBERS[newIndex];
+        hash ^= HASH_POSITION_NUMBERS[index] ^ HASH_POSITION_NUMBERS[newIndex];
     }
 
     private int getValueIndex(long posMask, long tiles) {
@@ -229,54 +245,29 @@ public class BitBoard extends Board {
 
     @Override
     public boolean isLegalMove(byte[] move) {
-        return isFree(move[0], move[1]) && ((move[2] > 0 && !haveIUsed(move[2])) || (move[2] < 0 && !hasOppUsed(move[2])));
+        return isFree(getPos(move[0], move[1])) && ((move[2] > 0 && !haveIUsed(move[2])) || (move[2] < 0 && !hasOppUsed(move[2])));
+    }
+
+    private void initializeTranspositionTableValues() {
+        key = 0;
+        hash = 0;
+
+        for (byte a = 0; a < 8; a++) {
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                int index = 32 * pos + get(pos) + 15;
+                key ^= KEY_POSITION_NUMBERS[index];
+                hash ^= HASH_POSITION_NUMBERS[index];
+            }
+        }
     }
 
     @Override
     public int getTranspositionTableKey() {
-        // TODO: incremental updates
-        int key = 0;
-
-        for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                byte v = get(a, b);
-                
-                if (v == FREE) {
-                    v = 0;
-                } else if (v == BLOCKED) {
-                    v = 31;
-                } else if (v < 0) {
-                    v += 31;
-                }
-                
-                key ^= KEY_POSITION_NUMBERS[32 * pos(a, b) + v];
-            }
-        }
-
         return key;
     }
 
     @Override
     public long getHash() {
-        // TODO: incremental updates
-        long hash = 0;
-
-        for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                byte v = get(a, b);
-                
-                if (v == FREE) {
-                    v = 0;
-                } else if (v == BLOCKED) {
-                    v = 31;
-                } else if (v < 0) {
-                    v += 31;
-                }
-                
-                hash ^= HASH_POSITION_NUMBERS[32 * pos(a, b) + v];
-            }
-        }
-
         return hash;
     }
 }

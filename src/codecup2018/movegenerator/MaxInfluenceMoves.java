@@ -14,7 +14,7 @@ public class MaxInfluenceMoves implements MoveGenerator {
         // Moves with many open squares should be processed first
         for (byte[] move : moves) {
             // Temporarily store these sorting values in the move
-            move[2] = (byte) board.getFreeSpotsAround(move[0], move[1]);
+            move[2] = (byte) board.getFreeSpotsAround(Board.getPos(move[0], move[1]));
         }
         
         Collections.sort(moves, new Comparator<byte[]>() {

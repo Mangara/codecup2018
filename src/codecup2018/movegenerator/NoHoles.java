@@ -12,16 +12,16 @@ public class NoHoles implements MoveGenerator {
         boolean anyNonHole = false;
 
         for (byte a = 0; a < 8 && !anyNonHole; a++) {
-            for (byte b = 0; b < 8 - a && !anyNonHole; b++) {
-                if (board.isFree(a, b) && board.getFreeSpotsAround(a, b) > 0) {
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8 && !anyNonHole; pos++) {
+                if (board.isFree(pos) && board.getFreeSpotsAround(pos) > 0) {
                     anyNonHole = true;
                 }
             }
         }
         
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (!board.isFree(a, b) || (anyNonHole && board.getFreeSpotsAround(a, b) == 0)) {
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                if (!board.isFree(pos) || (anyNonHole && board.getFreeSpotsAround(pos) == 0)) {
                     continue;
                 }
 
@@ -30,7 +30,7 @@ public class NoHoles implements MoveGenerator {
                         continue;
                     }
 
-                    moves.add(new byte[]{a, b, (player1 ? v : (byte) -v)});
+                    moves.add(new byte[]{a, (byte) (pos % 8), (player1 ? v : (byte) -v)});
                 }
             }
         }

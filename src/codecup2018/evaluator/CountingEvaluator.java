@@ -28,8 +28,8 @@ public class CountingEvaluator implements Evaluator {
     }
 
     @Override
-    public void block(byte a, byte b) {
-        evaluator.block(a, b);
+    public void block(byte pos) {
+        evaluator.block(pos);
     }
 
     @Override

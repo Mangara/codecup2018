@@ -16,7 +16,7 @@ public class ArrayBoard extends Board {
     public ArrayBoard(Board board) {
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
-                set(a, b, board.get(a, b));
+                set(a, b, board.get(getPos(a, b)));
             }
         }
     }
@@ -30,7 +30,8 @@ public class ArrayBoard extends Board {
     }
 
     @Override
-    public byte get(byte a, byte b) {
+    public byte get(byte pos) {
+        int a = pos / 8, b = pos % 8;
         return grid[a][b];
     }
 
@@ -40,7 +41,8 @@ public class ArrayBoard extends Board {
     }
 
     @Override
-    public boolean isFree(byte a, byte b) {
+    public boolean isFree(byte pos) {
+        int a = pos / 8, b = pos % 8;
         return grid[a][b] == FREE;
     }
 
@@ -60,7 +62,8 @@ public class ArrayBoard extends Board {
     }
 
     @Override
-    public int getHoleValue(byte a, byte b) {
+    public int getHoleValue(byte pos) {
+        int a = pos / 8, b = pos % 8;
         int total = 0;
 
         if (a > 0) {
@@ -95,7 +98,8 @@ public class ArrayBoard extends Board {
     }
 
     @Override
-    public int getFreeSpotsAround(byte a, byte b) {
+    public int getFreeSpotsAround(byte pos) {
+        int a = pos / 8, b = pos % 8;
         int total = 0;
 
         if (a > 0 && grid[a - 1][b] == FREE) {
@@ -126,7 +130,8 @@ public class ArrayBoard extends Board {
     }
 
     @Override
-    public void block(byte a, byte b) {
+    public void block(byte pos) {
+        byte a = (byte) (pos / 8), b = (byte) (pos % 8);
         set(a, b, BLOCKED);
     }
 
@@ -187,27 +192,16 @@ public class ArrayBoard extends Board {
 
     @Override
     public boolean isLegalMove(byte[] move) {
-        return isFree(move[0], move[1]) && ((move[2] > 0 && !haveIUsed(move[2])) || (move[2] < 0 && !hasOppUsed(move[2])));
+        return isFree(getPos(move[0], move[1])) && ((move[2] > 0 && !haveIUsed(move[2])) || (move[2] < 0 && !hasOppUsed(move[2])));
     }
 
     @Override
     public int getTranspositionTableKey() {
-        // TODO: incremental updates
         int key = 0;
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
-                byte v = get(a, b);
-
-                if (v == FREE) {
-                    v = 0;
-                } else if (v == BLOCKED) {
-                    v = 31;
-                } else if (v < 0) {
-                    v += 31;
-                }
-
-                key ^= KEY_POSITION_NUMBERS[32 * (8 * a + b) + v];
+                key ^= KEY_POSITION_NUMBERS[32 * (8 * a + b) + get(getPos(a, b)) + 15];
             }
         }
 
@@ -216,22 +210,11 @@ public class ArrayBoard extends Board {
 
     @Override
     public long getHash() {
-        // TODO: incremental updates
         long hash = 0;
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
-                byte v = get(a, b);
-
-                if (v == FREE) {
-                    v = 0;
-                } else if (v == BLOCKED) {
-                    v = 31;
-                } else if (v < 0) {
-                    v += 31;
-                }
-
-                hash ^= HASH_POSITION_NUMBERS[32 * (8 * a + b) + v];
+                hash ^= HASH_POSITION_NUMBERS[32 * (8 * a + b) + get(getPos(a, b)) + 15];
             }
         }
 

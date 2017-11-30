@@ -75,11 +75,11 @@ public class EndgameTest {
         int location = 0;
 
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
                 if (blocked.contains(location)) {
-                    board.set(a, b, Board.BLOCKED);
-                    p1.block(a, b);
-                    p2.block(a, b);
+                    board.set(a, (byte) (pos % 8), Board.BLOCKED);
+                    p1.block(pos);
+                    p2.block(pos);
                 }
                 location++;
             }
@@ -109,7 +109,7 @@ public class EndgameTest {
     }
 
     private static boolean doMove(ArrayBoard board, byte[] move, boolean player1) {
-        if (board.getFreeSpotsAround(move[0], move[1]) == 0) {
+        if (board.getFreeSpotsAround(Board.getPos(move[0], move[1])) == 0) {
             return true;
         }
 
@@ -128,9 +128,9 @@ public class EndgameTest {
         List<int[]> holes = new ArrayList<>();
 
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) == Board.FREE) {
-                    holes.add(new int[]{a, b, board.getHoleValue(a, b)});
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                if (board.get(pos) == Board.FREE) {
+                    holes.add(new int[]{a, (byte) (pos % 8), board.getHoleValue(pos)});
                 }
             }
         }
@@ -199,16 +199,16 @@ public class EndgameTest {
         int finalScore = 0;
         
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) == Board.FREE) {
-                    finalScore = board.getHoleValue(a, b);
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                if (board.get(pos) == Board.FREE) {
+                    finalScore = board.getHoleValue(pos);
                 }
             }
         }
 
         if (targetScore != finalScore) {
             System.err.println("Starting board:");
-            Util.print(originalBoard);
+            Board.print(originalBoard);
             System.err.print("Holes: ");
             for (int[] hole : holes) {
                 System.err.print(Arrays.toString(hole) + ", ");
@@ -225,7 +225,7 @@ public class EndgameTest {
             }
             System.err.println();
             System.err.println("Final board:");
-            Util.print(board);
+            Board.print(board);
             System.err.println();
             fail("Player did not close optimal holes");
         }

@@ -26,14 +26,14 @@ public abstract class ComponentPlayer extends Player {
     @Override
     public void initialize(Board currentBoard) {
         super.initialize(currentBoard);
-        
+
         components.clear();
         ArrayBoard tempBoard = new ArrayBoard(currentBoard);
 
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (tempBoard.get(a, b) == Board.FREE) {
-                    markComponent(tempBoard, a, b);
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                if (tempBoard.get(pos) == Board.FREE) {
+                    markComponent(tempBoard, a, (byte) (pos % 8));
 
                     /*/// DEBUG
                     System.err.println("After marking component");
@@ -69,8 +69,9 @@ public abstract class ComponentPlayer extends Player {
     }
 
     @Override
-    public void block(byte a, byte b) {
-        super.block(a, b);
+    public void block(byte pos) {
+        super.block(pos);
+        byte a = (byte) (pos / 8), b = (byte) (pos % 8);
         updateComponentsForMove(a, b, Board.BLOCKED);
     }
 
@@ -86,10 +87,10 @@ public abstract class ComponentPlayer extends Player {
         }
         System.err.println();
         ///*/
-        
+
         super.processMove(move, mine);
         updateComponentsForMove(move[0], move[1], (mine ? move[2] : (byte) -move[2]));
-        
+
         /*/// DEBUG
         System.err.printf("After processing move (%d, %d) = %d:%n", move[0], move[1], move[2]);
         Util.print(board);
@@ -115,7 +116,7 @@ public abstract class ComponentPlayer extends Player {
         for (int i = 0; i < components.size(); i++) {
             ArrayBoard bb = components.get(i);
 
-            if (bb.get(a, b) == Board.FREE) {
+            if (bb.get(Board.getPos(a, b)) == Board.FREE) {
                 playedComponent = i;
             }
 
@@ -149,27 +150,27 @@ public abstract class ComponentPlayer extends Player {
     private void markComponent(ArrayBoard board, byte a, byte b) {
         board.set(a, b, VISITED);
 
-        if (a > 0 && board.get((byte) (a - 1), b) == Board.FREE) {
+        if (a > 0 && board.get(Board.getPos((byte) (a - 1), b)) == Board.FREE) {
             markComponent(board, (byte) (a - 1), b);
         }
 
-        if (a < 7 - b && board.get((byte) (a + 1), b) == Board.FREE) {
+        if (a < 7 - b && board.get(Board.getPos((byte) (a + 1), b)) == Board.FREE) {
             markComponent(board, (byte) (a + 1), b);
         }
 
-        if (b > 0 && board.get(a, (byte) (b - 1)) == Board.FREE) {
+        if (b > 0 && board.get(Board.getPos(a, (byte) (b - 1))) == Board.FREE) {
             markComponent(board, a, (byte) (b - 1));
         }
 
-        if (b < 7 - a && board.get(a, (byte) (b + 1)) == Board.FREE) {
+        if (b < 7 - a && board.get(Board.getPos(a, (byte) (b + 1))) == Board.FREE) {
             markComponent(board, a, (byte) (b + 1));
         }
 
-        if (a > 0 && b < 8 - a && board.get((byte) (a - 1), (byte) (b + 1)) == Board.FREE) {
+        if (a > 0 && b < 8 - a && board.get(Board.getPos((byte) (a - 1), (byte) (b + 1))) == Board.FREE) {
             markComponent(board, (byte) (a - 1), (byte) (b + 1));
         }
 
-        if (a < 8 - b && b > 0 && board.get((byte) (a + 1), (byte) (b - 1)) == Board.FREE) {
+        if (a < 8 - b && b > 0 && board.get(Board.getPos((byte) (a + 1), (byte) (b - 1))) == Board.FREE) {
             markComponent(board, (byte) (a + 1), (byte) (b - 1));
         }
     }
@@ -178,10 +179,11 @@ public abstract class ComponentPlayer extends Player {
         ArrayBoard componentBoard = new ArrayBoard(fullBoard);
 
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (fullBoard.get(a, b) == Board.FREE) {
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                byte b = (byte) (pos % 8);
+                if (fullBoard.get(pos) == Board.FREE) {
                     componentBoard.set(a, b, Board.BLOCKED);
-                } else if (fullBoard.get(a, b) == VISITED) {
+                } else if (fullBoard.get(pos) == VISITED) {
                     componentBoard.set(a, b, Board.FREE);
                     fullBoard.set(a, b, Board.BLOCKED);
                 }
@@ -194,32 +196,32 @@ public abstract class ComponentPlayer extends Player {
     private List<ArrayBoard> split(ArrayBoard cBoard, byte a, byte b) {
         List<ArrayBoard> newComponents = new ArrayList<>();
 
-        if (a > 0 && cBoard.get((byte) (a - 1), b) == Board.FREE) {
+        if (a > 0 && cBoard.get(Board.getPos((byte) (a - 1), b)) == Board.FREE) {
             markComponent(cBoard, (byte) (a - 1), b);
             newComponents.add(extractComponentBoard(cBoard));
         }
 
-        if (a < 7 - b && cBoard.get((byte) (a + 1), b) == Board.FREE) {
+        if (a < 7 - b && cBoard.get(Board.getPos((byte) (a + 1), b)) == Board.FREE) {
             markComponent(cBoard, (byte) (a + 1), b);
             newComponents.add(extractComponentBoard(cBoard));
         }
 
-        if (b > 0 && cBoard.get(a, (byte) (b - 1)) == Board.FREE) {
+        if (b > 0 && cBoard.get(Board.getPos(a, (byte) (b - 1))) == Board.FREE) {
             markComponent(cBoard, a, (byte) (b - 1));
             newComponents.add(extractComponentBoard(cBoard));
         }
 
-        if (b < 7 - a && cBoard.get(a, (byte) (b + 1)) == Board.FREE) {
+        if (b < 7 - a && cBoard.get(Board.getPos(a, (byte) (b + 1))) == Board.FREE) {
             markComponent(cBoard, a, (byte) (b + 1));
             newComponents.add(extractComponentBoard(cBoard));
         }
 
-        if (a > 0 && b < 8 - a && cBoard.get((byte) (a - 1), (byte) (b + 1)) == Board.FREE) {
+        if (a > 0 && b < 8 - a && cBoard.get(Board.getPos((byte) (a - 1), (byte) (b + 1))) == Board.FREE) {
             markComponent(cBoard, (byte) (a - 1), (byte) (b + 1));
             newComponents.add(extractComponentBoard(cBoard));
         }
 
-        if (a < 8 - b && b > 0 && cBoard.get((byte) (a + 1), (byte) (b - 1)) == Board.FREE) {
+        if (a < 8 - b && b > 0 && cBoard.get(Board.getPos((byte) (a + 1), (byte) (b - 1))) == Board.FREE) {
             markComponent(cBoard, (byte) (a + 1), (byte) (b - 1));
             newComponents.add(extractComponentBoard(cBoard));
         }

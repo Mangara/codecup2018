@@ -16,7 +16,7 @@ public interface Evaluator {
     
     public void initialize(Board board);
         
-    public void block(byte a, byte b);
+    public void block(byte pos);
             
     public void applyMove(byte[] move);
 

@@ -10,15 +10,21 @@ Quartiles: 3 - 1661 - 17873 - 45894 - 168145
 Average time (ms): 13.307
 Quartiles: 0.001 - 0.447 - 6.502 - 22.854 - 71.367
 
-Player: AsT_IEV_MI_5 (just values)
+Player: AsT_IEV_MI_5 (values)
 Average evaluations: 25160
 Quartiles: 3 - 1353 - 15625 - 42780 - 155437
 Average time (ms): 21.988
 Quartiles: 0.002 - 1.260 - 12.143 - 39.197 - 112.791
 
-Player: AsT_IEV_MI_5 (values and best move)
+Player: AsT_IEV_MI_5 (+best move)
 Player: AsT_IEV_MI_5
 Average evaluations: 25452
 Quartiles: 3 - 1410 - 16140 - 42823 - 155642
 Average time (ms): 20.637
 Quartiles: 0.002 - 1.218 - 11.582 - 36.097 - 123.100
+
+Player: AsT_IEV_MI_5 (+incremental hash updates)
+Average evaluations: 25452
+Quartiles: 3 - 1410 - 16140 - 42823 - 155642
+Average time (ms): 13.288
+Quartiles: 0.033 - 0.563 - 6.197 - 23.058 - 70.198

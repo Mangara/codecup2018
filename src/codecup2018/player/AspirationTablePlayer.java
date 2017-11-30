@@ -10,7 +10,7 @@ import java.util.List;
 public class AspirationTablePlayer extends StandardPlayer {
 
     public static boolean DEBUG_FINAL_VALUE = true;
-    private static final boolean DEBUG_AB = true;
+    private static final boolean DEBUG_AB = false;
 
     private static final byte[] FAIL_HIGH = new byte[0];
     private static final byte[] FAIL_LOW = new byte[0];
@@ -128,7 +128,7 @@ public class AspirationTablePlayer extends StandardPlayer {
         
         if (DEBUG_AB) {
             System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "sRunning negamax with %d plies left, interval=[%d, %d] and board state:%n", getName(), "", depth, alpha, beta);
-            Util.print(board);
+            Board.print(board);
         }
 
         int bestValue = Integer.MIN_VALUE + 1;

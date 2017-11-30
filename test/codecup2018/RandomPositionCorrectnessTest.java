@@ -47,7 +47,7 @@ public class RandomPositionCorrectnessTest {
         
         for (byte[] move : moves) {
             if (!Arrays.equals(move, first)) {
-                Util.print(board);
+                Board.print(board);
                 for (int i = 0; i < players.size(); i++) {
                     Player p = players.get(i);
                     byte[] m = moves.get(i);
