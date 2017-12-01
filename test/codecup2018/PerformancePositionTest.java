@@ -76,13 +76,13 @@ public class PerformancePositionTest {
         String[] ms = moves.split(",");
         
         for (int i = 0; i < 5; i++) {
-            byte[] pos = Util.getCoordinates(ms[i]);
-            board.block(pos[0], pos[1]);
+            byte pos = Board.getPos(ms[i]);
+            board.block(pos);
         }
         
         for (int i = 5; i < ms.length; i++) {
             String m = ms[i];
-            byte[] move = Util.parseMove(m);
+            byte[] move = Board.parseMove(m);
             boolean myMove = (i % 2 == 1) == player1; // Odd because actual moves start after 5 blocks
             board.applyMove(new byte[] {move[0], move[1], myMove ? move[2] : (byte) -move[2]});
         }

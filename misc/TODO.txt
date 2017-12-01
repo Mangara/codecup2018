@@ -1,16 +1,15 @@
 == Architecture
 
-- Use a single integer (byte) to represent a location: 0-64, corresponding to 8 * a + b. This way we can use single-dimensional arrays for the board and don't need to transform back and forth all the time.
- 
 - Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for a sorting score in the top 22 bits. Then, to sort the moves by some score, we just set their top 22 bits appropriately and then use the default numeric sorting algorithm. This also lets the minimax return both a move and its evaluation in one return value. Make sure that all evaluations fit in 22 bits and make utility functions (in util?) to get/set this.
-
-- Make sure all possible values for the board make up a contiguous set of 32 numbers. That way computing the hash is much easier. I think all that needs to be done for this is setting 'blocked' to 16.
+ x Test new MedianFree
 
 - Make Board track the number of free-free connections. This allows us to detect the endgame.
 
 - Make a new board that uses bitboards for free positions, my tiles, and opponent tiles, but a 1D array for values.
 
-- Make the board maintain/update the holevalues and free spots around each free tile. We need these often enough that this is worth it.
+- Make the board maintain/update the holevalues and free spots around each free tile. We need these often enough that this should be worth it.
+
+- Try enumerating all free spots with a simple loop through all bit positions instead of the current (expensive) calls to Long. If we want to get really fancy, we can do this depending on the number.
 
 == Tournaments
 
@@ -76,6 +75,8 @@ X Add a transposition table. This will really help speed up researching when the
  x Replacement scheme: if we want to store a position, but its table entry already contains another position, replace if: the other is old, or has been searched to less depth.
  x David Eppstein has pseudo-code: https://www.ics.uci.edu/~eppstein/180a/970424.html
 X Generate positions and values seperately?
+X Make sure all possible values for the board make up a contiguous set of 32 numbers. That way computing the hash is much easier. I think all that needs to be done for this is setting 'blocked' to 16.
+X Use a single integer (byte) to represent a location: 0-64, corresponding to 8 * a + b. This way we can use single-dimensional arrays for the board and don't need to transform back and forth all the time.
 
 === WONTFIX
 

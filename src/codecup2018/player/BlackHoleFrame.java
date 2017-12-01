@@ -95,11 +95,12 @@ public class BlackHoleFrame extends javax.swing.JFrame {
     public void requestMove() {
         // Enable all free board buttons
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) == Board.FREE) {
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                if (board.get(pos) == Board.FREE) {
+                    byte b = (byte) (pos % 8);
                     boardButtons[a][b].setEnabled(true);
                     
-                    int val = board.getHoleValue(a, b);
+                    int val = board.getHoleValue(pos);
                     if (val > 0) {
                         boardButtons[a][b].setText(Integer.toString(val));
                         boardButtons[a][b].setForeground(MY_HOLE_FG_COLOR);
@@ -134,7 +135,7 @@ public class BlackHoleFrame extends javax.swing.JFrame {
     }
 
     private void boardSpacePressed(byte a, byte b) {
-        System.out.println("Pressed board space: (" + a + ", " + b + ") = " + Util.coordinatesToString(a, b));
+        System.out.println("Pressed board space: (" + a + ", " + b + ") = " + Board.coordinatesToString(a, b));
         
         // Evaluate possible moves here
         ExpectedValue ev = new ExpectedValue();

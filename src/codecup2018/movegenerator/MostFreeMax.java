@@ -13,12 +13,12 @@ public class MostFreeMax implements MoveGenerator {
         int mostFree = 0;
 
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (!board.isFree(a, b)) {
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                if (!board.isFree(pos)) {
                     continue;
                 }
                 
-                int free = board.getFreeSpotsAround(a, b);
+                int free = board.getFreeSpotsAround(pos);
                 
                 if (free < mostFree) {
                     continue;
@@ -27,7 +27,7 @@ public class MostFreeMax implements MoveGenerator {
                     moves.clear();
                 }
 
-                moves.add(new byte[]{a, b, (player1 ? v : (byte) -v)});
+                moves.add(new byte[]{a, (byte) (pos % 8), (player1 ? v : (byte) -v)});
             }
         }
 

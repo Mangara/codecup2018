@@ -2,25 +2,22 @@ package codecup2018.evaluator;
 
 import codecup2018.data.Board;
 import java.util.Arrays;
-import java.util.List;
 
 public class MedianFree implements Evaluator {
 
     @Override
     public int evaluate(Board board) {
         // Find the value of all free spaces
-        List<byte[]> free = board.getFreeSpots();
-        int[] holeValues = new int[free.size()];
+        int[] free = board.getFreeSpots();
 
-        for (int i = 0; i < free.size(); i++) {
-            byte[] spot = free.get(i);
-            holeValues[i] = board.getHoleValue(spot[0], spot[1]);
+        for (int i = 0; i < free.length; i++) {
+            free[i] = Board.setMoveEval(free[i], board.getHoleValue(Board.getMovePos(free[i])));
         }
 
         // Return the one that wouldnt be filled in if the players just took
         // turns filling in free spaces with 0
-        Arrays.sort(holeValues);
-        return 10000 * holeValues[(holeValues.length - 1) / 2];
+        Arrays.sort(free);
+        return 10000 * Board.getMoveEval(free[(free.length - 1) / 2]);
     }
 
     @Override
@@ -28,7 +25,7 @@ public class MedianFree implements Evaluator {
     }
 
     @Override
-    public void block(byte a, byte b) {
+    public void block(byte pos) {
     }
 
     @Override

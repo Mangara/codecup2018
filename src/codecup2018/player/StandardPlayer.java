@@ -22,9 +22,9 @@ public abstract class StandardPlayer extends Player {
     }
 
     @Override
-    public void block(byte a, byte b) {
-        board.block(a, b);
-        evaluator.block(a, b);
+    public void block(byte pos) {
+        board.block(pos);
+        evaluator.block(pos);
     }
 
     @Override
