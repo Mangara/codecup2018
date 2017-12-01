@@ -1,8 +1,5 @@
 package codecup2018.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class BitBoard extends Board {
 
     private static final long BOARD = 0b0000000100000011000001110000111100011111001111110111111111111111L;

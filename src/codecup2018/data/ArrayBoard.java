@@ -1,8 +1,5 @@
 package codecup2018.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ArrayBoard extends Board {
 
     private final byte[][] grid = new byte[8][8];
@@ -47,13 +44,15 @@ public class ArrayBoard extends Board {
     }
 
     @Override
-    public List<byte[]> getFreeSpots() {
-        List<byte[]> free = new ArrayList<>(nFree);
+    public int[] getFreeSpots() {
+        int[] free = new int[nFree];
+        int i = 0;
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 if (grid[a][b] == FREE) {
-                    free.add(new byte[]{a, b, 0});
+                    free[i] = buildMove(getPos(a, b), (byte) 0, 0);
+                    i++;
                 }
             }
         }
@@ -152,26 +151,34 @@ public class ArrayBoard extends Board {
     }
 
     @Override
-    public void applyMove(byte[] move) {
-        grid[move[0]][move[1]] = move[2];
+    public void applyMove(int move) {
+        byte pos = getMovePos(move);
+        byte val = getMoveVal(move);
+        byte a = (byte) (pos / 8), b = (byte) (pos % 8);
+        
+        grid[a][b] = val;
         nFree--;
 
-        if (move[2] > 0) {
-            myUsed[move[2] - 1] = true;
+        if (val > 0) {
+            myUsed[val - 1] = true;
         } else {
-            oppUsed[-move[2] - 1] = true;
+            oppUsed[-val - 1] = true;
         }
     }
 
     @Override
-    public void undoMove(byte[] move) {
-        grid[move[0]][move[1]] = FREE;
+    public void undoMove(int move) {
+        byte pos = getMovePos(move);
+        byte val = getMoveVal(move);
+        byte a = (byte) (pos / 8), b = (byte) (pos % 8);
+        
+        grid[a][b] = FREE;
         nFree++;
 
-        if (move[2] > 0) {
-            myUsed[move[2] - 1] = false;
+        if (val > 0) {
+            myUsed[val - 1] = false;
         } else {
-            oppUsed[-move[2] - 1] = false;
+            oppUsed[-val - 1] = false;
         }
     }
 
@@ -191,8 +198,9 @@ public class ArrayBoard extends Board {
     }
 
     @Override
-    public boolean isLegalMove(byte[] move) {
-        return isFree(getPos(move[0], move[1])) && ((move[2] > 0 && !haveIUsed(move[2])) || (move[2] < 0 && !hasOppUsed(move[2])));
+    public boolean isLegalMove(int move) {
+        byte val = getMoveVal(move);
+        return isFree(getMovePos(move)) && ((val > 0 && !haveIUsed(val)) || (val < 0 && !hasOppUsed(val)));
     }
 
     @Override
