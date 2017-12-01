@@ -110,13 +110,13 @@ public class BitBoard extends Board {
     }
 
     @Override
-    public List<byte[]> getFreeSpots() {
-        List<byte[]> result = new ArrayList<>();
+    public int[] getFreeSpots() {
+        int[] result = new int[getNFreeSpots()];
         long tempFree = free;
 
-        while (tempFree != 0) {
+        for (int i = 0; tempFree != 0; i++) {
             int pos = Long.numberOfTrailingZeros(tempFree);
-            result.add(new byte[]{(byte) (pos / 8), (byte) (pos % 8), 0});
+            result[i] = pos;
             tempFree &= (tempFree - 1); // Clear lowest bit
         }
 
@@ -157,10 +157,10 @@ public class BitBoard extends Board {
     }
 
     @Override
-    public void applyMove(byte[] move) {
-        byte pos = getPos(move[0], move[1]);
+    public void applyMove(int move) {
+        byte pos = getMovePos(move);
         long posMask = posMask(pos);
-        byte value = move[2];
+        byte value = getMoveVal(move);
 
         free &= ~posMask;
 
@@ -182,10 +182,10 @@ public class BitBoard extends Board {
     }
 
     @Override
-    public void undoMove(byte[] move) {
-        byte pos = getPos(move[0], move[1]);
+    public void undoMove(int move) {
+        byte pos = getMovePos(move);
         long posMask = posMask(pos);
-        byte value = move[2];
+        byte value = getMoveVal(move);
         
         free |= posMask;
 
@@ -244,8 +244,9 @@ public class BitBoard extends Board {
     }
 
     @Override
-    public boolean isLegalMove(byte[] move) {
-        return isFree(getPos(move[0], move[1])) && ((move[2] > 0 && !haveIUsed(move[2])) || (move[2] < 0 && !hasOppUsed(move[2])));
+    public boolean isLegalMove(int move) {
+        byte val = getMoveVal(move);
+        return isFree(getMovePos(move)) && ((val > 0 && !haveIUsed(val)) || (val < 0 && !hasOppUsed(val)));
     }
 
     private void initializeTranspositionTableValues() {
