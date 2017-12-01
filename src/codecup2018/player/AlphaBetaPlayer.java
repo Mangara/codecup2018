@@ -1,6 +1,7 @@
 package codecup2018.player;
 
 import codecup2018.Util;
+import codecup2018.data.Board;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
@@ -60,7 +61,7 @@ public class AlphaBetaPlayer extends StandardPlayer {
     private int alphaBeta(boolean player1, int depth, int alpha, int beta) {
         if (DEBUG_AB) {
             System.err.printf("%s:  Running alpha-beta with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
-            Util.print(board);
+            Board.print(board);
         }
 
         if (depth == 0 || board.isGameOver()) {

@@ -29,9 +29,9 @@ public class ExpectedValue implements Evaluator {
         int nHoles = 0;
         
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (board.isFree(a, b)) {
-                    totalExpectedHoleValue += board.getHoleValue(a, b) + board.getFreeSpotsAround(a, b) * expectedFree;
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                if (board.isFree(pos)) {
+                    totalExpectedHoleValue += board.getHoleValue(pos) + board.getFreeSpotsAround(pos) * expectedFree;
                     nHoles++;
                 }
             }
@@ -45,7 +45,7 @@ public class ExpectedValue implements Evaluator {
     }
 
     @Override
-    public void block(byte a, byte b) {
+    public void block(byte pos) {
     }
 
     @Override

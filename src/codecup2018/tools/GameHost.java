@@ -44,7 +44,7 @@ public class GameHost {
         ArrayBoard board = setUpBoard();
 
         if (print) {
-            Util.print(board);
+            Board.print(board);
         }
 
         p1.initialize(new BitBoard(board));
@@ -62,9 +62,9 @@ public class GameHost {
             }
 
             verifyMove(board, p1Move, true);
-
+            
             if (print) {
-                Util.print(board);
+                Board.print(board);
                 System.err.println("GAME: Sending move to player 2");
             }
 
@@ -83,7 +83,7 @@ public class GameHost {
             verifyMove(board, p2Move, false);
 
             if (print) {
-                Util.print(board);
+                Board.print(board);
             }
 
             if (i < 14) {
@@ -114,7 +114,7 @@ public class GameHost {
 
     public static void runGameThreaded(final Player p1, final Player p2) throws IOException {
         ArrayBoard board = setUpBoard();
-        Util.print(board);
+        Board.print(board);
 
         final CircularByteBuffer p1InputBuffer = new CircularByteBuffer(CircularByteBuffer.INFINITE_SIZE, true);
         final CircularByteBuffer p1OutputBuffer = new CircularByteBuffer(CircularByteBuffer.INFINITE_SIZE, true);
@@ -160,14 +160,14 @@ public class GameHost {
             System.err.println("GAME: Asking player 1 for a move");
             String p1Move = p1OutputReader.readLine();
             System.err.println("GAME: Player 1 returned move: " + p1Move + ". Checking ...");
-            verifyMove(board, Util.parseMove(p1Move), true);
+            verifyMove(board, Board.parseMove(p1Move), true);
             System.err.println("GAME: Sending move to player 2");
             p2InputWriter.println(p1Move);
             p2InputWriter.flush();
             System.err.println("GAME: Asking player 2 for a move");
             String p2Move = p2OutputReader.readLine();
             System.err.println("GAME: Player 2 returned move: " + p2Move + ". Checking ...");
-            verifyMove(board, Util.parseMove(p2Move), false);
+            verifyMove(board, Board.parseMove(p2Move), false);
 
             if (i < 14) {
                 System.err.println("GAME: Sending move to player 1");
@@ -220,9 +220,9 @@ public class GameHost {
 
     private static void passBlockedCells(ArrayBoard board, PrintWriter writer) {
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) == Board.BLOCKED) {
-                    writer.println(Util.coordinatesToString(a, b));
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                if (board.get(pos) == Board.BLOCKED) {
+                    writer.println(Board.posToString(pos));
                 }
             }
         }
@@ -236,7 +236,7 @@ public class GameHost {
             throw new IllegalArgumentException("Position does not exist");
         }
 
-        if (board.get(move[0], move[1]) != Board.FREE) {
+        if (board.get(Board.getPos(move[0], move[1])) != Board.FREE) {
             throw new IllegalArgumentException("Position not free");
         }
 
@@ -251,9 +251,9 @@ public class GameHost {
 
     private static int getBlackHoleScore(ArrayBoard board) {
         for (byte a = 0; a < 8; a++) {
-            for (byte b = 0; b < 8 - a; b++) {
-                if (board.get(a, b) == Board.FREE) {
-                    return board.getHoleValue(a, b);
+            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
+                if (board.get(pos) == Board.FREE) {
+                    return board.getHoleValue(pos);
                 }
             }
         }
