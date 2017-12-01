@@ -1,7 +1,5 @@
 package codecup2018.data;
 
-import codecup2018.Util;
-import java.util.List;
 import java.util.Random;
 
 public abstract class Board {
@@ -31,9 +29,9 @@ public abstract class Board {
 
     public abstract void block(byte pos);
 
-    public abstract void applyMove(byte[] move);
+    public abstract void applyMove(int move);
 
-    public abstract void undoMove(byte[] move);
+    public abstract void undoMove(int move);
 
     public abstract boolean haveIUsed(byte value);
 
@@ -48,17 +46,49 @@ public abstract class Board {
 
     public abstract int getFreeSpotsAround(byte pos);
 
-    public abstract List<byte[]> getFreeSpots();
+    public abstract int[] getFreeSpots();
 
     public abstract boolean isGameOver();
 
-    public abstract boolean isLegalMove(byte[] move);
+    public abstract boolean isLegalMove(int move);
 
     public abstract int getTranspositionTableKey();
 
     public abstract long getHash();
 
     // Utility methods
+    public static final int MOVE_POS_MASK = (1 << 6) - 1;           // 00000000000000000000000000111111
+    public static final int MOVE_VAL_MASK = ((1 << 5) - 1) << 6;    // 00000000000000000000011111000000
+    public static final int MOVE_EVAL_MASK = ((1 << 21) - 1) << 11; // 11111111111111111111100000000000
+
+    public static byte getMovePos(int move) {
+        return (byte) (move & MOVE_POS_MASK);
+    }
+
+    public static byte getMoveVal(int move) {
+        return (byte) (((move & MOVE_VAL_MASK) >> 6) - 15);
+    }
+
+    public static int getMoveEval(int move) {
+        return (move & MOVE_EVAL_MASK) >> 11; // Probably wrong for negative numbers?
+    }
+
+    public static int setMovePos(int move, byte pos) {
+        return (move & ~MOVE_POS_MASK) | pos;
+    }
+
+    public static int setMoveVal(int move, byte val) {
+        return (move & ~MOVE_VAL_MASK) | (val + 15 << 6);
+    }
+
+    public static int setMoveEval(int move, int eval) {
+        return (move & ~MOVE_EVAL_MASK) | (eval << 11);
+    }
+
+    public static int buildMove(byte pos, byte val, int eval) {
+        return (eval << 11) | (val + 15 << 6) | pos;
+    }
+    
     public static byte getPos(byte a, byte b) {
         return (byte) (8 * a + b);
     }
@@ -70,19 +100,19 @@ public abstract class Board {
     public static String posToString(byte pos) {
         return Character.toString((char) ('A' + pos / 8)) + Character.toString((char) ('1' + pos % 8));
     }
-    
+
     public static String coordinatesToString(byte a, byte b) {
         return Character.toString((char) ('A' + a)) + Character.toString((char) ('1' + b));
     }
 
-    public static byte[] parseMove(String move) {
-        return new byte[]{(byte) (move.charAt(0) - 'A'), (byte) (move.charAt(1) - '1'), (byte) (Integer.parseInt(move.substring(3)))};
+    public static int parseMove(String move) {
+        return buildMove((byte) (8 * (move.charAt(0) - 'A') + move.charAt(1) - '1'), (byte) Integer.parseInt(move.substring(3)), 0);
     }
 
     public static byte getPos(String location) {
         return (byte) (8 * (location.charAt(0) - 'A') + location.charAt(1) - '1');
     }
-
+    
     public static byte[] getCoordinates(String location) {
         return new byte[]{(byte) (location.charAt(0) - 'A'), (byte) (location.charAt(1) - '1')};
     }
@@ -100,20 +130,5 @@ public abstract class Board {
             System.err.printf("%" + 2 * (7 - h) + "s%n", "");
         }
         System.err.println("nFree: " + board.getNFreeSpots());
-    }
-
-    public static void main(String[] args) {
-        for (byte a = 0; a < 8; a++) {
-            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
-                System.out.print(pos + " ");
-            }
-        }
-        System.out.println();
-        for (int a = 0; a < 8; a++) {
-            for (int b = 0; b < 8 - a; b++) {
-                System.out.print(getPos((byte) a, (byte) b) + " ");
-            }
-        }
-        System.out.println();
     }
 }

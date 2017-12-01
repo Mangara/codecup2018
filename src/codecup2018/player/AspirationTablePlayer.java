@@ -1,7 +1,6 @@
 package codecup2018.player;
 
 import codecup2018.data.Board;
-import codecup2018.Util;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
