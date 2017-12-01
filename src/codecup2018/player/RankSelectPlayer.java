@@ -17,10 +17,10 @@ public class RankSelectPlayer extends Player {
     }
 
     @Override
-    protected byte[] selectMove() {
-        List<byte[]> moves = generator.generateMoves(board, true);
+    protected int selectMove() {
+        int[] moves = generator.generateMoves(board, true);
 
-        double totalValue = (1 - Math.pow(power, moves.size() + 1)) / (1 - power) - 1;
+        double totalValue = (1 - Math.pow(power, moves.length + 1)) / (1 - power) - 1;
         double t = RAND.nextDouble() * totalValue;
         double value = power;
         int index = 0;
@@ -31,7 +31,7 @@ public class RankSelectPlayer extends Player {
             index++;
         }
 
-        return moves.get(index - 1);
+        return moves[index - 1];
     }
 
 }

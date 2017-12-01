@@ -28,8 +28,8 @@ public abstract class StandardPlayer extends Player {
     }
 
     @Override
-    public void processMove(byte[] move, boolean mine) {
-        byte[] m = new byte[]{move[0], move[1], (mine ? move[2] : (byte) -move[2])};
+    public void processMove(int move, boolean mine) {
+        int m = (mine ? move : Board.setMoveVal(move, (byte) -Board.getMoveVal(move)));
         board.applyMove(m);
         evaluator.applyMove(m);
     }

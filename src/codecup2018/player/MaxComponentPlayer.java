@@ -12,7 +12,7 @@ public class MaxComponentPlayer extends ComponentPlayer {
     }
 
     @Override
-    protected byte[] selectMove() {
+    protected int selectMove() {
         ArrayBoard largestComponent = components.get(0);
 
         if (largestComponent.getNFreeSpots()> 1) {

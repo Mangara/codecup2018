@@ -56,29 +56,35 @@ public class IncrementalExpectedValue implements Evaluator {
     }
 
     @Override
-    public void applyMove(byte[] move) {
-        int holeValue = board.getHoleValue(Board.getPos(move[0], move[1]));
-        int freeDegree = board.getFreeSpotsAround(Board.getPos(move[0], move[1]));
+    public void applyMove(int move) {
+        byte pos = Board.getMovePos(move);
+        byte val = Board.getMoveVal(move);
+        
+        int holeValue = board.getHoleValue(pos);
+        int freeDegree = board.getFreeSpotsAround(pos);
 
         nFree--;
-        totalHoleValue = totalHoleValue - holeValue + freeDegree * move[2];
+        totalHoleValue = totalHoleValue - holeValue + freeDegree * val;
         totalFreeDegree -= 2 * freeDegree;
 
         nUnused--;
-        totalUnused -= move[2];
+        totalUnused -= val;
     }
 
     @Override
-    public void undoMove(byte[] move) {
-        int holeValue = board.getHoleValue(Board.getPos(move[0], move[1]));
-        int freeDegree = board.getFreeSpotsAround(Board.getPos(move[0], move[1]));
+    public void undoMove(int move) {
+        byte pos = Board.getMovePos(move);
+        byte val = Board.getMoveVal(move);
+        
+        int holeValue = board.getHoleValue(pos);
+        int freeDegree = board.getFreeSpotsAround(pos);
 
         nFree++;
-        totalHoleValue = totalHoleValue + holeValue - freeDegree * move[2];
+        totalHoleValue = totalHoleValue + holeValue - freeDegree * val;
         totalFreeDegree += 2 * freeDegree;
 
         nUnused++;
-        totalUnused += move[2];
+        totalUnused += val;
     }
 
     @Override

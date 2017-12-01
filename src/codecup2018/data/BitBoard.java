@@ -107,13 +107,13 @@ public class BitBoard extends Board {
     }
 
     @Override
-    public int[] getFreeSpots() {
-        int[] result = new int[getNFreeSpots()];
+    public byte[] getFreeSpots() {
+        byte[] result = new byte[getNFreeSpots()];
         long tempFree = free;
 
         for (int i = 0; tempFree != 0; i++) {
             int pos = Long.numberOfTrailingZeros(tempFree);
-            result[i] = pos;
+            result[i] = (byte) pos;
             tempFree &= (tempFree - 1); // Clear lowest bit
         }
 

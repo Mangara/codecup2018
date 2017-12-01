@@ -76,7 +76,7 @@ public abstract class ComponentPlayer extends Player {
     }
 
     @Override
-    public void processMove(byte[] move, boolean mine) {
+    public void processMove(int move, boolean mine) {
         /*/// DEBUG
         System.err.printf("Before processing move (%d, %d) = %d:%n", move[0], move[1], move[2]);
         Util.print(board);

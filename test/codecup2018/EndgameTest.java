@@ -108,7 +108,7 @@ public class EndgameTest {
         return board;
     }
 
-    private static boolean doMove(ArrayBoard board, byte[] move, boolean player1) {
+    private static boolean doMove(ArrayBoard board, int move, boolean player1) {
         if (board.getFreeSpotsAround(Board.getPos(move[0], move[1])) == 0) {
             return true;
         }
@@ -160,7 +160,7 @@ public class EndgameTest {
         player.initialize(board);
 
         while (holesLeft > 1) {
-            byte[] move = player.move();
+            int move = player.move();
 
             for (int i = 0; i < holes.size(); i++) {
                 int[] hole = holes.get(i);

@@ -1,7 +1,6 @@
 package codecup2018.player;
 
 import codecup2018.movegenerator.MoveGenerator;
-import java.util.List;
 import java.util.Random;
 
 public class RandomPlayer extends Player {
@@ -20,8 +19,8 @@ public class RandomPlayer extends Player {
     }
 
     @Override
-    protected byte[] selectMove() {
-        List<byte[]> moves = generator.generateMoves(board, true);
-        return moves.get(rand.nextInt(moves.size()));
+    protected int selectMove() {
+        int[] moves = generator.generateMoves(board, true);
+        return moves[rand.nextInt(moves.length)];
     }
 }

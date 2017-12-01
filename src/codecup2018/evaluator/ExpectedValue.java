@@ -49,11 +49,11 @@ public class ExpectedValue implements Evaluator {
     }
 
     @Override
-    public void applyMove(byte[] move) {
+    public void applyMove(int move) {
     }
 
     @Override
-    public void undoMove(byte[] move) {
+    public void undoMove(int move) {
     }
     
 }

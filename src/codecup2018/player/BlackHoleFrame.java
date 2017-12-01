@@ -55,7 +55,7 @@ public class BlackHoleFrame extends javax.swing.JFrame {
     private final JToggleButton[][] boardButtons = new JToggleButton[8][8];
     private final JButton[] numberButtons = new JButton[15];
 
-    private byte[] move = null;
+    private int move = null;
     private boolean[] used = new boolean[15];
     private ArrayBoard board;
 
@@ -82,7 +82,7 @@ public class BlackHoleFrame extends javax.swing.JFrame {
         button.setUI(BLOCKED_UI);
     }
 
-    public void processMove(byte[] move, boolean mine) {
+    public void processMove(int move, boolean mine) {
         board.set(move[0], move[1], (mine ? move[2] : (byte) -move[2]));
         JToggleButton button = boardButtons[move[0]][move[1]];
 
@@ -146,7 +146,7 @@ public class BlackHoleFrame extends javax.swing.JFrame {
         
         for (byte v = 1; v <= 15; v++) {
             if (!board.haveIUsed(v)) {
-                byte[] move = new byte[] {a, b, v};
+                int move = new byte[] {a, b, v};
                 board.applyMove(move);
                 int expected = ev.evaluate(board);
                 int medianFree = mf.evaluate(board);

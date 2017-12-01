@@ -7,30 +7,34 @@ import java.util.List;
 public class NoHoles implements MoveGenerator {
 
     @Override
-    public List<byte[]> generateMoves(Board board, boolean player1) {
-        List<byte[]> moves = new ArrayList<>();
-        boolean anyNonHole = false;
+    public int[] generateMoves(Board board, boolean player1) {
+        byte[] free = board.getFreeSpots();
+        
+        // Count non-holes
+        int[] freeNeighbours = new int[free.length];
+        int nonHoles = 0;
 
-        for (byte a = 0; a < 8 && !anyNonHole; a++) {
-            for (byte pos = (byte) (8 * a); pos < 7 * a + 8 && !anyNonHole; pos++) {
-                if (board.isFree(pos) && board.getFreeSpotsAround(pos) > 0) {
-                    anyNonHole = true;
-                }
+        for (int i = 0; i < free.length; i++) {
+            byte pos = free[i];
+            freeNeighbours[i] = board.getFreeSpotsAround(pos);
+
+            if (freeNeighbours[i] > 0) {
+                nonHoles++;
             }
         }
-        
-        for (byte a = 0; a < 8; a++) {
-            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
-                if (!board.isFree(pos) || (anyNonHole && board.getFreeSpotsAround(pos) == 0)) {
-                    continue;
-                }
 
-                for (byte v = 1; v <= 15; v++) {
-                    if ((player1 && board.haveIUsed(v)) || (!player1 && board.hasOppUsed(v))) {
-                        continue;
-                    }
+        // Either play all non-holes or all holes
+        List<Byte> freeValues = getFreeValues(board, player1);
+        int[] moves = new int[freeValues.size() * (nonHoles > 0 ? nonHoles : free.length)];
+        int moveIndex = 0;
 
-                    moves.add(new byte[]{a, (byte) (pos % 8), (player1 ? v : (byte) -v)});
+        for (int i = 0; i < free.length; i++) {
+            byte pos = free[i];
+
+            if (nonHoles == 0 || freeNeighbours[i] > 0) {
+                for (Byte v : freeValues) {
+                    moves[moveIndex] = Board.buildMove(pos, v, 0);
+                    moveIndex++;
                 }
             }
         }
@@ -38,4 +42,17 @@ public class NoHoles implements MoveGenerator {
         return moves;
     }
 
+    private List<Byte> getFreeValues(Board board, boolean player1) {
+        List<Byte> freeValues = new ArrayList<>();
+
+        for (byte v = 1; v <= 15; v++) {
+            if ((player1 && board.haveIUsed(v)) || (!player1 && board.hasOppUsed(v))) {
+                continue;
+            }
+
+            freeValues.add(player1 ? v : (byte) -v);
+        }
+
+        return freeValues;
+    }
 }

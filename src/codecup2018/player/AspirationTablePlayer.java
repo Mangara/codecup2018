@@ -40,8 +40,8 @@ public class AspirationTablePlayer extends StandardPlayer {
     }
 
     @Override
-    protected byte[] selectMove() {
-        byte[] move = topLevelSearch(prevScore - WINDOW_SIZE, prevScore + WINDOW_SIZE);
+    protected int selectMove() {
+        int move = topLevelSearch(prevScore - WINDOW_SIZE, prevScore + WINDOW_SIZE);
 
         if (move == FAIL_HIGH) {
             move = topLevelSearch(prevScore + WINDOW_SIZE - 1, Integer.MAX_VALUE);
@@ -69,11 +69,11 @@ public class AspirationTablePlayer extends StandardPlayer {
         byte[] bestMove = null;
         int myAlpha = alpha;
 
-        List<byte[]> moves = generator.generateMoves(board, true);
+        int[] moves = generator.generateMoves(board, true);
 
-        for (byte[] move : moves) {
+        for (int move : moves) {
             if (DEBUG_AB) {
-                System.err.println(getName() + ": Evaluating my move " + Arrays.toString(move));
+                System.err.println(getName() + ": Evaluating my move " + Board.moveToString(move));
             }
 
             board.applyMove(move);
@@ -83,7 +83,7 @@ public class AspirationTablePlayer extends StandardPlayer {
             evaluator.undoMove(move);
 
             if (DEBUG_AB) {
-                System.err.println(getName() + ": Value of my move " + Arrays.toString(move) + " is " + value);
+                System.err.println(getName() + ": Value of my move " + Board.moveToString(move) + " is " + value);
             }
 
             if (value > bestValue) {
@@ -176,15 +176,15 @@ public class AspirationTablePlayer extends StandardPlayer {
         }
 
         if (beta > myAlpha) { // First move did not cause a cutoff
-            List<byte[]> moves = generator.generateMoves(board, player > 0);
+            int[] moves = generator.generateMoves(board, player > 0);
 
-            for (byte[] move : moves) {
+            for (int move : moves) {
                 if (tableMatch && Arrays.equals(move, entry.bestMove)) {
                     continue; // We already tried this one
                 }
                 
                 if (DEBUG_AB) {
-                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sEvaluating move %s%n", getName(), "", Arrays.toString(move));
+                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sEvaluating move %s%n", getName(), "", Board.moveToString(move));
                 }
 
                 board.applyMove(move);

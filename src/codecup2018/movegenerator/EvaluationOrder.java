@@ -2,9 +2,7 @@ package codecup2018.movegenerator;
 
 import codecup2018.data.Board;
 import codecup2018.evaluator.Evaluator;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Arrays;
 
 public class EvaluationOrder implements MoveGenerator {
 
@@ -17,26 +15,23 @@ public class EvaluationOrder implements MoveGenerator {
     }
 
     @Override
-    public List<byte[]> generateMoves(final Board board, boolean player1) {
-        List<byte[]> moves = generator.generateMoves(board, player1);
-        
-        // TODO: do this efficiently
-        Collections.sort(moves, new Comparator<byte[]>() {
-            @Override
-            public int compare(byte[] m1, byte[] m2) {
-                board.applyMove(m1);
-                int val1 = evaluator.evaluate(board);
-                board.undoMove(m1);
-                
-                board.applyMove(m2);
-                int val2 = evaluator.evaluate(board);
-                board.undoMove(m2);
-                
-                return -Integer.compare(val1, val2);
-            }
-        });
-        
+    public int[] generateMoves(final Board board, boolean player1) {
+        int[] moves = generator.generateMoves(board, player1);
+
+        for (int i = 0; i < moves.length; i++) {
+            int move = moves[i];
+
+            board.applyMove(move);
+            int eval = evaluator.evaluate(board);
+            board.undoMove(move);
+
+            moves[i] = Board.setMoveEval(move, -eval);
+        }
+
+        // Sort by negated score
+        Arrays.sort(moves);
+
         return moves;
     }
-    
+
 }

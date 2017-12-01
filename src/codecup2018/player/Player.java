@@ -36,7 +36,7 @@ public abstract class Player {
 
         // Read in 5 blocked fields
         for (int i = 0; i < 5; i++) {
-            byte pos = Board.getPos(in.readLine());
+            byte pos = Board.parsePos(in.readLine());
             block(pos);
         }
 
@@ -53,13 +53,13 @@ public abstract class Player {
                 processMove(Board.parseMove(input), false);
             }
 
-            byte[] move = move();
+            int move = move();
 
             if (TIMING) {
                 System.err.println("Move took " + (System.currentTimeMillis() - start) + " ms.");
             }
 
-            out.println(Board.coordinatesToString(move[0], move[1]) + "=" + move[2]);
+            out.println(Board.moveToString(move));
         }
     }
 
@@ -75,15 +75,15 @@ public abstract class Player {
         board.block(pos);
     }
 
-    public void processMove(byte[] move, boolean mine) {
-        board.applyMove(new byte[]{move[0], move[1], (mine ? move[2] : (byte) -move[2])});
+    public void processMove(int move, boolean mine) {
+        board.applyMove(mine ? move : Board.setMoveVal(move, (byte) -Board.getMoveVal(move)));
     }
 
-    public byte[] move() {
-        byte[] move = selectMove();
+    public int move() {
+        int move = selectMove();
         processMove(move, true);
         return move;
     }
 
-    protected abstract byte[] selectMove();
+    protected abstract int selectMove();
 }

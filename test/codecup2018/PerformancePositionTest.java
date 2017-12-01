@@ -36,7 +36,7 @@ public class PerformancePositionTest {
         Player unoptimized = new NegaMaxPlayer("NM_IEV_MI_4", eval, new MaxInfluenceMoves(), 4);
         //Player unoptimized = new AspirationPlayer("Unordered", eval, new MostFreeMax(), 10);
         unoptimized.initialize(new BitBoard(board));
-        byte[] move1 = unoptimized.move();
+        int move1 = unoptimized.move();
         int unoptimizedEvaluations = eval.getnEvaluations();
         
         //Player optimized = new AspirationPlayer("As_MF_MFM_11", eval, new MostFreeMax(), 11);
@@ -44,7 +44,7 @@ public class PerformancePositionTest {
         Player optimized = new AspirationTablePlayer("AsT_IEV_MI_4", eval, new MaxInfluenceMoves(), 4);
         //Player optimized = new AspirationPlayer("EV_Ordered", eval, new EvaluationOrder(new ExpectedValue(), new MostFreeMax()), 10);
         optimized.initialize(new BitBoard(board));
-        byte[] move2 = optimized.move();
+        int move2 = optimized.move();
         int optimizedEvaluations = eval.getnEvaluations();
         
         if (first) {
@@ -76,13 +76,13 @@ public class PerformancePositionTest {
         String[] ms = moves.split(",");
         
         for (int i = 0; i < 5; i++) {
-            byte pos = Board.getPos(ms[i]);
+            byte pos = Board.parsePos(ms[i]);
             board.block(pos);
         }
         
         for (int i = 5; i < ms.length; i++) {
             String m = ms[i];
-            byte[] move = Board.parseMove(m);
+            int move = Board.parseMove(m);
             boolean myMove = (i % 2 == 1) == player1; // Odd because actual moves start after 5 blocks
             board.applyMove(new byte[] {move[0], move[1], myMove ? move[2] : (byte) -move[2]});
         }

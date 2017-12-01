@@ -1,34 +1,37 @@
 package codecup2018.movegenerator;
 
-import codecup2018.data.ArrayBoard;
 import codecup2018.data.Board;
-import java.util.ArrayList;
-import java.util.List;
 
 public class NoHolesMax implements MoveGenerator {
 
     @Override
-    public List<byte[]> generateMoves(Board board, boolean player1) {
-        List<byte[]> moves = new ArrayList<>();
-        boolean anyNonHole = false;
+    public int[] generateMoves(Board board, boolean player1) {
+        byte[] free = board.getFreeSpots();
 
-        for (byte a = 0; a < 8 && !anyNonHole; a++) {
-            for (byte pos = (byte) (8 * a); pos < 7 * a + 8 && !anyNonHole; pos++) {
-                if (board.isFree(pos) && board.getFreeSpotsAround(pos) > 0) {
-                    anyNonHole = true;
-                }
+        // Count non-holes
+        int[] freeNeighbours = new int[free.length];
+        int nonHoles = 0;
+
+        for (int i = 0; i < free.length; i++) {
+            byte pos = free[i];
+            freeNeighbours[i] = board.getFreeSpotsAround(pos);
+
+            if (freeNeighbours[i] > 0) {
+                nonHoles++;
             }
         }
 
-        byte v = getExtremeValueLeft(board, player1, anyNonHole);
+        // Either play all non-holes or all holes
+        byte v = getExtremeValueLeft(board, player1, nonHoles > 0);
+        int[] moves = new int[nonHoles > 0 ? nonHoles : free.length];
+        int moveIndex = 0;
 
-        for (byte a = 0; a < 8; a++) {
-            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
-                if (!board.isFree(pos) || (anyNonHole && board.getFreeSpotsAround(pos) == 0)) {
-                    continue;
-                }
+        for (int i = 0; i < free.length; i++) {
+            byte pos = free[i];
 
-                moves.add(new byte[]{a, (byte) (pos % 8), (player1 ? v : (byte) -v)});
+            if (nonHoles == 0 || freeNeighbours[i] > 0) {
+                moves[moveIndex] = Board.buildMove(pos, v, 0);
+                moveIndex++;
             }
         }
 
@@ -40,7 +43,7 @@ public class NoHolesMax implements MoveGenerator {
             byte v = (byte) (max ? 15 - i : i + 1);
 
             if ((player1 && !board.haveIUsed(v)) || (!player1 && !board.hasOppUsed(v))) {
-                return v;
+                return (player1 ? v : (byte) -v);
             }
         }
 

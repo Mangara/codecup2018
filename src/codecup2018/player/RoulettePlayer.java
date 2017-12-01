@@ -16,34 +16,34 @@ public class RoulettePlayer extends StandardPlayer {
     }
 
     @Override
-    protected byte[] selectMove() {
+    protected int selectMove() {
         // Pick a move with probability proportional to a power of its expected value
-        List<byte[]> moves = generator.generateMoves(board, true);
+        int[] moves = generator.generateMoves(board, true);
 
         // Evaluate all moves
-        double[] values = new double[moves.size()];
+        double[] values = new double[moves.length];
 
-        for (int i = 0; i < moves.size(); i++) {
-            board.applyMove(moves.get(i));
+        for (int i = 0; i < moves.length; i++) {
+            board.applyMove(moves[i]);
             values[i] = evaluator.evaluate(board);
-            board.undoMove(moves.get(i));
+            board.undoMove(moves[i]);
         }
 
         // Normalize move values
         double minValue = Double.POSITIVE_INFINITY;
 
-        for (int i = 0; i < moves.size(); i++) {
+        for (int i = 0; i < moves.length; i++) {
             minValue = Math.min(minValue, values[i]);
         }
 
-        for (int i = 0; i < moves.size(); i++) {
+        for (int i = 0; i < moves.length; i++) {
             values[i] = Math.pow(values[i] - minValue, power);
         }
 
         // Roulette selection
         double totalValue = 0;
 
-        for (int i = 0; i < moves.size(); i++) {
+        for (int i = 0; i < moves.length; i++) {
             totalValue += values[i];
         }
 
@@ -56,10 +56,10 @@ public class RoulettePlayer extends StandardPlayer {
                 index++;
             }
 
-            return moves.get(index - 1);
+            return moves[index - 1];
         } else {
             // All moves have value 0 - pick a random move
-            return moves.get(RAND.nextInt(moves.size()));
+            return moves[RAND.nextInt(moves.length)];
         }
     }
 
