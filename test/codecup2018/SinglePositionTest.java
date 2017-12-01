@@ -44,10 +44,10 @@ public class SinglePositionTest {
         
         Player.DEBUG = true;
         player.initialize(board);
-        byte[] move = player.move();
+        int move = player.move();
         
         System.out.println();
         System.out.println("==========================");
-        System.out.println("Move: " + Arrays.toString(move));
+        System.out.println("Move: " + Board.moveToString(move));
     }
 }

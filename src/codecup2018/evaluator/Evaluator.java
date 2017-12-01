@@ -18,7 +18,7 @@ public interface Evaluator {
         
     public void block(byte pos);
             
-    public void applyMove(byte[] move);
+    public void applyMove(int move);
 
-    public void undoMove(byte[] move);
+    public void undoMove(int move);
 }

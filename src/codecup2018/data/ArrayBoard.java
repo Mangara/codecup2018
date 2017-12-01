@@ -44,14 +44,14 @@ public class ArrayBoard extends Board {
     }
 
     @Override
-    public int[] getFreeSpots() {
-        int[] free = new int[nFree];
+    public byte[] getFreeSpots() {
+        byte[] free = new byte[nFree];
         int i = 0;
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 if (grid[a][b] == FREE) {
-                    free[i] = buildMove(getPos(a, b), (byte) 0, 0);
+                    free[i] = getPos(a, b);
                     i++;
                 }
             }

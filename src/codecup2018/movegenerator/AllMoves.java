@@ -7,26 +7,34 @@ import java.util.List;
 public class AllMoves implements MoveGenerator {
 
     @Override
-    public List<byte[]> generateMoves(Board board, boolean player1) {
-        List<byte[]> moves = new ArrayList<>();
+    public int[] generateMoves(Board board, boolean player1) {
+        byte[] free = board.getFreeSpots();
+        List<Byte> freeValues = getFreeValues(board, player1);
 
-        for (byte a = 0; a < 8; a++) {
-            for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
-                if (!board.isFree(pos)) {
-                    continue;
-                }
+        int[] moves = new int[free.length * freeValues.size()];
+        int i = 0;
 
-                for (byte v = 1; v <= 15; v++) {
-                    if ((player1 && board.haveIUsed(v)) || (!player1 && board.hasOppUsed(v))) {
-                        continue;
-                    }
-
-                    moves.add(new byte[]{a, (byte) (pos % 8), (player1 ? v : (byte) -v)});
-                }
+        for (byte pos : free) {
+            for (byte v : freeValues) {
+                moves[i] = Board.buildMove(pos, v, 0);
+                i++;
             }
         }
 
         return moves;
     }
 
+    private List<Byte> getFreeValues(Board board, boolean player1) {
+        List<Byte> freeValues = new ArrayList<>();
+
+        for (byte v = 1; v <= 15; v++) {
+            if ((player1 && board.haveIUsed(v)) || (!player1 && board.hasOppUsed(v))) {
+                continue;
+            }
+
+            freeValues.add(player1 ? v : (byte) -v);
+        }
+
+        return freeValues;
+    }
 }

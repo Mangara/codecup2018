@@ -1,35 +1,23 @@
 package codecup2018.movegenerator;
 
 import codecup2018.data.Board;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.Arrays;
 
 public class MaxInfluenceMoves implements MoveGenerator {
 
     @Override
-    public List<byte[]> generateMoves(final Board board, boolean player1) {
-        List<byte[]> moves = board.getFreeSpots();
+    public int[] generateMoves(final Board board, boolean player1) {
+        byte v = getMaxValueLeft(board, player1);
+        byte[] free = board.getFreeSpots();
+        int[] moves = new int[free.length];
         
         // Moves with many open squares should be processed first
-        for (byte[] move : moves) {
-            // Temporarily store these sorting values in the move
-            move[2] = (byte) board.getFreeSpotsAround(Board.getPos(move[0], move[1]));
+        for (int i = 0; i < free.length; i++) {
+            byte pos = free[i];
+            moves[i] = Board.buildMove(pos, v, -board.getFreeSpotsAround(pos));
         }
         
-        Collections.sort(moves, new Comparator<byte[]>() {
-            @Override
-            public int compare(byte[] m1, byte[] m2) {
-                return -Byte.compare(m1[2], m2[2]);
-            }
-        });
-        
-        byte v = getMaxValueLeft(board, player1);
-        
-        for (byte[] move : moves) {
-            move[2] = v;
-        }
-
+        Arrays.sort(moves);
         return moves;
     }
 

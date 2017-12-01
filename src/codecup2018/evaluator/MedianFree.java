@@ -8,16 +8,16 @@ public class MedianFree implements Evaluator {
     @Override
     public int evaluate(Board board) {
         // Find the value of all free spaces
-        int[] free = board.getFreeSpots();
+        byte[] free = board.getFreeSpots();
 
         for (int i = 0; i < free.length; i++) {
-            free[i] = Board.setMoveEval(free[i], board.getHoleValue(Board.getMovePos(free[i])));
+            free[i] = (byte) board.getHoleValue(free[i]); // In the range [-90, 90], so fits in a byte
         }
 
         // Return the one that wouldnt be filled in if the players just took
         // turns filling in free spaces with 0
         Arrays.sort(free);
-        return 10000 * Board.getMoveEval(free[(free.length - 1) / 2]);
+        return 10000 * free[(free.length - 1) / 2];
     }
 
     @Override
@@ -29,11 +29,11 @@ public class MedianFree implements Evaluator {
     }
 
     @Override
-    public void applyMove(byte[] move) {
+    public void applyMove(int move) {
     }
 
     @Override
-    public void undoMove(byte[] move) {
+    public void undoMove(int move) {
     }
 
 }

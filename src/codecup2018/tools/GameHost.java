@@ -1,22 +1,18 @@
 package codecup2018.tools;
 
-import codecup2018.Util;
 import codecup2018.data.BitBoard;
 import codecup2018.data.ArrayBoard;
 import codecup2018.data.Board;
-import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.IncrementalExpectedValue;
-import codecup2018.movegenerator.MaxInfluenceMoves;
-import codecup2018.movegenerator.NoHoles;
-import codecup2018.player.AspirationTablePlayer;
+import codecup2018.movegenerator.AllMoves;
+import codecup2018.player.AlphaBetaPlayer;
 import codecup2018.player.Player;
-import codecup2018.player.SimpleMaxPlayer;
+import codecup2018.player.RandomPlayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -29,10 +25,11 @@ public class GameHost {
         //setRandom(new Random());
         setRandom(new Random(614944651));
         
+        GameHost.runGame(new RandomPlayer("Rando", new AllMoves()), new AlphaBetaPlayer("AB_IEV_AM_2", new IncrementalExpectedValue(), new AllMoves(), 2), true);
         //GameHost.runGame(new SimpleMaxPlayer("Expy_MI", new ExpectedValue(), new MaxInfluenceMoves()), new NegaMaxPlayer("NM_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4), false);
         //GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
         //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), false);
-        GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationTablePlayer("AsT_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3), false);
+        //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationTablePlayer("AsT_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3), false);
         //GameHost.runGameThreaded(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4));
     }
 
@@ -55,10 +52,10 @@ public class GameHost {
                 System.err.println("GAME: Asking player 1 for a move");
             }
 
-            byte[] p1Move = p1.move();
+            int p1Move = p1.move();
 
             if (print) {
-                System.err.println("GAME: Player 1 returned move: " + Arrays.toString(p1Move) + ". Checking ...");
+                System.err.println("GAME: Player 1 returned move: " + Board.moveToString(p1Move) + ". Checking ...");
             }
 
             verifyMove(board, p1Move, true);
@@ -74,10 +71,10 @@ public class GameHost {
                 System.err.println("GAME: Asking player 2 for a move");
             }
 
-            byte[] p2Move = p2.move();
+            int p2Move = p2.move();
 
             if (print) {
-                System.err.println("GAME: Player 2 returned move: " + Arrays.toString(p2Move) + ". Checking ...");
+                System.err.println("GAME: Player 2 returned move: " + Board.moveToString(p2Move) + ". Checking ...");
             }
 
             verifyMove(board, p2Move, false);
@@ -230,23 +227,32 @@ public class GameHost {
         writer.flush();
     }
     
-    private static void verifyMove(ArrayBoard board, byte[] move, boolean player1) {
+    private static void verifyMove(ArrayBoard board, int move, boolean player1) {
         // Position is empty
-        if (move[0] < 0 || move[0] > 7 || move[1] < 0 || move[1] > 7 - move[0]) {
+        byte pos = Board.getMovePos(move);
+        byte a = (byte) (pos / 8), b = (byte) (pos % 8);
+        
+        if (a < 0 || a > 7 || b < 0 || b > 7 - a) {
             throw new IllegalArgumentException("Position does not exist");
         }
 
-        if (board.get(Board.getPos(move[0], move[1])) != Board.FREE) {
+        if (board.get(pos) != Board.FREE) {
             throw new IllegalArgumentException("Position not free");
         }
 
         // Number is unused
-        if (move[2] < 1 || (player1 && board.haveIUsed(move[2])) || (!player1 && board.hasOppUsed(move[2]))) {
+        byte val = Board.getMoveVal(move);
+        
+        if (val < 1) {
+            throw new IllegalArgumentException("Illegal value");
+        }
+        
+        if ((player1 && board.haveIUsed(val)) || (!player1 && board.hasOppUsed(val))) {
             throw new IllegalArgumentException("Value already used");
         }
 
         // Apply move
-        board.set(move[0], move[1], (player1 ? move[2] : (byte) -move[2]));
+        board.set(a, b, (player1 ? val : (byte) -val));
     }
 
     private static int getBlackHoleScore(ArrayBoard board) {

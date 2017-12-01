@@ -1,11 +1,8 @@
 package codecup2018.player;
 
-import codecup2018.Util;
 import codecup2018.data.Board;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
-import java.util.Arrays;
-import java.util.List;
 
 public class NegaMaxPlayer extends StandardPlayer {
 
@@ -27,40 +24,13 @@ public class NegaMaxPlayer extends StandardPlayer {
     }
 
     @Override
-    protected byte[] selectMove() {
-        // Top-level alpha-beta
-        int bestValue = Integer.MIN_VALUE + 1;
-        byte[] bestMove = null;
-
-        List<byte[]> moves = generator.generateMoves(board, true);
-
-        for (byte[] move : moves) {
-            if (DEBUG_AB) {
-                System.err.println(getName() + ": Evaluating my move " + Arrays.toString(move));
-            }
-
-            board.applyMove(move);
-            evaluator.applyMove(move);
-            int value = -negamax(-1, depth, Integer.MIN_VALUE + 1, -bestValue);
-            board.undoMove(move);
-            evaluator.undoMove(move);
-
-            if (DEBUG_AB) {
-                System.err.println(getName() + ": Value of my move " + Arrays.toString(move) + " is " + value);
-            }
-
-            if (value > bestValue) {
-                bestValue = value;
-                bestMove = move;
-            }
-        }
-
-        return bestMove;
+    protected int selectMove() {
+        return negamax(1, depth + 1, Board.MIN_EVAL_MOVE, Board.MAX_EVAL_MOVE);
     }
 
     private int negamax(int player, int depth, int alpha, int beta) {
         if (DEBUG_AB) {
-            System.err.printf("%s:  Running negamax with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
+            System.err.printf("%s:  Running negamax with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, Board.getMoveEval(alpha), Board.getMoveEval(beta));
             Board.print(board);
         }
 
@@ -68,29 +38,29 @@ public class NegaMaxPlayer extends StandardPlayer {
             return player * evaluator.evaluate(board);
         }
 
-        int bestValue = Integer.MIN_VALUE + 1;
-        List<byte[]> moves = generator.generateMoves(board, player > 0);
+        int bestMove = Board.MIN_EVAL_MOVE;
+        int[] moves = generator.generateMoves(board, player > 0);
 
-        for (byte[] move : moves) {
+        for (int move : moves) {
             if (DEBUG_AB) {
-                System.err.printf("%s:   Evaluating move %s%n", getName(), Arrays.toString(move));
+                System.err.printf("%s:   Evaluating move %s%n", getName(), Board.moveToString(move));
             }
 
             board.applyMove(move);
             evaluator.applyMove(move);
-            int value = -negamax(-player, depth - 1, -beta, -alpha);
+            int bestChildMove = Board.negateEval(negamax(-player, depth - 1, -beta, -alpha));
             board.undoMove(move);
             evaluator.undoMove(move);
 
             if (DEBUG_AB) {
-                System.err.printf("%s:   Got back a score of %d%n", getName(), value);
+                System.err.printf("%s:   Got back a score of %d%n", getName(), Board.getMoveEval(bestChildMove));
             }
 
-            if (value > bestValue) {
-                bestValue = value;
+            if (bestChildMove > bestMove) {
+                bestMove = bestChildMove;
 
-                if (value > alpha) {
-                    alpha = value;
+                if (bestChildMove > alpha) {
+                    alpha = bestChildMove;
 
                     if (beta <= alpha) {
                         break;
@@ -99,7 +69,7 @@ public class NegaMaxPlayer extends StandardPlayer {
             }
         }
 
-        return bestValue;
+        return bestMove;
     }
 
 }

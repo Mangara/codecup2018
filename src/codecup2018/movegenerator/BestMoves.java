@@ -24,15 +24,15 @@ public class BestMoves implements MoveGenerator {
     }
 
     @Override
-    public List<byte[]> generateMoves(Board board, boolean player1) {
-        List<byte[]> allMoves = generator.generateMoves(board, player1);
+    public int[] generateMoves(Board board, boolean player1) {
+        int[] allMoves = generator.generateMoves(board, player1);
 
         // Sorted worst-to-best
-        List<byte[]> result = new ArrayList<>(nMoves);
+        List<Integer> result = new ArrayList<>(nMoves);
         List<Integer> values = new ArrayList<>();
 
-        for (int i = 0; i < allMoves.size(); i++) {
-            byte[] move = allMoves.get(i);
+        for (int i = 0; i < allMoves.length; i++) {
+            int move = allMoves[i];
 
             // Find the value
             board.applyMove(move);
@@ -58,16 +58,23 @@ public class BestMoves implements MoveGenerator {
             }
         }
         
+        /*///DEBUG
         System.out.print("Moves: [");
-        for (byte[] m : result) {
-            System.out.print(Arrays.toString(m) + ", ");
+        for (int m : result) {
+            System.out.print(Board.moveToString(m) + ", ");
         }
         System.out.println("]");
         System.out.println("Values: " + values);
+        //*/
 
         // Return best first
-        Collections.reverse(result);
-        return result;
+        int[] moves = new int[nMoves];
+        
+        for (int i = 0; i < nMoves; i++) {
+            moves[i] = result.get(nMoves - i - 1);
+        }
+        
+        return moves;
     }
 
 }

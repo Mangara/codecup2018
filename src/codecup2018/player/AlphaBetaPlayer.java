@@ -1,11 +1,8 @@
 package codecup2018.player;
 
-import codecup2018.Util;
 import codecup2018.data.Board;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
-import java.util.Arrays;
-import java.util.List;
 
 public class AlphaBetaPlayer extends StandardPlayer {
 
@@ -27,16 +24,16 @@ public class AlphaBetaPlayer extends StandardPlayer {
     }
     
     @Override
-    protected byte[] selectMove() {
+    protected int selectMove() {
         // Top-level alpha-beta
         int bestValue = Integer.MIN_VALUE;
-        byte[] bestMove = null;
+        int bestMove = 0;
 
-        List<byte[]> moves = generator.generateMoves(board, true);
+        int[] moves = generator.generateMoves(board, true);
 
-        for (byte[] move : moves) {
+        for (int move : moves) {
             if (DEBUG_AB) {
-                System.err.println(getName() + ": Evaluating my move " + Arrays.toString(move));
+                System.err.println(getName() + ": Evaluating my move " + Board.moveToString(move));
             }
 
             board.applyMove(move);
@@ -46,7 +43,7 @@ public class AlphaBetaPlayer extends StandardPlayer {
             evaluator.undoMove(move);
 
             if (DEBUG_AB) {
-                System.err.println(getName() + ": Value of my move " + Arrays.toString(move) + " is " + value);
+                System.err.println(getName() + ": Value of my move " + Board.moveToString(move) + " is " + value);
             }
 
             if (value > bestValue) {
@@ -69,11 +66,11 @@ public class AlphaBetaPlayer extends StandardPlayer {
         }
 
         int bestValue = (player1 ? Integer.MIN_VALUE : Integer.MAX_VALUE);
-        List<byte[]> moves = generator.generateMoves(board, player1);
+        int[] moves = generator.generateMoves(board, player1);
 
-        for (byte[] move : moves) {
+        for (int move : moves) {
             if (DEBUG_AB) {
-                System.err.printf("%s:   Evaluating move %s%n", getName(), Arrays.toString(move));
+                System.err.printf("%s:   Evaluating move %s%n", getName(), Board.moveToString(move));
             }
 
             board.applyMove(move);

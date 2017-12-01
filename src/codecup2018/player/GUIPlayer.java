@@ -41,13 +41,13 @@ public class GUIPlayer extends Player {
     }
 
     @Override
-    public void processMove(byte[] move, boolean mine) {
+    public void processMove(int move, boolean mine) {
         super.processMove(move, mine);
         frame.processMove(move, mine);
     }
 
     @Override
-    protected byte[] selectMove() {
+    protected int selectMove() {
         frame.requestMove();
         
         while (!frame.moveAvailable()) {

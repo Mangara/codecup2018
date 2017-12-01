@@ -33,12 +33,12 @@ public class CountingEvaluator implements Evaluator {
     }
 
     @Override
-    public void applyMove(byte[] move) {
+    public void applyMove(int move) {
         evaluator.applyMove(move);
     }
 
     @Override
-    public void undoMove(byte[] move) {
+    public void undoMove(int move) {
         evaluator.undoMove(move);
     }
     

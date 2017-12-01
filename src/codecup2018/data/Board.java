@@ -46,7 +46,7 @@ public abstract class Board {
 
     public abstract int getFreeSpotsAround(byte pos);
 
-    public abstract int[] getFreeSpots();
+    public abstract byte[] getFreeSpots();
 
     public abstract boolean isGameOver();
 
@@ -56,10 +56,12 @@ public abstract class Board {
 
     public abstract long getHash();
 
-    // Utility methods
+    // Move-related utility methods
     public static final int MOVE_POS_MASK = (1 << 6) - 1;           // 00000000000000000000000000111111
     public static final int MOVE_VAL_MASK = ((1 << 5) - 1) << 6;    // 00000000000000000000011111000000
     public static final int MOVE_EVAL_MASK = ((1 << 21) - 1) << 11; // 11111111111111111111100000000000
+    public static final int MIN_EVAL_MOVE = buildMove((byte) 0, (byte) 0, -750001);
+    public static final int MAX_EVAL_MOVE = buildMove((byte) 0, (byte) 0, 750001);
 
     public static byte getMovePos(int move) {
         return (byte) (move & MOVE_POS_MASK);
@@ -70,7 +72,7 @@ public abstract class Board {
     }
 
     public static int getMoveEval(int move) {
-        return (move & MOVE_EVAL_MASK) >> 11; // Probably wrong for negative numbers?
+        return move >> 11;
     }
 
     public static int setMovePos(int move, byte pos) {
@@ -85,10 +87,15 @@ public abstract class Board {
         return (move & ~MOVE_EVAL_MASK) | (eval << 11);
     }
 
+    public static int negateEval(int move) {
+        return (move & ~MOVE_EVAL_MASK) | ((-(move >> 11) << 11) & MOVE_EVAL_MASK);
+    }
+    
     public static int buildMove(byte pos, byte val, int eval) {
         return (eval << 11) | (val + 15 << 6) | pos;
     }
     
+    // Position-related utility methods
     public static byte getPos(byte a, byte b) {
         return (byte) (8 * a + b);
     }
@@ -97,6 +104,11 @@ public abstract class Board {
         return new byte[]{(byte) (pos / 8), (byte) (pos % 8)};
     }
 
+    // String conversions
+    public static byte parsePos(String location) {
+        return (byte) (8 * (location.charAt(0) - 'A') + location.charAt(1) - '1');
+    }
+    
     public static String posToString(byte pos) {
         return Character.toString((char) ('A' + pos / 8)) + Character.toString((char) ('1' + pos % 8));
     }
@@ -108,18 +120,14 @@ public abstract class Board {
     public static int parseMove(String move) {
         return buildMove((byte) (8 * (move.charAt(0) - 'A') + move.charAt(1) - '1'), (byte) Integer.parseInt(move.substring(3)), 0);
     }
-
-    public static byte getPos(String location) {
-        return (byte) (8 * (location.charAt(0) - 'A') + location.charAt(1) - '1');
-    }
     
-    public static byte[] getCoordinates(String location) {
-        return new byte[]{(byte) (location.charAt(0) - 'A'), (byte) (location.charAt(1) - '1')};
+    public static String moveToString(int move) {
+        return posToString(getMovePos(move)) + '=' + getMoveVal(move);
     }
 
     public static void print(Board board) {
         for (byte h = 0; h < 8; h++) {
-            System.err.printf("%" + 2 * (7 - h) + "s", "");
+            System.err.printf("%" + (2 * (7 - h) + 1) + "s", "");
             for (byte i = 0; i <= h; i++) {
                 if (i > 0) {
                     System.err.print(' ');
@@ -127,8 +135,31 @@ public abstract class Board {
                 byte value = board.get(getPos((byte) (h - i), i));
                 System.err.print(value == Board.BLOCKED ? "  X" : String.format("%3d", value));
             }
-            System.err.printf("%" + 2 * (7 - h) + "s%n", "");
+            System.err.printf("%" + (2 * (7 - h) + 1) + "s%n", "");
         }
         System.err.println("nFree: " + board.getNFreeSpots());
+    }
+    
+    public static void main(String[] args) {
+        int move = buildMove((byte) 0, (byte) -15, -1);
+        
+        System.out.printf("Move: %32s%n", Integer.toBinaryString(move));
+        System.out.printf("Pos:  %32s - %d%n", Integer.toBinaryString(getMovePos(move)), getMovePos(move));
+        System.out.printf("Val:  %32s - %d%n", Integer.toBinaryString(getMoveVal(move)), getMoveVal(move));
+        System.out.printf("Eval: %32s - %d%n", Integer.toBinaryString(getMoveEval(move)), getMoveEval(move));
+        
+        move = negateEval(move);
+        
+        System.out.printf("Move: %32s%n", Integer.toBinaryString(move));
+        System.out.printf("Pos:  %32s - %d%n", Integer.toBinaryString(getMovePos(move)), getMovePos(move));
+        System.out.printf("Val:  %32s - %d%n", Integer.toBinaryString(getMoveVal(move)), getMoveVal(move));
+        System.out.printf("Eval: %32s - %d%n", Integer.toBinaryString(getMoveEval(move)), getMoveEval(move));
+        
+        move = negateEval(move);
+        
+        System.out.printf("Move: %32s%n", Integer.toBinaryString(move));
+        System.out.printf("Pos:  %32s - %d%n", Integer.toBinaryString(getMovePos(move)), getMovePos(move));
+        System.out.printf("Val:  %32s - %d%n", Integer.toBinaryString(getMoveVal(move)), getMoveVal(move));
+        System.out.printf("Eval: %32s - %d%n", Integer.toBinaryString(getMoveEval(move)), getMoveEval(move));
     }
 }
