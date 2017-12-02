@@ -6,7 +6,7 @@ import codecup2018.movegenerator.MoveGenerator;
 
 public class NegaMaxPlayer extends StandardPlayer {
 
-    private static final boolean DEBUG_AB = true;
+    private static final boolean DEBUG_AB = false;
 
     private int depth;
 
@@ -42,24 +42,10 @@ public class NegaMaxPlayer extends StandardPlayer {
         int[] moves = generator.generateMoves(board, player > 0);
 
         for (int move : moves) {
-            if (DEBUG_AB) {
-                System.err.printf("%s:   Evaluating move %s%n", getName(), Board.moveToString(move));
-            }
+            move = evaluateMove(move, player, depth, beta, alpha);
 
-            board.applyMove(move);
-            evaluator.applyMove(move);
-            int value = -Board.getMoveEval(negamax(-player, depth - 1, Board.negateEval(beta), Board.negateEval(alpha)));
-            board.undoMove(move);
-            evaluator.undoMove(move);
-
-            // TODO: think more about when we just want an eval and when we want the entire move
-            
-            if (DEBUG_AB) {
-                System.err.printf("%s:   Got back a score of %d%n", getName(), Board.getMoveEval(value));
-            }
-
-            if (Board.getMoveEval(value) > Board.getMoveEval(bestMove)) {
-                bestMove = Board.setMoveEval(move, Board.getMoveEval(value));
+            if (move > bestMove && Board.getMoveEval(move) > Board.getMoveEval(bestMove)) { // Only overwrite when strictly better
+                bestMove = move;
 
                 if (bestMove > alpha) {
                     alpha = bestMove;
@@ -72,6 +58,26 @@ public class NegaMaxPlayer extends StandardPlayer {
         }
 
         return bestMove;
+    }
+
+    private int evaluateMove(int move, int player, int depth, int beta, int alpha) {
+        if (DEBUG_AB) {
+            System.err.printf("%s:   Evaluating move %s%n", getName(), Board.moveToString(move));
+        }
+        
+        board.applyMove(move);
+        evaluator.applyMove(move);
+        
+        move = Board.setMoveEval(move, -Board.getMoveEval(negamax(-player, depth - 1, Board.negateEval(beta), Board.negateEval(alpha))));
+        
+        board.undoMove(move);
+        evaluator.undoMove(move);
+        
+        if (DEBUG_AB) {
+            System.err.printf("%s:   Got back a score of %d%n", getName(), Board.getMoveEval(move));
+        }
+        
+        return move;
     }
 
 }

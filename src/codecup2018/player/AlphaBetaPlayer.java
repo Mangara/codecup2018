@@ -6,7 +6,7 @@ import codecup2018.movegenerator.MoveGenerator;
 
 public class AlphaBetaPlayer extends StandardPlayer {
 
-    private static final boolean DEBUG_AB = true;
+    private static final boolean DEBUG_AB = false;
 
     private int depth;
 
@@ -52,7 +52,7 @@ public class AlphaBetaPlayer extends StandardPlayer {
             }
         }
 
-        return bestMove;
+        return Board.setMoveEval(bestMove, bestValue);
     }
 
     private int alphaBeta(boolean player1, int depth, int alpha, int beta) {
