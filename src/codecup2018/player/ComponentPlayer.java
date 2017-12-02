@@ -89,7 +89,9 @@ public abstract class ComponentPlayer extends Player {
         ///*/
 
         super.processMove(move, mine);
-        updateComponentsForMove(move[0], move[1], (mine ? move[2] : (byte) -move[2]));
+        byte pos = Board.getMovePos(move);
+        byte a = (byte) (pos / 8), b = (byte) (pos % 8);
+        updateComponentsForMove(a, b, (mine ? Board.getMoveVal(move) : (byte) -Board.getMoveVal(move)));
 
         /*/// DEBUG
         System.err.printf("After processing move (%d, %d) = %d:%n", move[0], move[1], move[2]);

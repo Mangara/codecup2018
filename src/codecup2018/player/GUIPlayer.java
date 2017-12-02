@@ -28,7 +28,7 @@ public class GUIPlayer extends Player {
                 if (val == Board.BLOCKED) {
                     frame.block(a, (byte) (pos % 8));
                 } else if (val != Board.FREE) {
-                    frame.processMove(new byte[] {a, (byte) (pos % 8), (val > 0 ? val : (byte) -val)}, val > 0);
+                    frame.processMove(Board.buildMove(pos, (byte) Math.abs(val), 0), val > 0);
                 }
             }
         }

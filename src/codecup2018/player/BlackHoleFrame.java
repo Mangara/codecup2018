@@ -55,7 +55,7 @@ public class BlackHoleFrame extends javax.swing.JFrame {
     private final JToggleButton[][] boardButtons = new JToggleButton[8][8];
     private final JButton[] numberButtons = new JButton[15];
 
-    private int move = null;
+    private int move = 0;
     private boolean[] used = new boolean[15];
     private ArrayBoard board;
 
@@ -83,11 +83,14 @@ public class BlackHoleFrame extends javax.swing.JFrame {
     }
 
     public void processMove(int move, boolean mine) {
-        board.set(move[0], move[1], (mine ? move[2] : (byte) -move[2]));
-        JToggleButton button = boardButtons[move[0]][move[1]];
+        byte pos = Board.getMovePos(move);
+        byte val = Board.getMoveVal(move);
+        byte a = (byte) (pos / 8), b = (byte) (pos % 8);
+        board.set(a, b, (mine ? val : (byte) -val));
+        JToggleButton button = boardButtons[a][b];
 
         button.setEnabled(false);
-        button.setText(Integer.toString(move[2]));
+        button.setText(Integer.toString(val));
         button.setBackground(mine ? MY_BG_COLOR : OPP_BG_COLOR);
         button.setUI(mine ? MY_UI : OPP_UI);
     }
@@ -119,17 +122,17 @@ public class BlackHoleFrame extends javax.swing.JFrame {
     }
 
     public boolean moveAvailable() {
-        return move != null;
+        return move != 0;
     }
 
-    public byte[] getMove() {
-        if (move == null) {
+    public int getMove() {
+        if (move == 0) {
             throw new NullPointerException();
         }
 
-        byte[] result = move;
+        int result = move;
 
-        move = null;
+        move = 0;
 
         return result;
     }
@@ -146,7 +149,7 @@ public class BlackHoleFrame extends javax.swing.JFrame {
         
         for (byte v = 1; v <= 15; v++) {
             if (!board.haveIUsed(v)) {
-                int move = new byte[] {a, b, v};
+                int move = Board.buildMove(Board.getPos(a, b), v, 0);
                 board.applyMove(move);
                 int expected = ev.evaluate(board);
                 int medianFree = mf.evaluate(board);
@@ -165,15 +168,11 @@ public class BlackHoleFrame extends javax.swing.JFrame {
 
     private void numberPressed(byte val) {
         System.out.println("Pressed number " + val);
-        // Set up move
-        move = new byte[3];
 
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 if (boardButtons[a][b].isSelected()) {
-                    move[0] = a;
-                    move[1] = b;
-                    move[2] = val;
+                    move = Board.buildMove(Board.getPos(a, b), val, 0);
 
                     used[val - 1] = true;
                     board.set(a, b, val);
@@ -283,6 +282,8 @@ public class BlackHoleFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Black Hole");
+        setMinimumSize(new java.awt.Dimension(800, 400));
+        setPreferredSize(new java.awt.Dimension(800, 400));
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
 
         pack();

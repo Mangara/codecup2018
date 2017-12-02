@@ -4,6 +4,7 @@ import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
 import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.movegenerator.AllMoves;
+import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.player.AlphaBetaPlayer;
 import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
@@ -24,8 +25,8 @@ public class RandomPositionCorrectnessTest {
             //new NegaMaxPlayer("NM_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new AspirationTablePlayer("AsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)
             
-            new AlphaBetaPlayer("AB_IEV_AM_3", new IncrementalExpectedValue(), new AllMoves(), 3),
-            new NegaMaxPlayer("NM_IEV_AM_3", new IncrementalExpectedValue(), new AllMoves(), 3)
+            new AlphaBetaPlayer("AB_IEV_AM_1", new IncrementalExpectedValue(), new AllMoves(), 0),
+            new NegaMaxPlayer("NM_IEV_AM_1", new IncrementalExpectedValue(), new AllMoves(), 0)
     );
 
     public RandomPositionCorrectnessTest(Board board) {
@@ -34,7 +35,7 @@ public class RandomPositionCorrectnessTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return RandomPostionGenerator.generateTestData(1000);
+        return RandomPostionGenerator.generateTestData(1); // 1000
     }
 
     @Test
@@ -55,7 +56,7 @@ public class RandomPositionCorrectnessTest {
                     Player p = players.get(i);
                     int m = moves.get(i);
                     
-                    System.err.println(p + ": " + Board.moveToString(m));
+                    System.err.println(p.getName() + ": " + Board.moveToString(m));
                 }
                 System.err.println();
                 
