@@ -60,72 +60,74 @@ public abstract class Board {
     public static final int MOVE_POS_MASK = (1 << 6) - 1;           // 00000000000000000000000000111111
     public static final int MOVE_VAL_MASK = ((1 << 5) - 1) << 6;    // 00000000000000000000011111000000
     public static final int MOVE_EVAL_MASK = ((1 << 21) - 1) << 11; // 11111111111111111111100000000000
-    public static final int MIN_EVAL_MOVE = buildMove((byte) 0, (byte) 0, -750001);
-    public static final int MAX_EVAL_MOVE = buildMove((byte) 0, (byte) 0, 750001);
+    public static final int MIN_EVAL = -750001;
+    public static final int MAX_EVAL = 750001;
+    public static final int MIN_EVAL_MOVE = buildMove((byte) 0, (byte) 0, MIN_EVAL);
+    public static final int MAX_EVAL_MOVE = buildMove((byte) 0, (byte) 0, MAX_EVAL);
 
-    public static byte getMovePos(int move) {
+    public static final byte getMovePos(int move) {
         return (byte) (move & MOVE_POS_MASK);
     }
 
-    public static byte getMoveVal(int move) {
+    public static final byte getMoveVal(int move) {
         return (byte) (((move & MOVE_VAL_MASK) >> 6) - 15);
     }
 
-    public static int getMoveEval(int move) {
+    public static final int getMoveEval(int move) {
         return move >> 11;
     }
 
-    public static int setMovePos(int move, byte pos) {
+    public static final int setMovePos(int move, byte pos) {
         return (move & ~MOVE_POS_MASK) | pos;
     }
 
-    public static int setMoveVal(int move, byte val) {
+    public static final int setMoveVal(int move, byte val) {
         return (move & ~MOVE_VAL_MASK) | (val + 15 << 6);
     }
 
-    public static int setMoveEval(int move, int eval) {
+    public static final int setMoveEval(int move, int eval) {
         return (move & ~MOVE_EVAL_MASK) | (eval << 11);
     }
 
-    public static int negateEval(int move) {
+    public static final int negateEval(int move) {
         return (move & ~MOVE_EVAL_MASK) | ((-(move >> 11) << 11) & MOVE_EVAL_MASK);
     }
     
-    public static int buildMove(byte pos, byte val, int eval) {
+    public static final int buildMove(byte pos, byte val, int eval) {
         return (eval << 11) | (val + 15 << 6) | pos;
     }
     
     // Position-related utility methods
-    public static byte getPos(byte a, byte b) {
+    public static final byte getPos(byte a, byte b) {
         return (byte) (8 * a + b);
     }
 
-    public static byte[] getCoordinates(byte pos) {
+    public static final byte[] getCoordinates(byte pos) {
         return new byte[]{(byte) (pos / 8), (byte) (pos % 8)};
     }
 
     // String conversions
-    public static byte parsePos(String location) {
+    public static final byte parsePos(String location) {
         return (byte) (8 * (location.charAt(0) - 'A') + location.charAt(1) - '1');
     }
     
-    public static String posToString(byte pos) {
+    public static final String posToString(byte pos) {
         return Character.toString((char) ('A' + pos / 8)) + Character.toString((char) ('1' + pos % 8));
     }
 
-    public static String coordinatesToString(byte a, byte b) {
+    public static final String coordinatesToString(byte a, byte b) {
         return Character.toString((char) ('A' + a)) + Character.toString((char) ('1' + b));
     }
 
-    public static int parseMove(String move) {
+    public static final int parseMove(String move) {
         return buildMove((byte) (8 * (move.charAt(0) - 'A') + move.charAt(1) - '1'), (byte) Integer.parseInt(move.substring(3)), 0);
     }
     
-    public static String moveToString(int move) {
+    public static final String moveToString(int move) {
         return posToString(getMovePos(move)) + '=' + getMoveVal(move);
     }
 
-    public static void print(Board board) {
+    public static final void print(Board board) {
         for (byte h = 0; h < 8; h++) {
             System.err.printf("%" + (2 * (7 - h) + 1) + "s", "");
             for (byte i = 0; i <= h; i++) {
