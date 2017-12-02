@@ -86,7 +86,7 @@ public class EndgameTest {
         }
 
         for (int i = 0; i < 15; i++) {
-            byte[] p1Move = p1.move();
+            int p1Move = p1.move();
 
             if (doMove(board, p1Move, true)) {
                 return board;
@@ -94,7 +94,7 @@ public class EndgameTest {
 
             p2.processMove(p1Move, false);
 
-            byte[] p2Move = p2.move();
+            int p2Move = p2.move();
 
             if (doMove(board, p2Move, false)) {
                 return p2.getBoard();
@@ -109,12 +109,15 @@ public class EndgameTest {
     }
 
     private static boolean doMove(ArrayBoard board, int move, boolean player1) {
-        if (board.getFreeSpotsAround(Board.getPos(move[0], move[1])) == 0) {
+        if (board.getFreeSpotsAround(Board.getMovePos(move)) == 0) {
             return true;
         }
 
         // Apply move
-        board.set(move[0], move[1], (player1 ? move[2] : (byte) -move[2]));
+        byte pos = Board.getMovePos(move);
+        byte val = Board.getMoveVal(move);
+        byte a = (byte) (pos / 8), b = (byte) (pos % 8);
+        board.set(a, b, (player1 ? val : (byte) -val));
 
         return false;
     }
@@ -130,7 +133,7 @@ public class EndgameTest {
         for (byte a = 0; a < 8; a++) {
             for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
                 if (board.get(pos) == Board.FREE) {
-                    holes.add(new int[]{a, (byte) (pos % 8), board.getHoleValue(pos)});
+                    holes.add(new int[]{pos, board.getHoleValue(pos)});
                 }
             }
         }
@@ -138,7 +141,7 @@ public class EndgameTest {
         Collections.sort(holes, new Comparator<int[]>() {
             @Override
             public int compare(int[] o1, int[] o2) {
-                return Integer.compare(o1[2], o2[2]);
+                return Integer.compare(o1[1], o2[1]);
             }
         });
 
@@ -164,7 +167,7 @@ public class EndgameTest {
 
             for (int i = 0; i < holes.size(); i++) {
                 int[] hole = holes.get(i);
-                if (move[0] == hole[0] && move[1] == hole[1]) {
+                if (Board.getMovePos(move) == hole[0]) {
                     closed[i] = true;
                     playerClosed[i] = true;
                     break;
@@ -189,7 +192,7 @@ public class EndgameTest {
 
             for (byte j = 1; j <= 15; j++) {
                 if (!board.hasOppUsed(j)) {
-                    player.processMove(new byte[] {(byte) hole[0], (byte) hole[1], j}, false);
+                    player.processMove(Board.buildMove((byte) hole[0], j, 0), false);
                     break;
                 }
             }

@@ -6,7 +6,7 @@ import codecup2018.movegenerator.MoveGenerator;
 
 public class AlphaBetaPlayer extends StandardPlayer {
 
-    private static final boolean DEBUG_AB = false;
+    private static final boolean DEBUG_AB = true;
 
     private int depth;
 

@@ -52,7 +52,7 @@ public class PerformancePositionTest {
             first = false;
         }
         
-        System.out.printf("Evals: %10d vs %10d (%d%%) moves: %10s vs %10s%n", optimizedEvaluations, unoptimizedEvaluations, (100 * optimizedEvaluations) / unoptimizedEvaluations, Arrays.toString(move2), Arrays.toString(move1));
+        System.out.printf("Evals: %10d vs %10d (%d%%) moves: %10s vs %10s%n", optimizedEvaluations, unoptimizedEvaluations, (100 * optimizedEvaluations) / unoptimizedEvaluations, Board.moveToString(move2), Board.moveToString(move1));
     }
 
     @Parameterized.Parameters
@@ -81,10 +81,15 @@ public class PerformancePositionTest {
         }
         
         for (int i = 5; i < ms.length; i++) {
+            boolean myMove = (i % 2 == 1) == player1; // Odd because actual moves start after 5 blocks
             String m = ms[i];
             int move = Board.parseMove(m);
-            boolean myMove = (i % 2 == 1) == player1; // Odd because actual moves start after 5 blocks
-            board.applyMove(new byte[] {move[0], move[1], myMove ? move[2] : (byte) -move[2]});
+            
+            if (!myMove) {
+                move = Board.setMoveVal(move, (byte) -Board.getMoveVal(move));
+            }
+            
+            board.applyMove(move);
         }
         
         return board;

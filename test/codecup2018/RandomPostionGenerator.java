@@ -82,14 +82,14 @@ public class RandomPostionGenerator {
                 testPositions.add(new BitBoard(p1.getBoard()));
             }
 
-            byte[] p1Move = p1.move();
+            int p1Move = p1.move();
             p2.processMove(p1Move, false);
 
             if (rand.nextDouble() < SELECTION_CHANCE) {
                 testPositions.add(new BitBoard(p2.getBoard()));
             }
 
-            byte[] p2Move = p2.move();
+            int p2Move = p2.move();
             if (i < 14) {
                 p1.processMove(p2Move, false);
             }

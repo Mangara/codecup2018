@@ -6,7 +6,7 @@ import codecup2018.movegenerator.MoveGenerator;
 
 public class NegaMaxPlayer extends StandardPlayer {
 
-    private static final boolean DEBUG_AB = false;
+    private static final boolean DEBUG_AB = true;
 
     private int depth;
 
@@ -35,7 +35,7 @@ public class NegaMaxPlayer extends StandardPlayer {
         }
 
         if (depth == 0 || board.isGameOver()) {
-            return player * evaluator.evaluate(board);
+            return Board.buildMove((byte) 0, (byte) 0, player * evaluator.evaluate(board));
         }
 
         int bestMove = Board.MIN_EVAL_MOVE;
@@ -48,19 +48,21 @@ public class NegaMaxPlayer extends StandardPlayer {
 
             board.applyMove(move);
             evaluator.applyMove(move);
-            int bestChildMove = Board.negateEval(negamax(-player, depth - 1, -beta, -alpha));
+            int value = -Board.getMoveEval(negamax(-player, depth - 1, Board.negateEval(beta), Board.negateEval(alpha)));
             board.undoMove(move);
             evaluator.undoMove(move);
 
+            // TODO: think more about when we just want an eval and when we want the entire move
+            
             if (DEBUG_AB) {
-                System.err.printf("%s:   Got back a score of %d%n", getName(), Board.getMoveEval(bestChildMove));
+                System.err.printf("%s:   Got back a score of %d%n", getName(), Board.getMoveEval(value));
             }
 
-            if (bestChildMove > bestMove) {
-                bestMove = bestChildMove;
+            if (Board.getMoveEval(value) > Board.getMoveEval(bestMove)) {
+                bestMove = Board.setMoveEval(move, Board.getMoveEval(value));
 
-                if (bestChildMove > alpha) {
-                    alpha = bestChildMove;
+                if (bestMove > alpha) {
+                    alpha = bestMove;
 
                     if (beta <= alpha) {
                         break;

@@ -1,9 +1,8 @@
 package codecup2018.player;
 
+import codecup2018.data.Board;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
-import java.util.Arrays;
-import java.util.List;
 
 public class SimpleMaxPlayer extends StandardPlayer {
 
@@ -13,7 +12,7 @@ public class SimpleMaxPlayer extends StandardPlayer {
 
     @Override
     protected int selectMove() {
-        byte[] bestMove = null;
+        int bestMove = 0;
         double bestValue = Double.NEGATIVE_INFINITY;
 
         int[] moves = generator.generateMoves(board, true);

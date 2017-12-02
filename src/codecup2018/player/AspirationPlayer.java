@@ -33,6 +33,8 @@ public class AspirationPlayer extends StandardPlayer {
 
     @Override
     protected int selectMove() {
+        return 0;
+    }/*
         int move = topLevelSearch(prevScore - WINDOW_SIZE, prevScore + WINDOW_SIZE);
 
         if (move == FAIL_HIGH) {
@@ -143,6 +145,6 @@ public class AspirationPlayer extends StandardPlayer {
         }
 
         return bestValue;
-    }
+    }*/
 
 }

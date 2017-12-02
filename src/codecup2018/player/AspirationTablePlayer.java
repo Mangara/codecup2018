@@ -41,6 +41,8 @@ public class AspirationTablePlayer extends StandardPlayer {
 
     @Override
     protected int selectMove() {
+        return 0;
+    }/*
         int move = topLevelSearch(prevScore - WINDOW_SIZE, prevScore + WINDOW_SIZE);
 
         if (move == FAIL_HIGH) {
@@ -150,10 +152,8 @@ public class AspirationTablePlayer extends StandardPlayer {
             }
 
             // Try the stored best move first
-            /*
-            Out of an abundance of caution; if entry.bestMove was changed due to
-            a table cell collision, undoing the new move could really mess up the search.
-             */
+            // Store the move out of an abundance of caution; if entry.bestMove was changed due to
+            // a table cell collision, undoing the new move could really mess up the search.
             bestMove = entry.bestMove;
 
             if (DEBUG_AB) {
@@ -236,7 +236,7 @@ public class AspirationTablePlayer extends StandardPlayer {
         }
 
         return bestValue;
-    }
+    }*/
 
     private class TranspositionEntry {
 
