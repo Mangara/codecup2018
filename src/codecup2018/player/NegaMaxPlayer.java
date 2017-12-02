@@ -25,33 +25,37 @@ public class NegaMaxPlayer extends StandardPlayer {
 
     @Override
     protected int selectMove() {
-        return negamax(1, depth + 1, Board.MIN_EVAL_MOVE, Board.MAX_EVAL_MOVE);
+        return negamax(1, depth + 1, Board.MIN_EVAL, Board.MAX_EVAL);
     }
 
     private int negamax(int player, int depth, int alpha, int beta) {
-        if (DEBUG_AB) {
-            System.err.printf("%s:  Running negamax with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, Board.getMoveEval(alpha), Board.getMoveEval(beta));
-            Board.print(board);
-        }
-
         if (depth == 0 || board.isGameOver()) {
             return Board.buildMove((byte) 0, (byte) 0, player * evaluator.evaluate(board));
+        }
+
+        if (DEBUG_AB) {
+            System.err.printf("%s:  Running negamax with %d turns left, interval=[%d, %d] and board state:%n", getName(), depth, alpha, beta);
+            Board.print(board);
         }
 
         int bestMove = Board.MIN_EVAL_MOVE;
         int[] moves = generator.generateMoves(board, player > 0);
 
         for (int move : moves) {
-            move = evaluateMove(move, player, depth, beta, alpha);
+            move = evaluateMove(move, player, depth, alpha, beta);
 
-            if (move > bestMove && Board.getMoveEval(move) > Board.getMoveEval(bestMove)) { // Only overwrite when strictly better
-                bestMove = move;
+            if (move > bestMove) {
+                int eval = Board.getMoveEval(move);
+                
+                if (eval > Board.getMoveEval(bestMove)) { // Only overwrite when strictly better
+                    bestMove = move;
 
-                if (bestMove > alpha) {
-                    alpha = bestMove;
+                    if (eval > alpha) {
+                        alpha = eval;
 
-                    if (beta <= alpha) {
-                        break;
+                        if (beta <= alpha) {
+                            break;
+                        }
                     }
                 }
             }
@@ -60,23 +64,23 @@ public class NegaMaxPlayer extends StandardPlayer {
         return bestMove;
     }
 
-    private int evaluateMove(int move, int player, int depth, int beta, int alpha) {
+    private int evaluateMove(int move, int player, int depth, int alpha, int beta) {
         if (DEBUG_AB) {
             System.err.printf("%s:   Evaluating move %s%n", getName(), Board.moveToString(move));
         }
-        
+
         board.applyMove(move);
         evaluator.applyMove(move);
-        
+
         move = Board.setMoveEval(move, -Board.getMoveEval(negamax(-player, depth - 1, Board.negateEval(beta), Board.negateEval(alpha))));
-        
+
         board.undoMove(move);
         evaluator.undoMove(move);
-        
+
         if (DEBUG_AB) {
             System.err.printf("%s:   Got back a score of %d%n", getName(), Board.getMoveEval(move));
         }
-        
+
         return move;
     }
 

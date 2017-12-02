@@ -3,6 +3,8 @@
 - Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for a sorting score in the top 22 bits. Then, to sort the moves by some score, we just set their top 22 bits appropriately and then use the default numeric sorting algorithm. This also lets the minimax return both a move and its evaluation in one return value. Make sure that all evaluations fit in 22 bits and make utility functions (in util?) to get/set this.
  x Test new MedianFree
 
+- Try running with compiler flags to see what's being inlined vs what isn't: -XX:+PrintCompilation -XX:+UnlockDiagnosticVMOptions -XX:+PrintInlining
+ 
 - Make Board track the number of free-free connections. This allows us to detect the endgame.
 
 - Make a new board that uses bitboards for free positions, my tiles, and opponent tiles, but a 1D array for values.
