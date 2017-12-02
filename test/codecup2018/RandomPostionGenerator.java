@@ -37,7 +37,7 @@ public class RandomPostionGenerator {
             boards.addAll(generateTestBoards(rand));
         }
 
-        return boards;
+        return boards.subList(0, n);
     }
 
     private static List<Board> generateTestBoards(Random rand) {

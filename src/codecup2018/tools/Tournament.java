@@ -27,8 +27,8 @@ public class Tournament {
         runTournament(Arrays.<Player>asList(
                 new RandomPlayer("Rando", new AllMoves()),
                 new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
-                new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4),
-                new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
+                //new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4),
+                //new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
                 new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
         ));
     }

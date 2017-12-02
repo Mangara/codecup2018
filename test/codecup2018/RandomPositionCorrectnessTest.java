@@ -25,8 +25,8 @@ public class RandomPositionCorrectnessTest {
             //new NegaMaxPlayer("NM_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new AspirationTablePlayer("AsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)
             
-            new AlphaBetaPlayer("AB_IEV_AM_1", new IncrementalExpectedValue(), new AllMoves(), 0),
-            new NegaMaxPlayer("NM_IEV_AM_1", new IncrementalExpectedValue(), new AllMoves(), 0)
+            new AlphaBetaPlayer("AB_IEV_AM_3", new IncrementalExpectedValue(), new MostFreeMax(), 3),
+            new NegaMaxPlayer("NM_IEV_AM_3", new IncrementalExpectedValue(), new MostFreeMax(), 3)
     );
 
     public RandomPositionCorrectnessTest(Board board) {
@@ -35,7 +35,7 @@ public class RandomPositionCorrectnessTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return RandomPostionGenerator.generateTestData(1); // 1000
+        return RandomPostionGenerator.generateTestData(1000); // 1000
     }
 
     @Test
@@ -56,7 +56,7 @@ public class RandomPositionCorrectnessTest {
                     Player p = players.get(i);
                     int m = moves.get(i);
                     
-                    System.err.println(p.getName() + ": " + Board.moveToString(m));
+                    System.err.println(p.getName() + ": " + Board.moveToString(m) + " eval: " + Board.getMoveEval(m));
                 }
                 System.err.println();
                 
