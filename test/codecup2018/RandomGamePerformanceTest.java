@@ -21,6 +21,7 @@ import codecup2018.tools.GameHost;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import org.junit.Test;
 
 public class RandomGamePerformanceTest {
@@ -35,13 +36,13 @@ public class RandomGamePerformanceTest {
 
     @Test
     public void runTest() throws NoSuchFieldException, IllegalAccessException {
-        List<Player> opponents = Arrays.<Player>asList(
-                new RankSelectPlayer("Ranky_MI_0.8", new MaxInfluenceMoves(), 0.8),
-                new RandomPlayer("Rando", new AllMoves()),
-                new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles())
-        );
-
         for (StandardPlayer player : players) {
+            List<Player> opponents = Arrays.<Player>asList(
+                    new RankSelectPlayer("Ranky_MI_0.8", new MaxInfluenceMoves(), 0.8, new Random(256745367354L)),
+                    new RandomPlayer("Rando", new AllMoves(), new Random(1567245267354L)),
+                    new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles())
+            );
+
             CountingEvaluator count = makeEvaluatorCount(player);
 
             int[] evaluations = new int[N_GAMES];
@@ -57,14 +58,14 @@ public class RandomGamePerformanceTest {
                 opponent.initialize(new BitBoard(board));
 
                 long start, time = 0;
-                
+
                 if (i % 2 == 0) {
                     // Play a game
                     for (int turn = 0; turn < 15; turn++) {
                         start = System.nanoTime();
                         int p1Move = player.move();
                         time += System.nanoTime() - start;
-                        
+
                         opponent.processMove(p1Move, false);
 
                         int p2Move = opponent.move();
@@ -78,15 +79,15 @@ public class RandomGamePerformanceTest {
                     // Play a game
                     for (int turn = 0; turn < 15; turn++) {
                         int p1Move = opponent.move();
-                        
+
                         start = System.nanoTime();
                         player.processMove(p1Move, false);
                         time += System.nanoTime() - start;
-                        
+
                         start = System.nanoTime();
                         int p2Move = player.move();
                         time += System.nanoTime() - start;
-                        
+
                         if (turn < 14) {
                             opponent.processMove(p2Move, false);
                         }

@@ -1,19 +1,23 @@
 package codecup2018.player;
 
 import codecup2018.movegenerator.MoveGenerator;
-import java.util.List;
 import java.util.Random;
 
 public class RankSelectPlayer extends Player {
 
-    private static final Random RAND = new Random();
+    private final Random rand;
     private final MoveGenerator generator;
     private final double power;
 
     public RankSelectPlayer(String name, MoveGenerator generator, double power) {
+        this(name, generator, power, new Random());
+    }
+    
+    public RankSelectPlayer(String name, MoveGenerator generator, double power, Random rand) {
         super(name);
         this.generator = generator;
         this.power = power;
+        this.rand = rand;
     }
 
     @Override
@@ -21,7 +25,7 @@ public class RankSelectPlayer extends Player {
         int[] moves = generator.generateMoves(board, true);
 
         double totalValue = (1 - Math.pow(power, moves.length + 1)) / (1 - power) - 1;
-        double t = RAND.nextDouble() * totalValue;
+        double t = rand.nextDouble() * totalValue;
         double value = power;
         int index = 0;
 
