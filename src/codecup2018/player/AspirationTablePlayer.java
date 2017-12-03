@@ -4,15 +4,11 @@ import codecup2018.data.Board;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.movegenerator.MoveGenerator;
 import java.util.Arrays;
-import java.util.List;
 
 public class AspirationTablePlayer extends StandardPlayer {
 
-    public static boolean DEBUG_FINAL_VALUE = true;
+    public static boolean DEBUG_FINAL_VALUE = false;
     private static final boolean DEBUG_AB = false;
-
-    private static final byte[] FAIL_HIGH = new byte[0];
-    private static final byte[] FAIL_LOW = new byte[0];
 
     public static int WINDOW_SIZE = 10001;
 
@@ -24,7 +20,7 @@ public class AspirationTablePlayer extends StandardPlayer {
     private final TranspositionEntry[] transpositionTable = new TranspositionEntry[TABLE_SIZE];
 
     private int prevScore = 0;
-    private byte turn = 0;
+    private byte turn = 1;
 
     public AspirationTablePlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth) {
         super(name, evaluator, generator);
@@ -35,188 +31,146 @@ public class AspirationTablePlayer extends StandardPlayer {
     public void initialize(Board currentBoard) {
         super.initialize(currentBoard);
         prevScore = evaluator.evaluate(board);
-        turn = 0;
+        turn = 1;
         Arrays.fill(transpositionTable, null);
     }
 
     @Override
     protected int selectMove() {
-        return 0;
-    }/*
-        int move = topLevelSearch(prevScore - WINDOW_SIZE, prevScore + WINDOW_SIZE);
+        int alpha = prevScore - WINDOW_SIZE, beta = prevScore + WINDOW_SIZE;
 
-        if (move == FAIL_HIGH) {
-            move = topLevelSearch(prevScore + WINDOW_SIZE - 1, Integer.MAX_VALUE);
-        } else if (move == FAIL_LOW) {
-            move = topLevelSearch(Integer.MIN_VALUE + 1, prevScore - WINDOW_SIZE + 1);
+        if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+            System.err.printf("Searching [%d, %d]", alpha, beta);
         }
 
-        if (move == FAIL_HIGH || move == FAIL_LOW) {
-            System.err.println("Search is unstable: failed " + (move == FAIL_HIGH ? "high" : "low") + " after first failing " + (move == FAIL_HIGH ? "low" : "high"));
-            return topLevelSearch(Integer.MIN_VALUE + 1, Integer.MAX_VALUE);
+        int move = negamax((byte) 1, (byte) (maxDepth + 1), alpha, beta);
+        int eval = Board.getMoveEval(move);
+
+        if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+            System.err.printf(" => %d%n", eval);
         }
 
+        if (eval >= beta) { // Fail high
+            alpha = beta - 1;
+            beta = Board.MAX_EVAL;
+
+            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+                System.err.printf("Searching [%d, %d]", alpha, beta);
+            }
+
+            move = negamax((byte) 1, (byte) (maxDepth + 1), alpha, beta);
+            eval = Board.getMoveEval(move);
+
+            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+                System.err.printf(" => %d%n", eval);
+            }
+        } else if (eval <= alpha) { // Fail low
+            beta = alpha + 1;
+            alpha = Board.MIN_EVAL;
+
+            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+                System.err.printf("Searching [%d, %d]", alpha, beta);
+            }
+
+            move = negamax((byte) 1, (byte) (maxDepth + 1), alpha, beta);
+            eval = Board.getMoveEval(move);
+
+            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+                System.err.printf(" => %d%n", eval);
+            }
+        }
+
+        if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+            System.err.println("Final: " + eval);
+        }
+
+        if (eval >= beta || eval <= alpha) {
+            System.err.println("Search is unstable: failed " + (eval >= beta ? "high" : "low") + " after first failing " + (eval >= beta ? "low" : "high"));
+            move = negamax((byte) 1, (byte) (maxDepth + 1), Board.MIN_EVAL, Board.MAX_EVAL);
+            eval = Board.getMoveEval(move);
+        }
+
+        prevScore = eval;
         turn++;
 
         return move;
     }
 
-    private byte[] topLevelSearch(int alpha, int beta) {
-        if (DEBUG_AB || DEBUG_FINAL_VALUE) {
-            System.err.printf("Searching [%d, %d]%n", alpha, beta);
-        }
-
-        // Top-level alpha-beta
-        int bestValue = Integer.MIN_VALUE + 1;
-        byte[] bestMove = null;
-        int myAlpha = alpha;
-
-        int[] moves = generator.generateMoves(board, true);
-
-        for (int move : moves) {
-            if (DEBUG_AB) {
-                System.err.println(getName() + ": Evaluating my move " + Board.moveToString(move));
-            }
-
-            board.applyMove(move);
-            evaluator.applyMove(move);
-            int value = -negamax((byte) -1, maxDepth, -beta, -myAlpha);
-            board.undoMove(move);
-            evaluator.undoMove(move);
-
-            if (DEBUG_AB) {
-                System.err.println(getName() + ": Value of my move " + Board.moveToString(move) + " is " + value);
-            }
-
-            if (value > bestValue) {
-                bestValue = value;
-                bestMove = move;
-
-                if (value > myAlpha) {
-                    myAlpha = value;
-
-                    if (myAlpha >= beta) {
-                        if (DEBUG_AB || DEBUG_FINAL_VALUE) {
-                            System.err.println("FAIL HIGH");
-                        }
-
-                        return FAIL_HIGH;
-                    }
-                }
-            }
-        }
-
-        if (bestValue <= alpha) {
-            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
-                System.err.println("FAIL LOW");
-            }
-
-            return FAIL_LOW;
-        } else {
-            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
-                System.err.println("Final: " + bestValue);
-            }
-
-            prevScore = bestValue;
-            return bestMove;
-        }
-    }
-
     private int negamax(byte player, byte depth, int alpha, int beta) {
         if (depth == 0 || board.isGameOver()) {
-            return player * evaluator.evaluate(board);
+            return Board.buildMove((byte) 0, (byte) 0, player * evaluator.evaluate(board));
         }
-        
+
         if (DEBUG_AB) {
-            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "sRunning negamax with %d plies left, interval=[%d, %d] and board state:%n", getName(), "", depth, alpha, beta);
+            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sRunning negamax with %d plies left, interval=[%d, %d] and board state:%n", getName(), "", depth, alpha, beta);
             Board.print(board);
         }
 
-        int bestValue = Integer.MIN_VALUE + 1;
-        byte[] bestMove = null;
+        int bestMove = Board.MIN_EVAL_MOVE;
+        int bestEval = Board.MIN_EVAL;
         int myAlpha = alpha;
 
         // Check the transposition table
         TranspositionEntry entry = transpositionTable[board.getTranspositionTableKey() & TABLE_KEY_MASK];
         boolean tableMatch = entry != null && entry.hash == board.getHash() && board.isLegalMove(entry.bestMove);
-        
+
         if (tableMatch) {
             // Return the stored evaluation if it matches what we're looking for
+            int entryEval = Board.getMoveEval(entry.bestMove);
+
             if (entry.depthSearched >= depth && (entry.type == TranspositionEntry.EXACT
-                    || (entry.type == TranspositionEntry.UPPER_BOUND && entry.value <= alpha)
-                    || (entry.type == TranspositionEntry.LOWER_BOUND && entry.value >= beta))) {
+                    || (entry.type == TranspositionEntry.UPPER_BOUND && entryEval <= alpha)
+                    || (entry.type == TranspositionEntry.LOWER_BOUND && entryEval >= beta))) {
                 if (DEBUG_AB) {
-                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "s%s transposition table result: %d%n", getName(), "", (entry.type == TranspositionEntry.EXACT ? "Exact" : (entry.type == TranspositionEntry.LOWER_BOUND ? "Lower bound" : "Upper bound")), entry.value);
+                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "s%s transposition table result: %d%n", getName(), "", (entry.type == TranspositionEntry.EXACT ? "Exact" : (entry.type == TranspositionEntry.LOWER_BOUND ? "Lower bound" : "Upper bound")), entryEval);
                 }
-                return entry.value;
+                return entry.bestMove;
             }
 
             // Try the stored best move first
             // Store the move out of an abundance of caution; if entry.bestMove was changed due to
             // a table cell collision, undoing the new move could really mess up the search.
-            bestMove = entry.bestMove;
+            bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, beta);
+            bestEval = Board.getMoveEval(bestMove);
 
-            if (DEBUG_AB) {
-                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sEvaluating move %s%n", getName(), "", Arrays.toString(bestMove));
-            }
-
-            board.applyMove(bestMove);
-            evaluator.applyMove(bestMove);
-            bestValue = -negamax((byte) -player, (byte) (depth - 1), -beta, -myAlpha);
-            board.undoMove(bestMove);
-            evaluator.undoMove(bestMove);
-
-            if (DEBUG_AB) {
-                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sGot back a score of %d%n", getName(), "", bestValue);
-            }
-
-            if (bestValue > myAlpha) {
-                myAlpha = bestValue;
+            if (bestEval > myAlpha) {
+                myAlpha = bestEval;
             }
         }
 
-        if (beta > myAlpha) { // First move did not cause a cutoff
+        if (myAlpha < beta) { // No cut-off yet
             int[] moves = generator.generateMoves(board, player > 0);
 
             for (int move : moves) {
-                if (tableMatch && Arrays.equals(move, entry.bestMove)) {
+                if (tableMatch && Board.getMovePos(move) == Board.getMovePos(entry.bestMove) && Board.getMoveVal(move) == Board.getMoveVal(entry.bestMove)) {
                     continue; // We already tried this one
                 }
-                
-                if (DEBUG_AB) {
-                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sEvaluating move %s%n", getName(), "", Board.moveToString(move));
-                }
 
-                board.applyMove(move);
-                evaluator.applyMove(move);
-                int value = -negamax((byte) -player, (byte) (depth - 1), -beta, -myAlpha);
-                board.undoMove(move);
-                evaluator.undoMove(move);
+                move = evaluateMove(move, player, depth, myAlpha, beta);
 
-                if (DEBUG_AB) {
-                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sGot back a score of %d%n", getName(), "", value);
-                }
+                if (move > bestMove) {
+                    int eval = Board.getMoveEval(move);
+                    
+                    if (eval > bestEval) { // Only overwrite when strictly better
+                        bestMove = move;
+                        bestEval = eval;
 
-                if (value > bestValue) {
-                    bestValue = value;
-                    bestMove = move;
+                        if (eval > myAlpha) {
+                            myAlpha = eval;
 
-                    if (value > myAlpha) {
-                        myAlpha = value;
-
-                        if (beta <= myAlpha) {
-                            if (DEBUG_AB) {
-                                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta-cutoff%n", getName(), "", value);
+                            if (beta <= myAlpha) {
+                                if (DEBUG_AB) {
+                                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta cut-off%n", getName(), "");
+                                }
+                                break;
                             }
-
-                            break;
                         }
                     }
                 }
             }
         } else {
             if (DEBUG_AB) {
-                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta-cutoff%n", getName(), "", bestValue);
+                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta-cutoff from stored move%n", getName(), "");
             }
         }
 
@@ -230,22 +184,40 @@ public class AspirationTablePlayer extends StandardPlayer {
             entry.hash = board.getHash();
             entry.bestMove = bestMove;
             entry.depthSearched = depth;
-            entry.value = bestValue;
-            entry.type = (bestValue > alpha ? (bestValue < beta ? TranspositionEntry.EXACT : TranspositionEntry.LOWER_BOUND) : TranspositionEntry.UPPER_BOUND);
+            entry.type = (bestEval > alpha ? (bestEval < beta ? TranspositionEntry.EXACT : TranspositionEntry.LOWER_BOUND) : TranspositionEntry.UPPER_BOUND);
             entry.turn = turn;
         }
 
-        return bestValue;
-    }*/
+        return bestMove;
+    }
+
+    private int evaluateMove(int move, byte player, byte depth, int alpha, int beta) {
+        if (DEBUG_AB) {
+            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sEvaluating move %s%n", getName(), "", Board.moveToString(move));
+        }
+
+        board.applyMove(move);
+        evaluator.applyMove(move);
+
+        move = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -beta, -alpha)));
+
+        board.undoMove(move);
+        evaluator.undoMove(move);
+
+        if (DEBUG_AB) {
+            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sGot back a score of %d%n", getName(), "", Board.getMoveEval(move));
+        }
+
+        return move;
+    }
 
     private class TranspositionEntry {
 
         static final byte EXACT = 3, LOWER_BOUND = 4, UPPER_BOUND = 5;
 
         long hash; // Position hashcode for identification
-        byte[] bestMove; // Best move found from this position
+        int bestMove; // Best move found from this position, with evaluation
         byte depthSearched; // The depth this position was searched to
-        int value; // The value returned for this position
         byte type; // Whether the value was exact (between alpha and beta) or an upper bound (<= alpha) or a lower bound (>= beta)
         byte turn; // In which turn this entry was stored
     }

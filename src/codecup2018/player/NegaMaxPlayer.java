@@ -72,7 +72,7 @@ public class NegaMaxPlayer extends StandardPlayer {
         board.applyMove(move);
         evaluator.applyMove(move);
 
-        move = Board.setMoveEval(move, -Board.getMoveEval(negamax(-player, depth - 1, Board.negateEval(beta), Board.negateEval(alpha))));
+        move = Board.setMoveEval(move, -Board.getMoveEval(negamax(-player, depth - 1, -beta, -alpha)));
 
         board.undoMove(move);
         evaluator.undoMove(move);
