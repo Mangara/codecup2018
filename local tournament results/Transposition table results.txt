@@ -28,3 +28,44 @@ Average evaluations: 25452
 Quartiles: 3 - 1410 - 16140 - 42823 - 155642
 Average time (ms): 13.288
 Quartiles: 0.033 - 0.563 - 6.197 - 23.058 - 70.198
+
+===== After move representation change =======
+
+Player: NM_IEV_MI_5
+Average evaluations: 25941
+Quartiles: 2 - 1421 - 15681 - 44110 - 154863
+Average time (ms): 7.388
+Quartiles: 0.000 - 0.315 - 3.496 - 12.598 - 93.890
+
+Player: As_IEV_MI_5
+Average evaluations: 27131
+Quartiles: 3 - 1661 - 17873 - 45894 - 168145
+Average time (ms): 7.678
+Quartiles: 0.001 - 0.365 - 3.971 - 13.106 - 56.411
+
+Player: AsT_IEV_MI_5
+Average evaluations: 25581
+Quartiles: 3 - 1427 - 16576 - 42823 - 155642
+Average time (ms): 7.875
+Quartiles: 0.001 - 0.353 - 3.976 - 13.376 - 55.380
+
+==== Full games ===================================
+
+Player: NM_IEV_MI_5
+Average evaluations: 484682
+Quartiles: 268155 - 413091 - 469064 - 540799 - 874381
+Average time (ms): 117.387
+Quartiles: 74.273 - 103.249 - 115.863 - 127.165 - 246.693
+
+Player: As_IEV_MI_5
+Average evaluations: 455163
+Quartiles: 301349 - 405084 - 434064 - 500524 - 737349
+Average time (ms): 121.045
+Quartiles: 82.856 - 107.481 - 117.785 - 131.496 - 176.552
+
+Player: AsT_IEV_MI_5
+Average evaluations: 391766
+Quartiles: 279555 - 342424 - 388375 - 424529 - 627385
+Average time (ms): 117.386
+Quartiles: 79.887 - 99.672 - 111.580 - 127.289 - 207.296
+

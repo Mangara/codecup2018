@@ -38,7 +38,7 @@ public class GameHost {
     }
 
     public static int runGame(Player p1, Player p2, boolean print) {
-        ArrayBoard board = setUpBoard();
+        Board board = setUpBoard();
 
         if (print) {
             Board.print(board);
@@ -110,7 +110,7 @@ public class GameHost {
     }
 
     public static void runGameThreaded(final Player p1, final Player p2) throws IOException {
-        ArrayBoard board = setUpBoard();
+        Board board = setUpBoard();
         Board.print(board);
 
         final CircularByteBuffer p1InputBuffer = new CircularByteBuffer(CircularByteBuffer.INFINITE_SIZE, true);
@@ -191,8 +191,8 @@ public class GameHost {
         }
     }
 
-    private static ArrayBoard setUpBoard() {
-        ArrayBoard board = new ArrayBoard();
+    public static Board setUpBoard() {
+        Board board = new BitBoard();
 
         // Block 5 locations
         Set<Integer> blocked = new HashSet<>();
@@ -206,7 +206,7 @@ public class GameHost {
         for (byte a = 0; a < 8; a++) {
             for (byte b = 0; b < 8 - a; b++) {
                 if (blocked.contains(location)) {
-                    board.set(a, b, Board.BLOCKED);
+                    board.block(Board.getPos(a, b));
                 }
                 location++;
             }
@@ -215,7 +215,7 @@ public class GameHost {
         return board;
     }
 
-    private static void passBlockedCells(ArrayBoard board, PrintWriter writer) {
+    private static void passBlockedCells(Board board, PrintWriter writer) {
         for (byte a = 0; a < 8; a++) {
             for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
                 if (board.get(pos) == Board.BLOCKED) {
@@ -227,7 +227,7 @@ public class GameHost {
         writer.flush();
     }
     
-    private static void verifyMove(ArrayBoard board, int move, boolean player1) {
+    private static void verifyMove(Board board, int move, boolean player1) {
         // Position is empty
         byte pos = Board.getMovePos(move);
         byte a = (byte) (pos / 8), b = (byte) (pos % 8);
@@ -252,10 +252,10 @@ public class GameHost {
         }
 
         // Apply move
-        board.set(a, b, (player1 ? val : (byte) -val));
+        board.applyMove(Board.setMoveVal(move, (player1 ? val : (byte) -val)));
     }
 
-    private static int getBlackHoleScore(ArrayBoard board) {
+    private static int getBlackHoleScore(Board board) {
         for (byte a = 0; a < 8; a++) {
             for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
                 if (board.get(pos) == Board.FREE) {
