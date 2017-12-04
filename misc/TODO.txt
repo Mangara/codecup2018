@@ -1,8 +1,5 @@
 == Architecture
 
-- Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for a sorting score in the top 22 bits. Then, to sort the moves by some score, we just set their top 22 bits appropriately and then use the default numeric sorting algorithm. This also lets the minimax return both a move and its evaluation in one return value. Make sure that all evaluations fit in 22 bits and make utility functions (in util?) to get/set this.
- x Test new MedianFree
-
 - Try running with compiler flags to see what's being inlined vs what isn't: -XX:+PrintCompilation -XX:+UnlockDiagnosticVMOptions -XX:+PrintInlining
  
 - Make Board track the number of free-free connections. This allows us to detect the endgame.
@@ -13,19 +10,14 @@
 
 - Try enumerating all free spots with a simple loop through all bit positions instead of the current (expensive) calls to Long. If we want to get really fancy, we can do this depending on the number.
 
-== Tournaments
 
-- PerformanceTest that plays full games versus identical opponents. If we keep generating the same moves, this will give a fair comparison of number of positions evaluated.
+== Tournaments
 
 == Players
 
 - Add more useful debug output for the competition bot (time taken per move, final value?)
 
-- Re-do aspiration search with slowly widening windows.
-
 - Implement iterative deepening. This will directly translate speed improvements into quality improvements. Use different aspiration windows for the first call (which uses the previous move value) and subsequent ones (which use the previous iteration value).
-
-- In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search. This would be easy in IEV, since we maintain the number of connections between free nodes. I'm not sure it would make the program stronger, but it's worth a shot.
 
 - Implement killer move heuristic: keep track of moves that cause beta cutoffs and try them first. Possibly per-ply? First perhaps just print moves that cause beta-cutoffs to get a sense of what they look like.
 
@@ -79,6 +71,10 @@ X Add a transposition table. This will really help speed up researching when the
 X Generate positions and values seperately?
 X Make sure all possible values for the board make up a contiguous set of 32 numbers. That way computing the hash is much easier. I think all that needs to be done for this is setting 'blocked' to 16.
 X Use a single integer (byte) to represent a location: 0-64, corresponding to 8 * a + b. This way we can use single-dimensional arrays for the board and don't need to transform back and forth all the time.
+X Use a single integer (int) to represent each move. There are only 3 components, two with 8 possible values (location) and one with 15 possible values. These need 3, 3, and 4 bits, so only 10 bits total, leaving room for a sorting score in the top 22 bits. Then, to sort the moves by some score, we just set their top 22 bits appropriately and then use the default numeric sorting algorithm. This also lets the minimax return both a move and its evaluation in one return value. Make sure that all evaluations fit in 22 bits and make utility functions (in util?) to get/set this.
+X PerformanceTest that plays full games versus identical opponents. If we keep generating the same moves, this will give a fair comparison of number of positions evaluated.
+X Re-do aspiration search with slowly widening windows.
+X In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search. This would be easy in IEV, since we maintain the number of connections between free nodes. I'm not sure it would make the program stronger, but it's worth a shot.
 
 === WONTFIX
 

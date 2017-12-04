@@ -39,6 +39,10 @@ public class NoHoles implements MoveGenerator {
             }
         }
 
+        if (moves.length == 0) {
+            System.err.println("Something went wrong.");
+        }
+        
         return moves;
     }
 
