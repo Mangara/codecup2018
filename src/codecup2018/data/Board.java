@@ -49,6 +49,8 @@ public abstract class Board {
     public abstract byte[] getFreeSpots();
 
     public abstract boolean isGameOver();
+    
+    public abstract boolean isGameInEndGame();
 
     public abstract boolean isLegalMove(int move);
 

@@ -2,12 +2,13 @@ package codecup2018.tools;
 
 import codecup2018.Pair;
 import codecup2018.evaluator.ExpectedValue;
+import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.evaluator.MedianFree;
 import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHoles;
-import codecup2018.player.AspirationPlayer;
+import codecup2018.player.MultiAspirationTableCutoffPlayer;
 import codecup2018.player.MultiAspirationTablePlayer;
 import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
@@ -28,7 +29,8 @@ public class Tournament {
                 new RandomPlayer("Rando", new AllMoves()),
                 new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
                 //new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6),
-                new MultiAspirationTablePlayer("MAsT_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
+                new MultiAspirationTablePlayer("MAsT_EV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6),
+                new MultiAspirationTableCutoffPlayer("MAsTC_EV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
                 new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
         ));
     }

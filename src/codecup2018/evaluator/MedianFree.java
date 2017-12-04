@@ -11,7 +11,7 @@ public class MedianFree implements Evaluator {
         byte[] free = board.getFreeSpots();
 
         for (int i = 0; i < free.length; i++) {
-            free[i] = (byte) board.getHoleValue(free[i]); // In the range [-90, 90], so fits in a byte
+            free[i] = (byte) board.getHoleValue(free[i]); // In the range [-75, 75], so fits in a byte
         }
 
         // Return the one that wouldnt be filled in if the players just took

@@ -198,6 +198,19 @@ public class ArrayBoard extends Board {
     }
 
     @Override
+    public boolean isGameInEndGame() {
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                if (isFree(Board.getPos(a, b)) && getFreeSpotsAround(Board.getPos(a, b)) > 0) {
+                    return false;
+                }
+            }
+        }
+        
+        return true;
+    }
+
+    @Override
     public boolean isLegalMove(int move) {
         byte val = getMoveVal(move);
         return isFree(getMovePos(move)) && ((val > 0 && !haveIUsed(val)) || (val < 0 && !hasOppUsed(val)));

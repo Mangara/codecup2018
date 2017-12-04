@@ -25,19 +25,22 @@ public class BitBoard extends Board {
         }
     }
 
-    private long free = BOARD;
+    private long free = 0;
     private long myTiles = 0;
     private long oppTiles = 0;
     private long myValues = 0;
     private long oppValues = 0;
     private short myUsed = 0;
     private short oppUsed = 0;
+    private int freeEdgeCount = 0; // The number of edges in the subgraph induced by the free tiles
 
     // Transposition table cached values
     private int key;
     private long hash;
 
     public BitBoard() {
+        free = BOARD;
+        freeEdgeCount = 3 * 2 + 18 * 4 + 15 * 6; // Corners, edge, center
         initializeTranspositionTableValues();
     }
 
@@ -51,17 +54,16 @@ public class BitBoard extends Board {
                 long posMask = posMask(pos);
 
                 if (val == FREE) {
-                    // Nothing
+                    free |= posMask;
+                    freeEdgeCount += 2 * getFreeSpotsAround(pos);
                 } else if (val == BLOCKED) {
-                    free -= posMask;
+                    // Nothing
                 } else if (val > 0) {
-                    free -= posMask;
                     myTiles |= posMask;
                     myValues |= ((long) val) << (4 * myValIndex);
                     myUsed |= (1 << val);
                     myValIndex++;
                 } else if (val < 0) {
-                    free -= posMask;
                     oppTiles |= posMask;
                     oppValues |= ((long) -val) << (4 * oppValIndex);
                     oppUsed |= (1 << -val);
@@ -151,6 +153,7 @@ public class BitBoard extends Board {
     @Override
     public void block(byte pos) {
         free &= ~posMask(pos);
+        freeEdgeCount -= 2 * getFreeSpotsAround(pos);
     }
 
     @Override
@@ -160,6 +163,7 @@ public class BitBoard extends Board {
         byte value = getMoveVal(move);
 
         free &= ~posMask;
+        freeEdgeCount -= 2 * getFreeSpotsAround(pos);
 
         if (value > 0) {
             myTiles |= posMask;
@@ -185,6 +189,7 @@ public class BitBoard extends Board {
         byte value = getMoveVal(move);
         
         free |= posMask;
+        freeEdgeCount += 2 * getFreeSpotsAround(pos);
 
         if (value > 0) {
             myTiles &= ~posMask;
@@ -238,6 +243,11 @@ public class BitBoard extends Board {
     @Override
     public boolean isGameOver() {
         return getNFreeSpots() == 1;
+    }
+
+    @Override
+    public boolean isGameInEndGame() {
+        return freeEdgeCount == 0;
     }
 
     @Override
