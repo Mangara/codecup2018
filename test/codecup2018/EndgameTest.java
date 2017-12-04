@@ -33,8 +33,8 @@ public class EndgameTest {
 
     private final Board board;
     //private final Player player = new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10);
-    //private final Player player = new SimpleMaxPlayer("Mifi", new MedianFree(), new AllMoves());
-    private final Player player = new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5);
+    private final Player player = new SimpleMaxPlayer("Mifi", new MedianFree(), new AllMoves());
+    //private final Player player = new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5);
 
     public EndgameTest(Board board) throws IOException {
         this.board = board;
@@ -126,7 +126,7 @@ public class EndgameTest {
     public void runTest() throws IOException {
         // Copy info for debug purposes
         ArrayBoard originalBoard = new ArrayBoard(board);
-
+        
         // Figure out the right moves
         List<int[]> holes = new ArrayList<>();
 
@@ -153,7 +153,7 @@ public class EndgameTest {
             }
         }
 
-        int targetScore = holes.get(movesLeft)[2];
+        int targetScore = holes.get(movesLeft)[1];
 
         // Test them
         int holesLeft = holes.size();

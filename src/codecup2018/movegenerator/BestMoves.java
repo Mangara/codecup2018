@@ -68,10 +68,11 @@ public class BestMoves implements MoveGenerator {
         //*/
 
         // Return best first
-        int[] moves = new int[nMoves];
+        int n = Math.min(nMoves, result.size());
+        int[] moves = new int[n];
         
-        for (int i = 0; i < nMoves; i++) {
-            moves[i] = result.get(nMoves - i - 1);
+        for (int i = 0; i < n; i++) {
+            moves[i] = result.get(n - i - 1);
         }
         
         return moves;

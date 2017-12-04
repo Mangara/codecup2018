@@ -1,11 +1,10 @@
 package codecup2018.tools;
 
 import codecup2018.data.BitBoard;
-import codecup2018.data.ArrayBoard;
 import codecup2018.data.Board;
-import codecup2018.evaluator.IncrementalExpectedValue;
-import codecup2018.movegenerator.AllMoves;
-import codecup2018.player.AlphaBetaPlayer;
+import codecup2018.evaluator.ExpectedValue;
+import codecup2018.movegenerator.BestMoves;
+import codecup2018.player.GUIPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import java.io.BufferedReader;
@@ -25,9 +24,9 @@ public class GameHost {
         //setRandom(new Random());
         setRandom(new Random(614944651));
         
-        GameHost.runGame(new RandomPlayer("Rando", new AllMoves()), new AlphaBetaPlayer("AB_IEV_AM_2", new IncrementalExpectedValue(), new AllMoves(), 2), true);
+        //GameHost.runGame(new RandomPlayer("Rando", new AllMoves()), new AlphaBetaPlayer("AB_IEV_AM_2", new IncrementalExpectedValue(), new AllMoves(), 2), true);
         //GameHost.runGame(new SimpleMaxPlayer("Expy_MI", new ExpectedValue(), new MaxInfluenceMoves()), new NegaMaxPlayer("NM_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4), false);
-        //GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
+        GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
         //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4), false);
         //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationTablePlayer("AsT_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3), false);
         //GameHost.runGameThreaded(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4));
