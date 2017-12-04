@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
 
-    public static boolean DEBUG_FINAL_VALUE = false;
+    public static boolean DEBUG_FINAL_VALUE = true;
     private static final boolean DEBUG_AB = false;
 
     public static int INITIAL_WINDOW_SIZE = 5000;
