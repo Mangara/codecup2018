@@ -8,6 +8,7 @@ import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.player.AspirationPlayer;
 import codecup2018.player.AspirationTablePlayer;
+import codecup2018.player.MultiAspirationTablePlayer;
 import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.StandardPlayer;
 import java.lang.reflect.Field;
@@ -20,7 +21,8 @@ public class RandomPositionPerformanceTest {
     private final List<StandardPlayer> players = Arrays.<StandardPlayer>asList(
             new NegaMaxPlayer("NM_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-            new AspirationTablePlayer("AsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)
+            new AspirationTablePlayer("AsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
+            new MultiAspirationTablePlayer("MAsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)
     );
 
     @Test
