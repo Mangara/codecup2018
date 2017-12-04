@@ -7,8 +7,8 @@ import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHoles;
-import codecup2018.movegenerator.NoHolesMax;
 import codecup2018.player.AspirationPlayer;
+import codecup2018.player.MultiAspirationTablePlayer;
 import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
@@ -21,14 +21,14 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 50;
+    private static final int GAMES = 200;
 
     public static void main(String[] args) {
         runTournament(Arrays.<Player>asList(
                 new RandomPlayer("Rando", new AllMoves()),
                 new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
-                //new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4),
-                //new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
+                //new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6),
+                new MultiAspirationTablePlayer("MAsT_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
                 new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
         ));
     }

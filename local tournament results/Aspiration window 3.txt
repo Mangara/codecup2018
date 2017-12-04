@@ -1,0 +1,2249 @@
+Player: MAsT_IEV_MI_5_2_1.0
+Average evaluations: 599715
+Quartiles: 256106 - 434495 - 550729 - 695983 - 2104499
+Average time (ms): 167.185
+Quartiles: 75.635 - 118.593 - 147.887 - 191.002 - 719.699
+
+Player: MAsT_IEV_MI_5_2_1.1
+Average evaluations: 602877
+Quartiles: 252727 - 428260 - 538927 - 692757 - 2110693
+Average time (ms): 165.323
+Quartiles: 75.865 - 116.692 - 142.568 - 189.638 - 696.785
+
+Player: MAsT_IEV_MI_5_2_1.2
+Average evaluations: 586171
+Quartiles: 237192 - 425928 - 534841 - 683056 - 1967797
+Average time (ms): 163.656
+Quartiles: 78.025 - 115.474 - 141.365 - 185.674 - 577.982
+
+Player: MAsT_IEV_MI_5_2_1.5
+Average evaluations: 438995
+Quartiles: 255886 - 376413 - 423834 - 490201 - 853514
+Average time (ms): 122.164
+Quartiles: 75.816 - 103.947 - 117.559 - 133.460 - 245.698
+
+Player: MAsT_IEV_MI_5_2_1.75
+Average evaluations: 421917
+Quartiles: 243175 - 356902 - 411819 - 472034 - 995651
+Average time (ms): 117.518
+Quartiles: 71.991 - 101.132 - 113.208 - 128.816 - 288.397
+
+Player: MAsT_IEV_MI_5_2_2.0
+Average evaluations: 410286
+Quartiles: 233809 - 354228 - 397643 - 454045 - 1095818
+Average time (ms): 114.130
+Quartiles: 71.037 - 99.313 - 110.047 - 124.531 - 249.621
+
+Player: MAsT_IEV_MI_5_2_2.25
+Average evaluations: 404433
+Quartiles: 238774 - 349312 - 392301 - 443596 - 1209518
+Average time (ms): 112.607
+Quartiles: 71.991 - 98.215 - 109.402 - 122.718 - 266.957
+
+Player: MAsT_IEV_MI_5_2_2.5
+Average evaluations: 394599
+Quartiles: 232229 - 343209 - 385812 - 435594 - 781721
+Average time (ms): 110.046
+Quartiles: 72.653 - 96.755 - 107.246 - 120.621 - 197.263
+
+Player: MAsT_IEV_MI_5_2_2.75
+Average evaluations: 391821
+Quartiles: 248011 - 338769 - 381652 - 429034 - 772337
+Average time (ms): 109.011
+Quartiles: 73.019 - 96.286 - 105.706 - 119.325 - 218.042
+
+Player: MAsT_IEV_MI_5_2_3.0
+Average evaluations: 388432
+Quartiles: 219985 - 340290 - 383512 - 426602 - 1048191
+Average time (ms): 107.975
+Quartiles: 70.959 - 96.568 - 105.937 - 116.932 - 252.226
+
+Player: MAsT_IEV_MI_5_2_3.5
+Average evaluations: 387949
+Quartiles: 245305 - 338824 - 379815 - 424176 - 706918
+Average time (ms): 108.837
+Quartiles: 71.650 - 96.606 - 106.578 - 118.834 - 187.092
+
+Player: MAsT_IEV_MI_5_2_4.0
+Average evaluations: 385320
+Quartiles: 247616 - 337528 - 374205 - 422337 - 751071
+Average time (ms): 106.611
+Quartiles: 75.515 - 95.116 - 104.079 - 115.797 - 186.265
+
+Player: MAsT_IEV_MI_5_2_4.5
+Average evaluations: 383966
+Quartiles: 244311 - 336799 - 375552 - 418558 - 759953
+Average time (ms): 105.802
+Quartiles: 71.229 - 94.680 - 103.434 - 114.232 - 179.925
+
+Player: MAsT_IEV_MI_5_2_5.0
+Average evaluations: 384591
+Quartiles: 221746 - 333281 - 377310 - 425285 - 825361
+Average time (ms): 105.192
+Quartiles: 71.252 - 93.988 - 103.724 - 114.125 - 198.002
+
+Player: MAsT_IEV_MI_5_2_6.0
+Average evaluations: 385763
+Quartiles: 242257 - 337959 - 377654 - 423377 - 735016
+Average time (ms): 105.307
+Quartiles: 65.299 - 94.579 - 102.873 - 114.016 - 162.079
+
+Player: MAsT_IEV_MI_5_2_7.0
+Average evaluations: 383208
+Quartiles: 244783 - 334877 - 372339 - 420387 - 675841
+Average time (ms): 104.703
+Quartiles: 70.455 - 93.696 - 102.592 - 113.729 - 165.299
+
+Player: MAsT_IEV_MI_5_2_8.0
+Average evaluations: 382501
+Quartiles: 245864 - 336553 - 375261 - 418248 - 1035086
+Average time (ms): 104.513
+Quartiles: 69.739 - 93.889 - 102.351 - 112.640 - 202.541
+
+Player: MAsT_IEV_MI_5_2_9.0
+Average evaluations: 379817
+Quartiles: 242328 - 339535 - 376247 - 414093 - 754063
+Average time (ms): 103.500
+Quartiles: 70.967 - 94.596 - 102.854 - 111.250 - 179.835
+
+Player: MAsT_IEV_MI_5_2_10.0
+Average evaluations: 384152
+Quartiles: 241563 - 334857 - 373919 - 423281 - 721432
+Average time (ms): 104.532
+Quartiles: 70.284 - 93.124 - 101.775 - 113.841 - 180.465
+
+Player: MAsT_IEV_MI_5_2_20.0
+Average evaluations: 386238
+Quartiles: 247545 - 337798 - 379955 - 422976 - 812647
+Average time (ms): 104.504
+Quartiles: 73.733 - 93.527 - 102.867 - 113.402 - 184.460
+
+Player: MAsT_IEV_MI_5_2_50.0
+Average evaluations: 375789
+Quartiles: 242257 - 329075 - 369160 - 412276 - 669370
+Average time (ms): 102.003
+Quartiles: 70.958 - 92.238 - 100.848 - 110.373 - 168.880
+
+Player: MAsT_IEV_MI_5_2_100.0
+Average evaluations: 385481
+Quartiles: 243888 - 339313 - 378409 - 421682 - 787019
+Average time (ms): 103.517
+Quartiles: 74.051 - 93.932 - 102.435 - 111.822 - 164.373
+
+Player: MAsT_IEV_MI_5_2_200.0
+Average evaluations: 389018
+Quartiles: 233378 - 337365 - 380413 - 426894 - 1009718
+Average time (ms): 104.061
+Quartiles: 69.128 - 93.545 - 101.581 - 112.917 - 206.709
+
+Player: MAsT_IEV_MI_5_2_500.0
+Average evaluations: 387678
+Quartiles: 237936 - 342065 - 381884 - 423602 - 686309
+Average time (ms): 104.254
+Quartiles: 71.579 - 94.620 - 102.796 - 112.613 - 168.360
+
+Player: MAsT_IEV_MI_5_2_1000.0
+Average evaluations: 381694
+Quartiles: 222788 - 335043 - 370832 - 419059 - 706983
+Average time (ms): 102.907
+Quartiles: 69.881 - 92.899 - 101.002 - 111.336 - 166.996
+
+Player: MAsT_IEV_MI_5_5_1.0
+Average evaluations: 601187
+Quartiles: 239081 - 430598 - 544404 - 725146 - 2072031
+Average time (ms): 165.475
+Quartiles: 74.936 - 116.817 - 141.294 - 197.443 - 627.498
+
+Player: MAsT_IEV_MI_5_5_1.1
+Average evaluations: 588020
+Quartiles: 260437 - 425649 - 537578 - 684783 - 2090522
+Average time (ms): 162.747
+Quartiles: 72.028 - 117.492 - 143.583 - 188.563 - 617.594
+
+Player: MAsT_IEV_MI_5_5_1.2
+Average evaluations: 497665
+Quartiles: 247371 - 405068 - 483225 - 561309 - 1218038
+Average time (ms): 135.797
+Quartiles: 81.070 - 111.011 - 126.590 - 149.352 - 361.286
+
+Player: MAsT_IEV_MI_5_5_1.5
+Average evaluations: 426017
+Quartiles: 234674 - 365030 - 415762 - 474216 - 1023370
+Average time (ms): 117.789
+Quartiles: 73.415 - 100.771 - 113.575 - 128.654 - 235.493
+
+Player: MAsT_IEV_MI_5_5_1.75
+Average evaluations: 409609
+Quartiles: 251419 - 354220 - 399223 - 451924 - 726615
+Average time (ms): 113.732
+Quartiles: 74.686 - 99.126 - 110.345 - 124.616 - 221.796
+
+Player: MAsT_IEV_MI_5_5_2.0
+Average evaluations: 398335
+Quartiles: 240997 - 345942 - 386126 - 438835 - 995742
+Average time (ms): 110.033
+Quartiles: 73.371 - 96.630 - 107.135 - 119.254 - 251.958
+
+Player: MAsT_IEV_MI_5_5_2.25
+Average evaluations: 396839
+Quartiles: 242684 - 345061 - 387522 - 441405 - 725666
+Average time (ms): 109.962
+Quartiles: 71.351 - 95.758 - 106.997 - 120.053 - 211.526
+
+Player: MAsT_IEV_MI_5_5_2.5
+Average evaluations: 389364
+Quartiles: 232841 - 340857 - 382665 - 430693 - 657017
+Average time (ms): 107.402
+Quartiles: 73.077 - 95.561 - 105.380 - 116.491 - 181.384
+
+Player: MAsT_IEV_MI_5_5_2.75
+Average evaluations: 394969
+Quartiles: 238750 - 342214 - 387691 - 430939 - 889878
+Average time (ms): 108.637
+Quartiles: 73.673 - 95.819 - 105.890 - 117.859 - 223.550
+
+Player: MAsT_IEV_MI_5_5_3.0
+Average evaluations: 384701
+Quartiles: 232309 - 336250 - 377887 - 422663 - 678799
+Average time (ms): 106.539
+Quartiles: 71.279 - 95.075 - 104.008 - 115.769 - 189.947
+
+Player: MAsT_IEV_MI_5_5_3.5
+Average evaluations: 380682
+Quartiles: 224891 - 334610 - 373632 - 416576 - 649475
+Average time (ms): 104.766
+Quartiles: 72.840 - 93.423 - 103.227 - 113.525 - 170.651
+
+Player: MAsT_IEV_MI_5_5_4.0
+Average evaluations: 383413
+Quartiles: 226587 - 336697 - 375680 - 420993 - 947417
+Average time (ms): 105.684
+Quartiles: 72.808 - 94.738 - 103.460 - 113.879 - 201.037
+
+Player: MAsT_IEV_MI_5_5_4.5
+Average evaluations: 380737
+Quartiles: 228579 - 334153 - 373607 - 419164 - 633612
+Average time (ms): 104.427
+Quartiles: 66.683 - 93.461 - 102.496 - 113.550 - 175.348
+
+Player: MAsT_IEV_MI_5_5_5.0
+Average evaluations: 380628
+Quartiles: 239941 - 331636 - 375663 - 418444 - 772957
+Average time (ms): 105.023
+Quartiles: 69.508 - 93.901 - 102.533 - 114.114 - 205.614
+
+Player: MAsT_IEV_MI_5_5_6.0
+Average evaluations: 379325
+Quartiles: 218196 - 330089 - 372178 - 418687 - 700020
+Average time (ms): 103.923
+Quartiles: 67.965 - 92.792 - 102.065 - 112.320 - 167.572
+
+Player: MAsT_IEV_MI_5_5_7.0
+Average evaluations: 381617
+Quartiles: 242602 - 336593 - 372604 - 415966 - 708048
+Average time (ms): 103.888
+Quartiles: 71.474 - 93.430 - 102.307 - 112.845 - 174.253
+
+Player: MAsT_IEV_MI_5_5_8.0
+Average evaluations: 380573
+Quartiles: 228435 - 336900 - 373938 - 413783 - 722441
+Average time (ms): 103.860
+Quartiles: 64.563 - 94.055 - 102.372 - 111.579 - 162.926
+
+Player: MAsT_IEV_MI_5_5_9.0
+Average evaluations: 381062
+Quartiles: 237668 - 337996 - 372484 - 415445 - 850463
+Average time (ms): 103.858
+Quartiles: 68.051 - 92.972 - 102.092 - 111.757 - 219.403
+
+Player: MAsT_IEV_MI_5_5_10.0
+Average evaluations: 379690
+Quartiles: 228602 - 335361 - 372129 - 414623 - 729133
+Average time (ms): 103.365
+Quartiles: 68.337 - 92.608 - 102.603 - 111.439 - 170.598
+
+Player: MAsT_IEV_MI_5_5_20.0
+Average evaluations: 382572
+Quartiles: 241535 - 338067 - 373502 - 417332 - 1143236
+Average time (ms): 103.426
+Quartiles: 69.977 - 93.153 - 101.106 - 111.886 - 210.311
+
+Player: MAsT_IEV_MI_5_5_50.0
+Average evaluations: 380139
+Quartiles: 243735 - 335535 - 371843 - 418194 - 825078
+Average time (ms): 102.428
+Quartiles: 72.393 - 92.824 - 100.920 - 110.186 - 172.711
+
+Player: MAsT_IEV_MI_5_5_100.0
+Average evaluations: 392206
+Quartiles: 246083 - 342325 - 382079 - 432537 - 1080718
+Average time (ms): 104.638
+Quartiles: 69.405 - 94.313 - 102.807 - 113.838 - 231.276
+
+Player: MAsT_IEV_MI_5_5_200.0
+Average evaluations: 385431
+Quartiles: 217998 - 338997 - 379119 - 422637 - 703400
+Average time (ms): 103.400
+Quartiles: 68.446 - 93.874 - 101.629 - 112.411 - 178.831
+
+Player: MAsT_IEV_MI_5_5_500.0
+Average evaluations: 375223
+Quartiles: 245160 - 331662 - 369001 - 408955 - 878986
+Average time (ms): 101.962
+Quartiles: 73.496 - 92.847 - 100.361 - 108.919 - 194.479
+
+Player: MAsT_IEV_MI_5_5_1000.0
+Average evaluations: 373857
+Quartiles: 234753 - 329094 - 365301 - 409864 - 696869
+Average time (ms): 100.918
+Quartiles: 68.592 - 91.818 - 99.897 - 108.686 - 156.708
+
+Player: MAsT_IEV_MI_5_10_1.0
+Average evaluations: 612331
+Quartiles: 267165 - 432030 - 545479 - 720512 - 2890370
+Average time (ms): 169.078
+Quartiles: 80.256 - 117.263 - 144.874 - 194.789 - 872.046
+
+Player: MAsT_IEV_MI_5_10_1.1
+Average evaluations: 525406
+Quartiles: 244595 - 413279 - 502605 - 609169 - 1608839
+Average time (ms): 142.709
+Quartiles: 73.610 - 112.896 - 134.026 - 162.119 - 452.271
+
+Player: MAsT_IEV_MI_5_10_1.2
+Average evaluations: 475628
+Quartiles: 269577 - 395960 - 460702 - 536744 - 1190450
+Average time (ms): 130.098
+Quartiles: 74.034 - 108.260 - 123.469 - 144.834 - 350.280
+
+Player: MAsT_IEV_MI_5_10_1.5
+Average evaluations: 419307
+Quartiles: 229475 - 355361 - 408086 - 467043 - 883178
+Average time (ms): 115.697
+Quartiles: 74.388 - 99.278 - 111.582 - 126.459 - 248.283
+
+Player: MAsT_IEV_MI_5_10_1.75
+Average evaluations: 400967
+Quartiles: 231749 - 342716 - 392582 - 442976 - 821057
+Average time (ms): 110.717
+Quartiles: 69.621 - 96.314 - 107.736 - 121.616 - 219.344
+
+Player: MAsT_IEV_MI_5_10_2.0
+Average evaluations: 398696
+Quartiles: 243442 - 344256 - 390402 - 439284 - 764278
+Average time (ms): 109.970
+Quartiles: 75.185 - 96.217 - 108.128 - 120.644 - 195.127
+
+Player: MAsT_IEV_MI_5_10_2.25
+Average evaluations: 389470
+Quartiles: 246291 - 341553 - 384321 - 431027 - 677974
+Average time (ms): 107.393
+Quartiles: 72.037 - 95.245 - 104.794 - 116.617 - 191.951
+
+Player: MAsT_IEV_MI_5_10_2.5
+Average evaluations: 383838
+Quartiles: 231045 - 335495 - 377712 - 420859 - 845358
+Average time (ms): 105.945
+Quartiles: 70.434 - 93.792 - 103.276 - 116.154 - 214.313
+
+Player: MAsT_IEV_MI_5_10_2.75
+Average evaluations: 385972
+Quartiles: 229463 - 338818 - 378276 - 420958 - 820785
+Average time (ms): 105.789
+Quartiles: 70.076 - 93.555 - 104.566 - 115.109 - 184.067
+
+Player: MAsT_IEV_MI_5_10_3.0
+Average evaluations: 380492
+Quartiles: 244810 - 333681 - 373891 - 416956 - 804144
+Average time (ms): 105.131
+Quartiles: 73.272 - 94.136 - 103.146 - 113.626 - 206.110
+
+Player: MAsT_IEV_MI_5_10_3.5
+Average evaluations: 382635
+Quartiles: 223002 - 335394 - 373665 - 422723 - 730476
+Average time (ms): 105.297
+Quartiles: 69.853 - 93.775 - 103.058 - 113.501 - 196.793
+
+Player: MAsT_IEV_MI_5_10_4.0
+Average evaluations: 377865
+Quartiles: 246384 - 333669 - 368654 - 415461 - 657390
+Average time (ms): 103.861
+Quartiles: 73.780 - 93.677 - 102.020 - 112.411 - 180.034
+
+Player: MAsT_IEV_MI_5_10_4.5
+Average evaluations: 378483
+Quartiles: 221391 - 334971 - 370239 - 415002 - 786462
+Average time (ms): 103.863
+Quartiles: 69.373 - 93.309 - 102.123 - 112.376 - 195.579
+
+Player: MAsT_IEV_MI_5_10_5.0
+Average evaluations: 376238
+Quartiles: 241788 - 332273 - 368055 - 412523 - 712918
+Average time (ms): 103.431
+Quartiles: 71.674 - 93.201 - 102.169 - 111.563 - 185.463
+
+Player: MAsT_IEV_MI_5_10_6.0
+Average evaluations: 374156
+Quartiles: 234613 - 328662 - 367538 - 408983 - 705861
+Average time (ms): 102.973
+Quartiles: 73.354 - 92.853 - 101.331 - 111.886 - 170.299
+
+Player: MAsT_IEV_MI_5_10_7.0
+Average evaluations: 379935
+Quartiles: 257111 - 332209 - 372589 - 417300 - 751588
+Average time (ms): 103.623
+Quartiles: 73.404 - 93.410 - 101.536 - 112.143 - 176.393
+
+Player: MAsT_IEV_MI_5_10_8.0
+Average evaluations: 377458
+Quartiles: 238466 - 328371 - 370551 - 415405 - 779122
+Average time (ms): 102.961
+Quartiles: 65.583 - 92.065 - 101.525 - 111.585 - 181.679
+
+Player: MAsT_IEV_MI_5_10_9.0
+Average evaluations: 377741
+Quartiles: 229385 - 331034 - 369054 - 412800 - 765612
+Average time (ms): 104.180
+Quartiles: 69.103 - 93.744 - 102.306 - 112.389 - 184.192
+
+Player: MAsT_IEV_MI_5_10_10.0
+Average evaluations: 379407
+Quartiles: 222089 - 333181 - 373781 - 414905 - 790559
+Average time (ms): 103.206
+Quartiles: 67.957 - 92.905 - 101.562 - 111.275 - 177.714
+
+Player: MAsT_IEV_MI_5_10_20.0
+Average evaluations: 379608
+Quartiles: 219692 - 333325 - 375509 - 418882 - 648954
+Average time (ms): 103.044
+Quartiles: 66.263 - 93.252 - 102.097 - 111.731 - 161.827
+
+Player: MAsT_IEV_MI_5_10_50.0
+Average evaluations: 388816
+Quartiles: 256687 - 342264 - 382373 - 425797 - 696599
+Average time (ms): 104.094
+Quartiles: 70.470 - 94.051 - 102.639 - 112.536 - 166.651
+
+Player: MAsT_IEV_MI_5_10_100.0
+Average evaluations: 388034
+Quartiles: 242047 - 338876 - 378976 - 426545 - 777542
+Average time (ms): 103.950
+Quartiles: 72.116 - 93.637 - 101.667 - 112.137 - 183.200
+
+Player: MAsT_IEV_MI_5_10_200.0
+Average evaluations: 382071
+Quartiles: 227306 - 333492 - 374590 - 419503 - 808122
+Average time (ms): 102.766
+Quartiles: 68.351 - 92.409 - 100.927 - 111.408 - 186.146
+
+Player: MAsT_IEV_MI_5_10_500.0
+Average evaluations: 373713
+Quartiles: 238173 - 331536 - 369308 - 411292 - 703386
+Average time (ms): 100.816
+Quartiles: 70.000 - 91.670 - 99.765 - 109.211 - 154.171
+
+Player: MAsT_IEV_MI_5_10_1000.0
+Average evaluations: 376117
+Quartiles: 206182 - 332705 - 366573 - 411238 - 708996
+Average time (ms): 100.824
+Quartiles: 66.620 - 91.603 - 99.241 - 107.950 - 159.001
+
+Player: MAsT_IEV_MI_5_20_1.0
+Average evaluations: 590434
+Quartiles: 248031 - 429002 - 536603 - 691818 - 2152830
+Average time (ms): 160.073
+Quartiles: 75.810 - 118.802 - 142.223 - 181.449 - 640.207
+
+Player: MAsT_IEV_MI_5_20_1.1
+Average evaluations: 492100
+Quartiles: 253736 - 400424 - 475347 - 566702 - 1103566
+Average time (ms): 134.146
+Quartiles: 76.582 - 109.451 - 127.318 - 149.413 - 359.936
+
+Player: MAsT_IEV_MI_5_20_1.2
+Average evaluations: 460052
+Quartiles: 264902 - 381809 - 443614 - 524162 - 990559
+Average time (ms): 126.001
+Quartiles: 76.988 - 104.992 - 118.531 - 139.812 - 279.077
+
+Player: MAsT_IEV_MI_5_20_1.5
+Average evaluations: 409351
+Quartiles: 243938 - 353580 - 403057 - 456862 - 797029
+Average time (ms): 113.066
+Quartiles: 74.073 - 99.200 - 109.280 - 124.935 - 223.887
+
+Player: MAsT_IEV_MI_5_20_1.75
+Average evaluations: 394541
+Quartiles: 244069 - 343482 - 388072 - 435449 - 688620
+Average time (ms): 109.362
+Quartiles: 76.371 - 96.387 - 106.492 - 119.601 - 193.078
+
+Player: MAsT_IEV_MI_5_20_2.0
+Average evaluations: 391582
+Quartiles: 237836 - 337190 - 383681 - 431082 - 746195
+Average time (ms): 108.121
+Quartiles: 73.246 - 95.040 - 104.890 - 117.551 - 195.527
+
+Player: MAsT_IEV_MI_5_20_2.25
+Average evaluations: 386286
+Quartiles: 243139 - 338669 - 379016 - 422835 - 799867
+Average time (ms): 106.718
+Quartiles: 74.058 - 95.045 - 104.253 - 115.895 - 198.166
+
+Player: MAsT_IEV_MI_5_20_2.5
+Average evaluations: 381678
+Quartiles: 233046 - 332760 - 374427 - 422388 - 656363
+Average time (ms): 105.556
+Quartiles: 71.332 - 93.838 - 103.661 - 114.308 - 168.247
+
+Player: MAsT_IEV_MI_5_20_2.75
+Average evaluations: 379574
+Quartiles: 242129 - 331046 - 372523 - 419128 - 759338
+Average time (ms): 104.662
+Quartiles: 70.631 - 93.053 - 103.013 - 113.265 - 206.746
+
+Player: MAsT_IEV_MI_5_20_3.0
+Average evaluations: 378116
+Quartiles: 232842 - 331761 - 370949 - 414456 - 660137
+Average time (ms): 104.311
+Quartiles: 70.960 - 93.710 - 102.331 - 112.703 - 167.955
+
+Player: MAsT_IEV_MI_5_20_3.5
+Average evaluations: 377660
+Quartiles: 229401 - 332596 - 371601 - 413365 - 671836
+Average time (ms): 104.096
+Quartiles: 69.938 - 92.850 - 101.900 - 112.673 - 170.363
+
+Player: MAsT_IEV_MI_5_20_4.0
+Average evaluations: 377116
+Quartiles: 240502 - 328115 - 368289 - 418090 - 817838
+Average time (ms): 103.490
+Quartiles: 72.277 - 92.454 - 101.789 - 112.055 - 183.995
+
+Player: MAsT_IEV_MI_5_20_4.5
+Average evaluations: 374686
+Quartiles: 246159 - 329927 - 366291 - 410578 - 743348
+Average time (ms): 102.936
+Quartiles: 68.736 - 92.299 - 101.516 - 111.478 - 165.378
+
+Player: MAsT_IEV_MI_5_20_5.0
+Average evaluations: 375590
+Quartiles: 231528 - 328916 - 369320 - 412931 - 1086381
+Average time (ms): 103.374
+Quartiles: 67.965 - 92.876 - 101.615 - 112.271 - 202.926
+
+Player: MAsT_IEV_MI_5_20_6.0
+Average evaluations: 376626
+Quartiles: 241934 - 331834 - 367570 - 416775 - 734971
+Average time (ms): 102.936
+Quartiles: 72.003 - 92.521 - 100.829 - 111.904 - 162.990
+
+Player: MAsT_IEV_MI_5_20_7.0
+Average evaluations: 377169
+Quartiles: 244172 - 332890 - 369252 - 414126 - 666804
+Average time (ms): 103.176
+Quartiles: 73.827 - 92.507 - 101.750 - 112.172 - 172.726
+
+Player: MAsT_IEV_MI_5_20_8.0
+Average evaluations: 373355
+Quartiles: 245359 - 327743 - 365356 - 411571 - 678377
+Average time (ms): 102.050
+Quartiles: 69.789 - 92.081 - 100.124 - 109.976 - 169.809
+
+Player: MAsT_IEV_MI_5_20_9.0
+Average evaluations: 378986
+Quartiles: 238158 - 332210 - 369128 - 416694 - 811815
+Average time (ms): 103.035
+Quartiles: 69.286 - 93.012 - 100.934 - 111.772 - 193.955
+
+Player: MAsT_IEV_MI_5_20_10.0
+Average evaluations: 379736
+Quartiles: 237393 - 334083 - 372184 - 417479 - 914041
+Average time (ms): 103.248
+Quartiles: 68.122 - 93.085 - 101.955 - 111.365 - 222.423
+
+Player: MAsT_IEV_MI_5_20_20.0
+Average evaluations: 372677
+Quartiles: 239286 - 330216 - 365157 - 410515 - 703124
+Average time (ms): 101.745
+Quartiles: 71.732 - 92.551 - 100.526 - 110.300 - 169.221
+
+Player: MAsT_IEV_MI_5_20_50.0
+Average evaluations: 388161
+Quartiles: 223333 - 340117 - 377743 - 424745 - 995507
+Average time (ms): 103.962
+Quartiles: 67.993 - 93.706 - 102.306 - 111.988 - 203.637
+
+Player: MAsT_IEV_MI_5_20_100.0
+Average evaluations: 383063
+Quartiles: 242600 - 336422 - 375513 - 420752 - 796609
+Average time (ms): 102.643
+Quartiles: 75.518 - 92.593 - 101.289 - 110.602 - 191.598
+
+Player: MAsT_IEV_MI_5_20_200.0
+Average evaluations: 371945
+Quartiles: 236705 - 325460 - 366445 - 407971 - 664425
+Average time (ms): 100.980
+Quartiles: 69.074 - 91.554 - 99.886 - 108.854 - 156.741
+
+Player: MAsT_IEV_MI_5_20_500.0
+Average evaluations: 377165
+Quartiles: 247925 - 332786 - 369958 - 414342 - 809668
+Average time (ms): 101.466
+Quartiles: 72.984 - 92.461 - 100.445 - 109.083 - 166.576
+
+Player: MAsT_IEV_MI_5_20_1000.0
+Average evaluations: 385770
+Quartiles: 222685 - 340323 - 376845 - 420524 - 702024
+Average time (ms): 103.767
+Quartiles: 70.642 - 94.261 - 101.948 - 111.639 - 178.463
+
+Player: MAsT_IEV_MI_5_50_1.0
+Average evaluations: 546279
+Quartiles: 247889 - 411603 - 515452 - 627766 - 1456446
+Average time (ms): 147.596
+Quartiles: 73.133 - 115.087 - 136.910 - 167.296 - 465.403
+
+Player: MAsT_IEV_MI_5_50_1.1
+Average evaluations: 465197
+Quartiles: 241739 - 386921 - 452708 - 525982 - 1177878
+Average time (ms): 127.045
+Quartiles: 76.968 - 106.281 - 122.831 - 140.586 - 316.208
+
+Player: MAsT_IEV_MI_5_50_1.2
+Average evaluations: 436063
+Quartiles: 241912 - 366027 - 419199 - 488445 - 1062838
+Average time (ms): 119.863
+Quartiles: 70.207 - 102.577 - 114.678 - 131.425 - 276.321
+
+Player: MAsT_IEV_MI_5_50_1.5
+Average evaluations: 398064
+Quartiles: 224961 - 343538 - 392685 - 441479 - 720097
+Average time (ms): 110.303
+Quartiles: 65.163 - 97.129 - 107.298 - 120.765 - 204.793
+
+Player: MAsT_IEV_MI_5_50_1.75
+Average evaluations: 392395
+Quartiles: 245252 - 346611 - 384625 - 428717 - 755322
+Average time (ms): 108.373
+Quartiles: 72.713 - 96.438 - 106.048 - 118.469 - 197.009
+
+Player: MAsT_IEV_MI_5_50_2.0
+Average evaluations: 382976
+Quartiles: 235682 - 338139 - 374093 - 419288 - 808350
+Average time (ms): 105.600
+Quartiles: 70.002 - 94.403 - 103.552 - 113.836 - 223.542
+
+Player: MAsT_IEV_MI_5_50_2.25
+Average evaluations: 381966
+Quartiles: 236157 - 332810 - 374612 - 423165 - 752798
+Average time (ms): 105.211
+Quartiles: 73.159 - 93.909 - 103.099 - 113.640 - 173.999
+
+Player: MAsT_IEV_MI_5_50_2.5
+Average evaluations: 379252
+Quartiles: 237474 - 329340 - 372433 - 415012 - 877155
+Average time (ms): 105.668
+Quartiles: 69.641 - 93.896 - 102.901 - 114.503 - 221.655
+
+Player: MAsT_IEV_MI_5_50_2.75
+Average evaluations: 378219
+Quartiles: 230808 - 330726 - 371876 - 415078 - 693143
+Average time (ms): 104.258
+Quartiles: 68.041 - 93.132 - 102.474 - 113.486 - 200.968
+
+Player: MAsT_IEV_MI_5_50_3.0
+Average evaluations: 378198
+Quartiles: 230849 - 329495 - 371483 - 416559 - 781761
+Average time (ms): 103.884
+Quartiles: 73.044 - 93.114 - 101.514 - 112.197 - 163.713
+
+Player: MAsT_IEV_MI_5_50_3.5
+Average evaluations: 375395
+Quartiles: 216387 - 328302 - 366692 - 414597 - 836637
+Average time (ms): 103.007
+Quartiles: 66.258 - 92.675 - 100.761 - 111.216 - 200.384
+
+Player: MAsT_IEV_MI_5_50_4.0
+Average evaluations: 378386
+Quartiles: 241370 - 329882 - 366670 - 418497 - 731314
+Average time (ms): 103.232
+Quartiles: 61.896 - 92.364 - 101.286 - 112.413 - 172.612
+
+Player: MAsT_IEV_MI_5_50_4.5
+Average evaluations: 376235
+Quartiles: 237316 - 328468 - 368031 - 417734 - 650616
+Average time (ms): 102.562
+Quartiles: 68.535 - 92.451 - 100.750 - 111.387 - 173.490
+
+Player: MAsT_IEV_MI_5_50_5.0
+Average evaluations: 375386
+Quartiles: 225577 - 330800 - 368175 - 414120 - 685959
+Average time (ms): 102.952
+Quartiles: 68.658 - 93.435 - 101.267 - 110.427 - 172.168
+
+Player: MAsT_IEV_MI_5_50_6.0
+Average evaluations: 373366
+Quartiles: 240344 - 326838 - 367103 - 407577 - 777520
+Average time (ms): 101.800
+Quartiles: 69.962 - 91.899 - 100.229 - 109.726 - 171.700
+
+Player: MAsT_IEV_MI_5_50_7.0
+Average evaluations: 377440
+Quartiles: 246861 - 332142 - 367968 - 414397 - 837882
+Average time (ms): 102.690
+Quartiles: 74.109 - 92.341 - 101.399 - 110.186 - 195.715
+
+Player: MAsT_IEV_MI_5_50_8.0
+Average evaluations: 375329
+Quartiles: 221623 - 329072 - 368326 - 412777 - 845693
+Average time (ms): 102.220
+Quartiles: 66.805 - 92.134 - 100.852 - 110.405 - 182.600
+
+Player: MAsT_IEV_MI_5_50_9.0
+Average evaluations: 375692
+Quartiles: 215953 - 329901 - 368582 - 412541 - 664529
+Average time (ms): 102.158
+Quartiles: 67.308 - 92.300 - 100.778 - 110.058 - 163.095
+
+Player: MAsT_IEV_MI_5_50_10.0
+Average evaluations: 373911
+Quartiles: 231762 - 332172 - 364349 - 405520 - 691036
+Average time (ms): 101.641
+Quartiles: 70.979 - 92.396 - 100.161 - 109.310 - 194.410
+
+Player: MAsT_IEV_MI_5_50_20.0
+Average evaluations: 384231
+Quartiles: 249159 - 335332 - 377104 - 423266 - 698940
+Average time (ms): 103.692
+Quartiles: 73.244 - 93.475 - 101.862 - 112.126 - 173.077
+
+Player: MAsT_IEV_MI_5_50_50.0
+Average evaluations: 379589
+Quartiles: 237260 - 329821 - 370764 - 420684 - 823905
+Average time (ms): 102.505
+Quartiles: 71.341 - 92.512 - 101.704 - 111.182 - 182.067
+
+Player: MAsT_IEV_MI_5_50_100.0
+Average evaluations: 373742
+Quartiles: 237844 - 329344 - 364234 - 412051 - 790210
+Average time (ms): 100.839
+Quartiles: 66.326 - 91.469 - 99.557 - 108.516 - 173.818
+
+Player: MAsT_IEV_MI_5_50_200.0
+Average evaluations: 377223
+Quartiles: 250662 - 330466 - 370600 - 412851 - 860706
+Average time (ms): 101.701
+Quartiles: 68.210 - 92.614 - 99.989 - 109.235 - 188.211
+
+Player: MAsT_IEV_MI_5_50_500.0
+Average evaluations: 389366
+Quartiles: 234108 - 343440 - 382111 - 425527 - 676441
+Average time (ms): 103.257
+Quartiles: 71.907 - 93.771 - 101.384 - 111.382 - 157.157
+
+Player: MAsT_IEV_MI_5_50_1000.0
+Average evaluations: 388459
+Quartiles: 243968 - 344285 - 381481 - 421487 - 757480
+Average time (ms): 103.320
+Quartiles: 74.362 - 93.921 - 101.808 - 111.507 - 170.605
+
+Player: MAsT_IEV_MI_5_100_1.0
+Average evaluations: 509281
+Quartiles: 245039 - 397851 - 477575 - 590832 - 1612307
+Average time (ms): 136.879
+Quartiles: 76.939 - 111.678 - 130.246 - 154.727 - 328.024
+
+Player: MAsT_IEV_MI_5_100_1.1
+Average evaluations: 447510
+Quartiles: 261701 - 378056 - 434749 - 502664 - 887380
+Average time (ms): 121.593
+Quartiles: 73.226 - 104.051 - 117.527 - 134.745 - 264.037
+
+Player: MAsT_IEV_MI_5_100_1.2
+Average evaluations: 424860
+Quartiles: 230552 - 360260 - 413898 - 474533 - 853881
+Average time (ms): 116.338
+Quartiles: 72.967 - 99.911 - 112.876 - 128.446 - 249.541
+
+Player: MAsT_IEV_MI_5_100_1.5
+Average evaluations: 394404
+Quartiles: 229117 - 342484 - 386251 - 435939 - 755645
+Average time (ms): 108.707
+Quartiles: 71.456 - 95.443 - 105.623 - 119.117 - 238.256
+
+Player: MAsT_IEV_MI_5_100_1.75
+Average evaluations: 383212
+Quartiles: 237289 - 336287 - 376153 - 420964 - 776388
+Average time (ms): 105.655
+Quartiles: 73.556 - 94.354 - 103.030 - 114.186 - 213.028
+
+Player: MAsT_IEV_MI_5_100_2.0
+Average evaluations: 376700
+Quartiles: 242688 - 329265 - 369153 - 413776 - 782147
+Average time (ms): 103.976
+Quartiles: 71.989 - 93.195 - 101.573 - 112.411 - 195.418
+
+Player: MAsT_IEV_MI_5_100_2.25
+Average evaluations: 376096
+Quartiles: 238617 - 328939 - 366824 - 412387 - 830011
+Average time (ms): 103.850
+Quartiles: 71.283 - 92.955 - 101.914 - 112.785 - 169.001
+
+Player: MAsT_IEV_MI_5_100_2.5
+Average evaluations: 375604
+Quartiles: 236216 - 329288 - 368373 - 414885 - 670486
+Average time (ms): 103.682
+Quartiles: 73.558 - 92.678 - 101.259 - 112.755 - 188.874
+
+Player: MAsT_IEV_MI_5_100_2.75
+Average evaluations: 372333
+Quartiles: 234079 - 325620 - 367483 - 405832 - 621908
+Average time (ms): 102.481
+Quartiles: 68.151 - 92.480 - 100.419 - 110.840 - 164.963
+
+Player: MAsT_IEV_MI_5_100_3.0
+Average evaluations: 375579
+Quartiles: 229644 - 330108 - 369515 - 411214 - 678285
+Average time (ms): 102.832
+Quartiles: 70.049 - 91.832 - 100.999 - 111.370 - 181.777
+
+Player: MAsT_IEV_MI_5_100_3.5
+Average evaluations: 375550
+Quartiles: 235951 - 330498 - 367646 - 411391 - 759758
+Average time (ms): 103.043
+Quartiles: 70.210 - 92.875 - 101.873 - 111.220 - 165.624
+
+Player: MAsT_IEV_MI_5_100_4.0
+Average evaluations: 372312
+Quartiles: 234843 - 327279 - 365923 - 406455 - 700510
+Average time (ms): 101.961
+Quartiles: 71.396 - 91.755 - 100.246 - 110.271 - 197.589
+
+Player: MAsT_IEV_MI_5_100_4.5
+Average evaluations: 372919
+Quartiles: 239520 - 325645 - 363986 - 410332 - 741415
+Average time (ms): 102.507
+Quartiles: 70.718 - 91.952 - 100.313 - 111.058 - 171.131
+
+Player: MAsT_IEV_MI_5_100_5.0
+Average evaluations: 370553
+Quartiles: 243595 - 328605 - 362659 - 408906 - 649509
+Average time (ms): 101.466
+Quartiles: 69.334 - 92.449 - 100.375 - 108.631 - 167.249
+
+Player: MAsT_IEV_MI_5_100_6.0
+Average evaluations: 375151
+Quartiles: 231142 - 327685 - 368653 - 413853 - 666871
+Average time (ms): 102.196
+Quartiles: 69.921 - 91.921 - 100.704 - 110.982 - 161.415
+
+Player: MAsT_IEV_MI_5_100_7.0
+Average evaluations: 377034
+Quartiles: 234846 - 330259 - 367800 - 414740 - 674737
+Average time (ms): 102.407
+Quartiles: 68.313 - 91.542 - 100.686 - 110.808 - 155.795
+
+Player: MAsT_IEV_MI_5_100_8.0
+Average evaluations: 375976
+Quartiles: 221888 - 327541 - 371034 - 414062 - 939862
+Average time (ms): 102.233
+Quartiles: 68.093 - 91.735 - 100.930 - 111.283 - 177.507
+
+Player: MAsT_IEV_MI_5_100_9.0
+Average evaluations: 376783
+Quartiles: 242424 - 329134 - 368803 - 415355 - 653100
+Average time (ms): 102.678
+Quartiles: 69.827 - 91.986 - 100.857 - 111.636 - 167.599
+
+Player: MAsT_IEV_MI_5_100_10.0
+Average evaluations: 374977
+Quartiles: 242469 - 330792 - 366267 - 412932 - 800436
+Average time (ms): 103.286
+Quartiles: 70.950 - 93.228 - 101.985 - 111.521 - 197.948
+
+Player: MAsT_IEV_MI_5_100_20.0
+Average evaluations: 380058
+Quartiles: 222270 - 333281 - 373380 - 419408 - 760778
+Average time (ms): 102.668
+Quartiles: 68.275 - 92.454 - 101.239 - 110.483 - 184.205
+
+Player: MAsT_IEV_MI_5_100_50.0
+Average evaluations: 374445
+Quartiles: 255408 - 328954 - 365694 - 413076 - 842088
+Average time (ms): 101.086
+Quartiles: 73.042 - 91.469 - 99.737 - 109.272 - 173.048
+
+Player: MAsT_IEV_MI_5_100_100.0
+Average evaluations: 377097
+Quartiles: 247137 - 334245 - 370186 - 408181 - 774102
+Average time (ms): 101.586
+Quartiles: 70.429 - 92.598 - 99.840 - 109.805 - 182.295
+
+Player: MAsT_IEV_MI_5_100_200.0
+Average evaluations: 383771
+Quartiles: 244414 - 336207 - 373450 - 423200 - 951691
+Average time (ms): 102.883
+Quartiles: 69.369 - 93.449 - 101.498 - 110.380 - 205.879
+
+Player: MAsT_IEV_MI_5_100_500.0
+Average evaluations: 387589
+Quartiles: 251477 - 340278 - 382078 - 421728 - 826848
+Average time (ms): 104.721
+Quartiles: 71.320 - 95.521 - 103.889 - 112.143 - 173.241
+
+Player: MAsT_IEV_MI_5_100_1000.0
+Average evaluations: 386836
+Quartiles: 246696 - 341263 - 378907 - 426721 - 768887
+Average time (ms): 103.503
+Quartiles: 73.429 - 93.252 - 102.565 - 111.636 - 175.244
+
+Player: MAsT_IEV_MI_5_200_1.0
+Average evaluations: 468358
+Quartiles: 235494 - 378005 - 455451 - 534508 - 1096676
+Average time (ms): 126.106
+Quartiles: 72.914 - 106.234 - 121.685 - 140.478 - 261.001
+
+Player: MAsT_IEV_MI_5_200_1.1
+Average evaluations: 426737
+Quartiles: 231864 - 360370 - 414943 - 479621 - 1077033
+Average time (ms): 116.770
+Quartiles: 74.085 - 101.282 - 112.661 - 128.939 - 296.141
+
+Player: MAsT_IEV_MI_5_200_1.2
+Average evaluations: 411005
+Quartiles: 242808 - 350269 - 398879 - 458268 - 930909
+Average time (ms): 112.793
+Quartiles: 71.994 - 98.344 - 109.351 - 123.421 - 225.623
+
+Player: MAsT_IEV_MI_5_200_1.5
+Average evaluations: 384300
+Quartiles: 226495 - 335906 - 378944 - 421911 - 731872
+Average time (ms): 105.903
+Quartiles: 69.667 - 94.469 - 103.350 - 115.034 - 204.985
+
+Player: MAsT_IEV_MI_5_200_1.75
+Average evaluations: 379693
+Quartiles: 227129 - 329944 - 370687 - 415574 - 740660
+Average time (ms): 104.997
+Quartiles: 70.834 - 93.665 - 101.687 - 113.051 - 200.141
+
+Player: MAsT_IEV_MI_5_200_2.0
+Average evaluations: 374192
+Quartiles: 223818 - 326084 - 363761 - 408614 - 940719
+Average time (ms): 102.800
+Quartiles: 71.764 - 92.036 - 100.582 - 111.066 - 226.140
+
+Player: MAsT_IEV_MI_5_200_2.25
+Average evaluations: 374497
+Quartiles: 223304 - 328674 - 366794 - 410165 - 670980
+Average time (ms): 103.167
+Quartiles: 70.339 - 92.326 - 101.407 - 112.216 - 180.991
+
+Player: MAsT_IEV_MI_5_200_2.5
+Average evaluations: 369368
+Quartiles: 228970 - 322741 - 360473 - 408207 - 685638
+Average time (ms): 101.688
+Quartiles: 67.713 - 91.440 - 99.760 - 109.434 - 160.277
+
+Player: MAsT_IEV_MI_5_200_2.75
+Average evaluations: 369860
+Quartiles: 241235 - 323955 - 364150 - 405035 - 643724
+Average time (ms): 102.248
+Quartiles: 69.999 - 92.047 - 100.944 - 110.219 - 173.509
+
+Player: MAsT_IEV_MI_5_200_3.0
+Average evaluations: 370833
+Quartiles: 237665 - 324904 - 362204 - 410643 - 1289076
+Average time (ms): 101.485
+Quartiles: 72.165 - 90.650 - 99.238 - 110.061 - 255.397
+
+Player: MAsT_IEV_MI_5_200_3.5
+Average evaluations: 371443
+Quartiles: 221963 - 330229 - 366403 - 406139 - 655673
+Average time (ms): 101.731
+Quartiles: 66.817 - 92.241 - 99.986 - 109.997 - 157.939
+
+Player: MAsT_IEV_MI_5_200_4.0
+Average evaluations: 372619
+Quartiles: 208888 - 327029 - 366788 - 406451 - 738316
+Average time (ms): 101.656
+Quartiles: 66.782 - 91.395 - 100.312 - 109.984 - 171.049
+
+Player: MAsT_IEV_MI_5_200_4.5
+Average evaluations: 375539
+Quartiles: 240254 - 324247 - 366925 - 413696 - 1024220
+Average time (ms): 102.531
+Quartiles: 69.936 - 91.669 - 100.437 - 110.963 - 219.594
+
+Player: MAsT_IEV_MI_5_200_5.0
+Average evaluations: 370451
+Quartiles: 222822 - 327844 - 359989 - 409079 - 630866
+Average time (ms): 101.453
+Quartiles: 66.264 - 91.741 - 100.244 - 109.770 - 181.380
+
+Player: MAsT_IEV_MI_5_200_6.0
+Average evaluations: 372905
+Quartiles: 211656 - 329178 - 367592 - 406413 - 769559
+Average time (ms): 101.537
+Quartiles: 66.327 - 91.302 - 99.928 - 109.884 - 178.066
+
+Player: MAsT_IEV_MI_5_200_7.0
+Average evaluations: 372240
+Quartiles: 244182 - 328401 - 364591 - 405775 - 685409
+Average time (ms): 101.460
+Quartiles: 73.032 - 91.591 - 99.409 - 109.653 - 173.505
+
+Player: MAsT_IEV_MI_5_200_8.0
+Average evaluations: 372511
+Quartiles: 240767 - 322886 - 362787 - 409125 - 750821
+Average time (ms): 101.379
+Quartiles: 70.055 - 91.354 - 99.250 - 109.641 - 173.016
+
+Player: MAsT_IEV_MI_5_200_9.0
+Average evaluations: 371295
+Quartiles: 221766 - 326550 - 364752 - 406980 - 641011
+Average time (ms): 100.885
+Quartiles: 67.054 - 91.376 - 99.337 - 108.588 - 164.749
+
+Player: MAsT_IEV_MI_5_200_10.0
+Average evaluations: 377568
+Quartiles: 242429 - 329968 - 369674 - 415254 - 745282
+Average time (ms): 101.878
+Quartiles: 71.368 - 92.050 - 100.518 - 109.754 - 176.628
+
+Player: MAsT_IEV_MI_5_200_20.0
+Average evaluations: 370256
+Quartiles: 222100 - 326446 - 366286 - 406659 - 652412
+Average time (ms): 100.536
+Quartiles: 65.576 - 91.106 - 99.201 - 108.051 - 166.658
+
+Player: MAsT_IEV_MI_5_200_50.0
+Average evaluations: 373596
+Quartiles: 252929 - 329111 - 366775 - 408647 - 649505
+Average time (ms): 100.963
+Quartiles: 72.732 - 91.754 - 99.480 - 108.758 - 184.349
+
+Player: MAsT_IEV_MI_5_200_100.0
+Average evaluations: 386893
+Quartiles: 227975 - 340167 - 378246 - 424516 - 706530
+Average time (ms): 102.964
+Quartiles: 68.716 - 93.293 - 101.153 - 110.431 - 159.944
+
+Player: MAsT_IEV_MI_5_200_200.0
+Average evaluations: 387397
+Quartiles: 244693 - 338704 - 378559 - 426286 - 791909
+Average time (ms): 103.237
+Quartiles: 68.929 - 93.524 - 101.449 - 111.202 - 167.012
+
+Player: MAsT_IEV_MI_5_200_500.0
+Average evaluations: 389628
+Quartiles: 248560 - 342758 - 380781 - 425412 - 763686
+Average time (ms): 103.683
+Quartiles: 67.716 - 93.586 - 102.069 - 111.504 - 180.604
+
+Player: MAsT_IEV_MI_5_200_1000.0
+Average evaluations: 390267
+Quartiles: 234197 - 343164 - 381502 - 427716 - 842479
+Average time (ms): 103.486
+Quartiles: 67.089 - 93.898 - 102.322 - 110.763 - 174.632
+
+Player: MAsT_IEV_MI_5_500_1.0
+Average evaluations: 432791
+Quartiles: 235598 - 362491 - 421311 - 490857 - 951823
+Average time (ms): 116.454
+Quartiles: 73.399 - 100.580 - 113.975 - 128.640 - 215.229
+
+Player: MAsT_IEV_MI_5_500_1.1
+Average evaluations: 395077
+Quartiles: 242628 - 341135 - 385706 - 440515 - 713109
+Average time (ms): 107.984
+Quartiles: 73.654 - 94.890 - 105.350 - 117.769 - 208.270
+
+Player: MAsT_IEV_MI_5_500_1.2
+Average evaluations: 385980
+Quartiles: 222775 - 336056 - 378017 - 429348 - 748346
+Average time (ms): 105.875
+Quartiles: 70.640 - 94.114 - 103.615 - 115.627 - 182.459
+
+Player: MAsT_IEV_MI_5_500_1.5
+Average evaluations: 373347
+Quartiles: 234678 - 328464 - 368524 - 411528 - 738373
+Average time (ms): 102.499
+Quartiles: 69.528 - 92.213 - 100.673 - 110.939 - 181.443
+
+Player: MAsT_IEV_MI_5_500_1.75
+Average evaluations: 369208
+Quartiles: 227084 - 325089 - 363177 - 404858 - 709540
+Average time (ms): 101.312
+Quartiles: 71.834 - 91.191 - 99.289 - 108.999 - 183.214
+
+Player: MAsT_IEV_MI_5_500_2.0
+Average evaluations: 367391
+Quartiles: 234443 - 327660 - 361715 - 401078 - 711250
+Average time (ms): 100.850
+Quartiles: 71.065 - 91.461 - 99.351 - 108.334 - 166.229
+
+Player: MAsT_IEV_MI_5_500_2.25
+Average evaluations: 368254
+Quartiles: 235638 - 321640 - 359468 - 402348 - 739243
+Average time (ms): 100.896
+Quartiles: 72.157 - 90.846 - 99.677 - 108.191 - 182.546
+
+Player: MAsT_IEV_MI_5_500_2.5
+Average evaluations: 369188
+Quartiles: 246210 - 323140 - 361225 - 405642 - 723553
+Average time (ms): 101.109
+Quartiles: 71.518 - 91.125 - 99.332 - 109.383 - 176.615
+
+Player: MAsT_IEV_MI_5_500_2.75
+Average evaluations: 365138
+Quartiles: 221831 - 321446 - 359636 - 397841 - 654274
+Average time (ms): 99.953
+Quartiles: 65.965 - 90.538 - 98.657 - 108.430 - 175.513
+
+Player: MAsT_IEV_MI_5_500_3.0
+Average evaluations: 370459
+Quartiles: 232514 - 327110 - 361811 - 403266 - 811559
+Average time (ms): 100.747
+Quartiles: 69.085 - 91.392 - 99.587 - 107.537 - 185.489
+
+Player: MAsT_IEV_MI_5_500_3.5
+Average evaluations: 371464
+Quartiles: 212153 - 327586 - 363930 - 408423 - 768111
+Average time (ms): 101.301
+Quartiles: 64.069 - 91.681 - 99.146 - 109.381 - 180.808
+
+Player: MAsT_IEV_MI_5_500_4.0
+Average evaluations: 367970
+Quartiles: 238397 - 323402 - 359211 - 406751 - 589694
+Average time (ms): 100.341
+Quartiles: 72.221 - 91.018 - 98.602 - 108.119 - 145.865
+
+Player: MAsT_IEV_MI_5_500_4.5
+Average evaluations: 369049
+Quartiles: 239865 - 326334 - 366345 - 407085 - 629723
+Average time (ms): 100.371
+Quartiles: 69.869 - 90.507 - 99.909 - 109.126 - 158.989
+
+Player: MAsT_IEV_MI_5_500_5.0
+Average evaluations: 368663
+Quartiles: 243775 - 324854 - 362708 - 402658 - 655406
+Average time (ms): 100.581
+Quartiles: 69.418 - 91.239 - 98.883 - 107.995 - 174.243
+
+Player: MAsT_IEV_MI_5_500_6.0
+Average evaluations: 377590
+Quartiles: 241949 - 332395 - 370743 - 414483 - 724776
+Average time (ms): 101.905
+Quartiles: 73.203 - 91.658 - 100.405 - 109.458 - 164.857
+
+Player: MAsT_IEV_MI_5_500_7.0
+Average evaluations: 374581
+Quartiles: 240507 - 327319 - 366827 - 410382 - 745905
+Average time (ms): 101.335
+Quartiles: 68.998 - 91.666 - 99.620 - 109.493 - 178.487
+
+Player: MAsT_IEV_MI_5_500_8.0
+Average evaluations: 374279
+Quartiles: 246094 - 330856 - 366240 - 409050 - 629046
+Average time (ms): 101.098
+Quartiles: 69.387 - 91.412 - 98.959 - 109.728 - 155.806
+
+Player: MAsT_IEV_MI_5_500_9.0
+Average evaluations: 374149
+Quartiles: 220703 - 331448 - 368043 - 409963 - 672646
+Average time (ms): 101.033
+Quartiles: 68.992 - 91.475 - 99.447 - 108.870 - 165.879
+
+Player: MAsT_IEV_MI_5_500_10.0
+Average evaluations: 375073
+Quartiles: 227470 - 330360 - 365987 - 411310 - 755952
+Average time (ms): 101.399
+Quartiles: 70.365 - 91.717 - 99.586 - 109.368 - 174.692
+
+Player: MAsT_IEV_MI_5_500_20.0
+Average evaluations: 370592
+Quartiles: 227595 - 327157 - 362363 - 405092 - 640462
+Average time (ms): 100.309
+Quartiles: 71.231 - 90.844 - 98.754 - 107.958 - 160.536
+
+Player: MAsT_IEV_MI_5_500_50.0
+Average evaluations: 390832
+Quartiles: 240328 - 342668 - 381101 - 427517 - 880237
+Average time (ms): 103.662
+Quartiles: 68.502 - 94.105 - 102.068 - 111.699 - 202.785
+
+Player: MAsT_IEV_MI_5_500_100.0
+Average evaluations: 390542
+Quartiles: 251070 - 342532 - 381465 - 430030 - 915286
+Average time (ms): 103.693
+Quartiles: 68.327 - 93.743 - 102.478 - 111.968 - 185.437
+
+Player: MAsT_IEV_MI_5_500_200.0
+Average evaluations: 388555
+Quartiles: 236325 - 342924 - 379946 - 424923 - 741234
+Average time (ms): 103.402
+Quartiles: 69.818 - 94.003 - 101.439 - 110.589 - 182.775
+
+Player: MAsT_IEV_MI_5_500_500.0
+Average evaluations: 389017
+Quartiles: 247807 - 340264 - 377607 - 432208 - 773445
+Average time (ms): 103.389
+Quartiles: 72.446 - 93.150 - 101.233 - 111.501 - 170.011
+
+Player: MAsT_IEV_MI_5_500_1000.0
+Average evaluations: 388134
+Quartiles: 238750 - 340053 - 377040 - 426209 - 701688
+Average time (ms): 104.847
+Quartiles: 68.675 - 94.667 - 103.104 - 113.126 - 169.438
+
+Player: MAsT_IEV_MI_5_1000_1.0
+Average evaluations: 392122
+Quartiles: 234158 - 338093 - 382335 - 435853 - 847181
+Average time (ms): 105.886
+Quartiles: 69.470 - 94.197 - 104.291 - 115.115 - 192.951
+
+Player: MAsT_IEV_MI_5_1000_1.1
+Average evaluations: 379678
+Quartiles: 241847 - 332765 - 375005 - 419516 - 669507
+Average time (ms): 103.203
+Quartiles: 69.926 - 92.177 - 102.205 - 111.744 - 163.798
+
+Player: MAsT_IEV_MI_5_1000_1.2
+Average evaluations: 371607
+Quartiles: 236745 - 327315 - 367165 - 411331 - 635100
+Average time (ms): 101.474
+Quartiles: 70.258 - 91.307 - 100.503 - 109.817 - 168.359
+
+Player: MAsT_IEV_MI_5_1000_1.5
+Average evaluations: 370704
+Quartiles: 233745 - 328497 - 364213 - 406037 - 647785
+Average time (ms): 100.321
+Quartiles: 70.650 - 90.361 - 99.583 - 107.947 - 175.721
+
+Player: MAsT_IEV_MI_5_1000_1.75
+Average evaluations: 369144
+Quartiles: 216796 - 326404 - 363376 - 404763 - 580262
+Average time (ms): 100.517
+Quartiles: 64.975 - 90.710 - 99.201 - 108.367 - 155.530
+
+Player: MAsT_IEV_MI_5_1000_2.0
+Average evaluations: 370063
+Quartiles: 224545 - 322766 - 361142 - 405231 - 653723
+Average time (ms): 100.481
+Quartiles: 65.713 - 90.154 - 98.928 - 108.903 - 168.791
+
+Player: MAsT_IEV_MI_5_1000_2.25
+Average evaluations: 370438
+Quartiles: 230948 - 324797 - 364307 - 406280 - 755275
+Average time (ms): 100.143
+Quartiles: 68.616 - 90.622 - 99.177 - 108.044 - 178.456
+
+Player: MAsT_IEV_MI_5_1000_2.5
+Average evaluations: 369263
+Quartiles: 226229 - 324722 - 364405 - 406389 - 579695
+Average time (ms): 100.174
+Quartiles: 70.575 - 90.836 - 99.054 - 108.232 - 151.513
+
+Player: MAsT_IEV_MI_5_1000_2.75
+Average evaluations: 370065
+Quartiles: 240455 - 328938 - 361498 - 405077 - 688504
+Average time (ms): 99.980
+Quartiles: 71.274 - 90.670 - 98.149 - 107.379 - 168.863
+
+Player: MAsT_IEV_MI_5_1000_3.0
+Average evaluations: 366064
+Quartiles: 219319 - 324846 - 358366 - 402760 - 659809
+Average time (ms): 99.517
+Quartiles: 65.984 - 90.761 - 98.144 - 106.765 - 171.525
+
+Player: MAsT_IEV_MI_5_1000_3.5
+Average evaluations: 369714
+Quartiles: 236129 - 328180 - 363097 - 404984 - 718602
+Average time (ms): 99.706
+Quartiles: 69.931 - 90.619 - 98.128 - 107.725 - 161.572
+
+Player: MAsT_IEV_MI_5_1000_4.0
+Average evaluations: 371216
+Quartiles: 230295 - 328979 - 364170 - 406764 - 613036
+Average time (ms): 100.389
+Quartiles: 68.892 - 91.160 - 99.475 - 108.349 - 154.061
+
+Player: MAsT_IEV_MI_5_1000_4.5
+Average evaluations: 372293
+Quartiles: 236977 - 327606 - 367782 - 405937 - 746809
+Average time (ms): 100.433
+Quartiles: 69.166 - 90.388 - 98.757 - 108.809 - 179.988
+
+Player: MAsT_IEV_MI_5_1000_5.0
+Average evaluations: 371902
+Quartiles: 217133 - 326138 - 365609 - 405286 - 810724
+Average time (ms): 100.432
+Quartiles: 68.684 - 90.606 - 98.662 - 108.700 - 163.100
+
+Player: MAsT_IEV_MI_5_1000_6.0
+Average evaluations: 369869
+Quartiles: 246954 - 324935 - 361887 - 407003 - 653567
+Average time (ms): 99.923
+Quartiles: 67.272 - 90.037 - 98.302 - 107.873 - 157.415
+
+Player: MAsT_IEV_MI_5_1000_7.0
+Average evaluations: 371245
+Quartiles: 236120 - 326855 - 363101 - 409838 - 760930
+Average time (ms): 100.304
+Quartiles: 71.961 - 90.916 - 97.897 - 108.199 - 164.598
+
+Player: MAsT_IEV_MI_5_1000_8.0
+Average evaluations: 373305
+Quartiles: 243523 - 327096 - 364827 - 411531 - 820300
+Average time (ms): 100.611
+Quartiles: 71.972 - 90.874 - 99.244 - 109.147 - 166.102
+
+Player: MAsT_IEV_MI_5_1000_9.0
+Average evaluations: 373554
+Quartiles: 221109 - 328123 - 365176 - 407429 - 772797
+Average time (ms): 100.500
+Quartiles: 70.384 - 90.888 - 98.646 - 108.443 - 172.630
+
+Player: MAsT_IEV_MI_5_1000_10.0
+Average evaluations: 373927
+Quartiles: 230044 - 329581 - 365746 - 410422 - 714356
+Average time (ms): 100.718
+Quartiles: 67.329 - 91.020 - 99.365 - 109.071 - 185.111
+
+Player: MAsT_IEV_MI_5_1000_20.0
+Average evaluations: 383830
+Quartiles: 250479 - 333782 - 376630 - 421981 - 761355
+Average time (ms): 102.092
+Quartiles: 70.849 - 91.561 - 100.794 - 109.866 - 204.851
+
+Player: MAsT_IEV_MI_5_1000_50.0
+Average evaluations: 383801
+Quartiles: 226628 - 336545 - 374554 - 418755 - 751941
+Average time (ms): 102.399
+Quartiles: 73.058 - 91.719 - 100.163 - 110.348 - 181.151
+
+Player: MAsT_IEV_MI_5_1000_100.0
+Average evaluations: 387041
+Quartiles: 221869 - 338335 - 380436 - 428504 - 755233
+Average time (ms): 102.559
+Quartiles: 67.518 - 92.530 - 101.399 - 110.917 - 167.172
+
+Player: MAsT_IEV_MI_5_1000_200.0
+Average evaluations: 382394
+Quartiles: 233326 - 336776 - 374142 - 426816 - 637811
+Average time (ms): 102.153
+Quartiles: 69.971 - 92.444 - 100.720 - 110.907 - 161.145
+
+Player: MAsT_IEV_MI_5_1000_500.0
+Average evaluations: 384132
+Quartiles: 223402 - 339320 - 375202 - 420416 - 816785
+Average time (ms): 102.505
+Quartiles: 69.919 - 92.604 - 100.660 - 111.074 - 170.896
+
+Player: MAsT_IEV_MI_5_1000_1000.0
+Average evaluations: 385458
+Quartiles: 228494 - 338607 - 377122 - 423318 - 681238
+Average time (ms): 102.373
+Quartiles: 68.295 - 92.304 - 100.610 - 111.242 - 154.495
+
+Player: MAsT_IEV_MI_5_2000_1.0
+Average evaluations: 370645
+Quartiles: 229836 - 325753 - 365083 - 408516 - 621724
+Average time (ms): 99.386
+Quartiles: 67.820 - 90.174 - 97.685 - 106.241 - 161.916
+
+Player: MAsT_IEV_MI_5_2000_1.1
+Average evaluations: 369890
+Quartiles: 226689 - 323131 - 365501 - 407035 - 649619
+Average time (ms): 99.753
+Quartiles: 71.134 - 90.236 - 98.160 - 107.683 - 148.341
+
+Player: MAsT_IEV_MI_5_2000_1.2
+Average evaluations: 368679
+Quartiles: 236102 - 323612 - 360817 - 408048 - 732497
+Average time (ms): 99.429
+Quartiles: 67.712 - 89.701 - 98.168 - 107.220 - 151.721
+
+Player: MAsT_IEV_MI_5_2000_1.5
+Average evaluations: 366304
+Quartiles: 211126 - 319721 - 358587 - 406792 - 728317
+Average time (ms): 98.518
+Quartiles: 67.286 - 88.599 - 96.873 - 106.838 - 175.101
+
+Player: MAsT_IEV_MI_5_2000_1.75
+Average evaluations: 367353
+Quartiles: 232617 - 325616 - 362490 - 403004 - 691232
+Average time (ms): 99.011
+Quartiles: 64.079 - 90.059 - 97.839 - 106.903 - 163.376
+
+Player: MAsT_IEV_MI_5_2000_2.0
+Average evaluations: 367874
+Quartiles: 230731 - 322836 - 361997 - 403195 - 617535
+Average time (ms): 98.783
+Quartiles: 69.235 - 89.241 - 97.506 - 106.182 - 156.467
+
+Player: MAsT_IEV_MI_5_2000_2.25
+Average evaluations: 366849
+Quartiles: 230774 - 322751 - 358548 - 400526 - 632505
+Average time (ms): 98.710
+Quartiles: 67.137 - 89.148 - 97.224 - 106.300 - 160.799
+
+Player: MAsT_IEV_MI_5_2000_2.5
+Average evaluations: 368253
+Quartiles: 229184 - 324640 - 360983 - 402446 - 960271
+Average time (ms): 99.567
+Quartiles: 68.345 - 90.041 - 98.067 - 106.940 - 204.145
+
+Player: MAsT_IEV_MI_5_2000_2.75
+Average evaluations: 367218
+Quartiles: 236270 - 323962 - 362596 - 400116 - 614765
+Average time (ms): 98.731
+Quartiles: 67.379 - 90.015 - 97.427 - 105.879 - 152.877
+
+Player: MAsT_IEV_MI_5_2000_3.0
+Average evaluations: 371535
+Quartiles: 237295 - 327040 - 364982 - 406779 - 691462
+Average time (ms): 99.302
+Quartiles: 72.235 - 89.681 - 97.492 - 106.941 - 165.863
+
+Player: MAsT_IEV_MI_5_2000_3.5
+Average evaluations: 371464
+Quartiles: 213883 - 332193 - 365282 - 407235 - 686462
+Average time (ms): 99.940
+Quartiles: 67.379 - 90.626 - 98.405 - 107.676 - 178.471
+
+Player: MAsT_IEV_MI_5_2000_4.0
+Average evaluations: 370568
+Quartiles: 238480 - 325418 - 359509 - 405667 - 692381
+Average time (ms): 99.514
+Quartiles: 68.054 - 90.035 - 97.744 - 107.444 - 170.329
+
+Player: MAsT_IEV_MI_5_2000_4.5
+Average evaluations: 373667
+Quartiles: 236771 - 327279 - 363353 - 412452 - 665045
+Average time (ms): 99.797
+Quartiles: 71.190 - 89.653 - 98.697 - 107.309 - 173.405
+
+Player: MAsT_IEV_MI_5_2000_5.0
+Average evaluations: 371925
+Quartiles: 229698 - 326711 - 363666 - 409237 - 705369
+Average time (ms): 99.812
+Quartiles: 71.128 - 89.854 - 98.269 - 108.234 - 161.819
+
+Player: MAsT_IEV_MI_5_2000_6.0
+Average evaluations: 373867
+Quartiles: 243049 - 331098 - 367844 - 410416 - 702893
+Average time (ms): 99.834
+Quartiles: 71.394 - 90.953 - 98.770 - 108.004 - 152.434
+
+Player: MAsT_IEV_MI_5_2000_7.0
+Average evaluations: 371234
+Quartiles: 225104 - 326408 - 367058 - 404619 - 597895
+Average time (ms): 99.426
+Quartiles: 67.674 - 90.017 - 98.227 - 106.927 - 151.770
+
+Player: MAsT_IEV_MI_5_2000_8.0
+Average evaluations: 375269
+Quartiles: 236672 - 332473 - 369133 - 413068 - 614752
+Average time (ms): 100.141
+Quartiles: 68.133 - 90.643 - 99.066 - 108.255 - 149.608
+
+Player: MAsT_IEV_MI_5_2000_9.0
+Average evaluations: 375161
+Quartiles: 214009 - 331656 - 368124 - 409263 - 716971
+Average time (ms): 99.712
+Quartiles: 64.993 - 90.566 - 98.020 - 106.851 - 170.580
+
+Player: MAsT_IEV_MI_5_2000_10.0
+Average evaluations: 375513
+Quartiles: 235082 - 328927 - 367975 - 414370 - 740877
+Average time (ms): 100.143
+Quartiles: 67.415 - 90.541 - 98.567 - 107.996 - 170.673
+
+Player: MAsT_IEV_MI_5_2000_20.0
+Average evaluations: 378368
+Quartiles: 240103 - 332151 - 369473 - 416849 - 704268
+Average time (ms): 100.653
+Quartiles: 71.822 - 91.737 - 99.093 - 108.423 - 159.063
+
+Player: MAsT_IEV_MI_5_2000_50.0
+Average evaluations: 386013
+Quartiles: 245691 - 337727 - 378029 - 423484 - 765092
+Average time (ms): 102.185
+Quartiles: 69.821 - 92.337 - 101.074 - 110.340 - 191.983
+
+Player: MAsT_IEV_MI_5_2000_100.0
+Average evaluations: 379881
+Quartiles: 223191 - 334276 - 373008 - 418512 - 954547
+Average time (ms): 101.012
+Quartiles: 68.470 - 91.341 - 99.420 - 108.488 - 205.794
+
+Player: MAsT_IEV_MI_5_2000_200.0
+Average evaluations: 381687
+Quartiles: 250135 - 333086 - 373096 - 421223 - 694616
+Average time (ms): 101.475
+Quartiles: 72.268 - 91.079 - 99.414 - 110.575 - 167.313
+
+Player: MAsT_IEV_MI_5_2000_500.0
+Average evaluations: 379721
+Quartiles: 232067 - 331543 - 370590 - 416250 - 735865
+Average time (ms): 100.865
+Quartiles: 64.117 - 90.614 - 99.469 - 108.551 - 179.669
+
+Player: MAsT_IEV_MI_5_2000_1000.0
+Average evaluations: 376582
+Quartiles: 236051 - 331273 - 371049 - 413575 - 677725
+Average time (ms): 100.257
+Quartiles: 70.184 - 90.705 - 99.714 - 107.908 - 148.970
+
+Player: MAsT_IEV_MI_5_5000_1.0
+Average evaluations: 370224
+Quartiles: 214837 - 326754 - 360988 - 407986 - 800673
+Average time (ms): 97.718
+Quartiles: 68.600 - 88.897 - 96.112 - 105.420 - 153.334
+
+Player: MAsT_IEV_MI_5_5000_1.1
+Average evaluations: 367324
+Quartiles: 230258 - 325027 - 361911 - 403872 - 743610
+Average time (ms): 97.317
+Quartiles: 69.527 - 89.135 - 96.500 - 104.281 - 177.125
+
+Player: MAsT_IEV_MI_5_5000_1.2
+Average evaluations: 368917
+Quartiles: 231153 - 324056 - 360998 - 405711 - 706144
+Average time (ms): 97.629
+Quartiles: 67.965 - 89.024 - 96.355 - 104.616 - 168.405
+
+Player: MAsT_IEV_MI_5_5000_1.5
+Average evaluations: 368896
+Quartiles: 238052 - 324677 - 361109 - 406331 - 636223
+Average time (ms): 97.960
+Quartiles: 69.950 - 88.562 - 96.791 - 105.275 - 150.438
+
+Player: MAsT_IEV_MI_5_5000_1.75
+Average evaluations: 367276
+Quartiles: 248707 - 323534 - 358776 - 406282 - 733057
+Average time (ms): 97.502
+Quartiles: 67.452 - 88.886 - 96.021 - 105.505 - 145.955
+
+Player: MAsT_IEV_MI_5_5000_2.0
+Average evaluations: 368382
+Quartiles: 229622 - 325889 - 360181 - 401789 - 643281
+Average time (ms): 97.670
+Quartiles: 70.500 - 88.987 - 96.473 - 104.840 - 167.186
+
+Player: MAsT_IEV_MI_5_5000_2.25
+Average evaluations: 369036
+Quartiles: 241229 - 326405 - 360594 - 407800 - 728369
+Average time (ms): 98.042
+Quartiles: 68.429 - 88.968 - 96.308 - 105.887 - 154.861
+
+Player: MAsT_IEV_MI_5_5000_2.5
+Average evaluations: 369125
+Quartiles: 240569 - 326197 - 363253 - 405673 - 636929
+Average time (ms): 98.056
+Quartiles: 69.283 - 89.101 - 96.299 - 105.991 - 154.654
+
+Player: MAsT_IEV_MI_5_5000_2.75
+Average evaluations: 367993
+Quartiles: 226810 - 325759 - 361372 - 404465 - 661266
+Average time (ms): 97.525
+Quartiles: 71.333 - 88.434 - 96.527 - 105.155 - 160.111
+
+Player: MAsT_IEV_MI_5_5000_3.0
+Average evaluations: 371342
+Quartiles: 234821 - 326764 - 364298 - 407547 - 710466
+Average time (ms): 98.287
+Quartiles: 69.295 - 88.899 - 96.898 - 105.941 - 176.011
+
+Player: MAsT_IEV_MI_5_5000_3.5
+Average evaluations: 373510
+Quartiles: 239501 - 327881 - 364086 - 408478 - 706419
+Average time (ms): 98.729
+Quartiles: 70.169 - 89.365 - 97.300 - 106.176 - 158.469
+
+Player: MAsT_IEV_MI_5_5000_4.0
+Average evaluations: 374612
+Quartiles: 233320 - 330630 - 366062 - 412500 - 634289
+Average time (ms): 98.819
+Quartiles: 69.922 - 89.810 - 97.650 - 106.669 - 160.058
+
+Player: MAsT_IEV_MI_5_5000_4.5
+Average evaluations: 374394
+Quartiles: 209079 - 328203 - 367795 - 410784 - 793836
+Average time (ms): 98.438
+Quartiles: 64.030 - 89.545 - 96.937 - 106.187 - 176.702
+
+Player: MAsT_IEV_MI_5_5000_5.0
+Average evaluations: 372201
+Quartiles: 249277 - 329070 - 362776 - 409089 - 693250
+Average time (ms): 98.371
+Quartiles: 71.609 - 89.169 - 97.167 - 105.516 - 159.490
+
+Player: MAsT_IEV_MI_5_5000_6.0
+Average evaluations: 371020
+Quartiles: 232517 - 326627 - 362396 - 408394 - 649640
+Average time (ms): 98.340
+Quartiles: 67.478 - 88.780 - 96.511 - 105.675 - 151.396
+
+Player: MAsT_IEV_MI_5_5000_7.0
+Average evaluations: 374841
+Quartiles: 240715 - 331593 - 366132 - 411738 - 672437
+Average time (ms): 99.032
+Quartiles: 70.827 - 89.732 - 97.617 - 107.117 - 153.260
+
+Player: MAsT_IEV_MI_5_5000_8.0
+Average evaluations: 374924
+Quartiles: 239640 - 330813 - 366418 - 412655 - 634995
+Average time (ms): 98.936
+Quartiles: 69.121 - 89.355 - 97.744 - 106.199 - 149.176
+
+Player: MAsT_IEV_MI_5_5000_9.0
+Average evaluations: 374579
+Quartiles: 235163 - 329071 - 366764 - 415016 - 671654
+Average time (ms): 99.005
+Quartiles: 69.778 - 89.939 - 97.799 - 106.563 - 147.321
+
+Player: MAsT_IEV_MI_5_5000_10.0
+Average evaluations: 373493
+Quartiles: 221075 - 328315 - 366057 - 410124 - 639639
+Average time (ms): 98.904
+Quartiles: 66.891 - 89.388 - 97.319 - 107.286 - 156.852
+
+Player: MAsT_IEV_MI_5_5000_20.0
+Average evaluations: 374495
+Quartiles: 227897 - 328460 - 366587 - 411975 - 668547
+Average time (ms): 99.032
+Quartiles: 67.303 - 90.041 - 97.631 - 106.848 - 150.606
+
+Player: MAsT_IEV_MI_5_5000_50.0
+Average evaluations: 370458
+Quartiles: 242321 - 328079 - 361605 - 405180 - 838161
+Average time (ms): 98.190
+Quartiles: 67.208 - 88.629 - 96.655 - 105.875 - 168.675
+
+Player: MAsT_IEV_MI_5_5000_100.0
+Average evaluations: 375202
+Quartiles: 246435 - 331140 - 368511 - 409416 - 780992
+Average time (ms): 99.071
+Quartiles: 69.793 - 90.005 - 98.122 - 106.240 - 163.291
+
+Player: MAsT_IEV_MI_5_5000_200.0
+Average evaluations: 373204
+Quartiles: 230113 - 329021 - 367493 - 411774 - 718052
+Average time (ms): 98.433
+Quartiles: 68.167 - 89.194 - 96.949 - 106.000 - 159.167
+
+Player: MAsT_IEV_MI_5_5000_500.0
+Average evaluations: 371263
+Quartiles: 230218 - 326542 - 364316 - 408939 - 740457
+Average time (ms): 98.464
+Quartiles: 68.309 - 89.149 - 97.563 - 106.526 - 150.640
+
+Player: MAsT_IEV_MI_5_5000_1000.0
+Average evaluations: 372421
+Quartiles: 243763 - 327323 - 363923 - 409729 - 688305
+Average time (ms): 98.587
+Quartiles: 70.961 - 89.011 - 97.418 - 106.163 - 176.310
+
+Player: MAsT_IEV_MI_5_10000_1.0
+Average evaluations: 374611
+Quartiles: 232992 - 329769 - 364368 - 411167 - 769243
+Average time (ms): 97.938
+Quartiles: 69.076 - 88.437 - 96.355 - 105.943 - 161.743
+
+Player: MAsT_IEV_MI_5_10000_1.1
+Average evaluations: 373526
+Quartiles: 232944 - 327505 - 366606 - 408135 - 795393
+Average time (ms): 97.602
+Quartiles: 66.727 - 88.890 - 96.254 - 104.895 - 172.280
+
+Player: MAsT_IEV_MI_5_10000_1.2
+Average evaluations: 374266
+Quartiles: 241724 - 328699 - 365067 - 407674 - 844905
+Average time (ms): 97.995
+Quartiles: 70.670 - 88.664 - 96.101 - 105.463 - 190.909
+
+Player: MAsT_IEV_MI_5_10000_1.5
+Average evaluations: 374442
+Quartiles: 244066 - 332494 - 370389 - 408802 - 672107
+Average time (ms): 97.687
+Quartiles: 71.501 - 88.739 - 96.705 - 105.071 - 154.656
+
+Player: MAsT_IEV_MI_5_10000_1.75
+Average evaluations: 373264
+Quartiles: 230973 - 327582 - 366117 - 411124 - 783071
+Average time (ms): 97.709
+Quartiles: 67.080 - 88.534 - 96.186 - 105.612 - 167.709
+
+Player: MAsT_IEV_MI_5_10000_2.0
+Average evaluations: 372449
+Quartiles: 229743 - 329069 - 366858 - 407419 - 680415
+Average time (ms): 97.709
+Quartiles: 71.160 - 89.124 - 96.391 - 105.384 - 160.358
+
+Player: MAsT_IEV_MI_5_10000_2.25
+Average evaluations: 371176
+Quartiles: 228219 - 326999 - 363034 - 411119 - 692871
+Average time (ms): 98.220
+Quartiles: 67.975 - 89.227 - 96.966 - 106.102 - 155.505
+
+Player: MAsT_IEV_MI_5_10000_2.5
+Average evaluations: 373249
+Quartiles: 238106 - 332077 - 365506 - 408294 - 654297
+Average time (ms): 97.878
+Quartiles: 70.308 - 89.054 - 96.265 - 104.751 - 146.911
+
+Player: MAsT_IEV_MI_5_10000_2.75
+Average evaluations: 377034
+Quartiles: 226856 - 329783 - 367297 - 413189 - 685484
+Average time (ms): 98.332
+Quartiles: 69.825 - 88.731 - 96.962 - 105.706 - 149.070
+
+Player: MAsT_IEV_MI_5_10000_3.0
+Average evaluations: 373669
+Quartiles: 229275 - 330423 - 365670 - 407857 - 819772
+Average time (ms): 97.691
+Quartiles: 64.454 - 89.341 - 96.026 - 104.985 - 168.759
+
+Player: MAsT_IEV_MI_5_10000_3.5
+Average evaluations: 376055
+Quartiles: 228088 - 329879 - 369002 - 412547 - 852319
+Average time (ms): 98.274
+Quartiles: 64.878 - 89.650 - 97.009 - 106.393 - 173.228
+
+Player: MAsT_IEV_MI_5_10000_4.0
+Average evaluations: 376414
+Quartiles: 240741 - 333600 - 367861 - 410340 - 780947
+Average time (ms): 98.202
+Quartiles: 68.039 - 89.824 - 97.010 - 105.264 - 161.518
+
+Player: MAsT_IEV_MI_5_10000_4.5
+Average evaluations: 372136
+Quartiles: 246254 - 328067 - 365744 - 408131 - 720039
+Average time (ms): 97.825
+Quartiles: 66.367 - 88.774 - 96.355 - 105.457 - 155.290
+
+Player: MAsT_IEV_MI_5_10000_5.0
+Average evaluations: 374896
+Quartiles: 240400 - 329940 - 365151 - 412189 - 840899
+Average time (ms): 97.918
+Quartiles: 67.694 - 88.837 - 96.340 - 105.385 - 165.221
+
+Player: MAsT_IEV_MI_5_10000_6.0
+Average evaluations: 372150
+Quartiles: 220912 - 326731 - 365003 - 407017 - 705866
+Average time (ms): 98.026
+Quartiles: 67.245 - 88.947 - 96.783 - 104.893 - 160.795
+
+Player: MAsT_IEV_MI_5_10000_7.0
+Average evaluations: 372107
+Quartiles: 220330 - 326864 - 362708 - 407767 - 829597
+Average time (ms): 97.717
+Quartiles: 65.090 - 88.326 - 96.317 - 105.713 - 180.141
+
+Player: MAsT_IEV_MI_5_10000_8.0
+Average evaluations: 373174
+Quartiles: 228440 - 327599 - 363846 - 408112 - 683939
+Average time (ms): 98.454
+Quartiles: 66.144 - 89.274 - 97.374 - 105.911 - 150.605
+
+Player: MAsT_IEV_MI_5_10000_9.0
+Average evaluations: 372707
+Quartiles: 231154 - 328782 - 365511 - 408062 - 722573
+Average time (ms): 98.021
+Quartiles: 67.234 - 88.924 - 96.267 - 105.296 - 168.430
+
+Player: MAsT_IEV_MI_5_10000_10.0
+Average evaluations: 371605
+Quartiles: 232761 - 330092 - 366561 - 408454 - 643213
+Average time (ms): 97.355
+Quartiles: 67.501 - 88.585 - 96.288 - 104.256 - 185.542
+
+Player: MAsT_IEV_MI_5_10000_20.0
+Average evaluations: 374761
+Quartiles: 247722 - 328501 - 366089 - 410778 - 662784
+Average time (ms): 97.824
+Quartiles: 67.770 - 88.638 - 96.360 - 105.340 - 155.097
+
+Player: MAsT_IEV_MI_5_10000_50.0
+Average evaluations: 375583
+Quartiles: 253172 - 331777 - 369099 - 409602 - 815883
+Average time (ms): 97.964
+Quartiles: 69.690 - 89.078 - 96.305 - 105.121 - 187.885
+
+Player: MAsT_IEV_MI_5_10000_100.0
+Average evaluations: 372310
+Quartiles: 243501 - 326983 - 365865 - 410121 - 659296
+Average time (ms): 97.405
+Quartiles: 68.532 - 87.913 - 95.841 - 105.308 - 157.734
+
+Player: MAsT_IEV_MI_5_10000_200.0
+Average evaluations: 372807
+Quartiles: 234416 - 327682 - 366963 - 410321 - 774913
+Average time (ms): 97.945
+Quartiles: 68.550 - 88.674 - 96.230 - 105.786 - 173.948
+
+Player: MAsT_IEV_MI_5_10000_500.0
+Average evaluations: 375299
+Quartiles: 243140 - 329368 - 371527 - 411683 - 887856
+Average time (ms): 98.348
+Quartiles: 69.298 - 88.936 - 97.145 - 105.965 - 164.099
+
+Player: MAsT_IEV_MI_5_10000_1000.0
+Average evaluations: 373637
+Quartiles: 235248 - 328871 - 367955 - 409689 - 696171
+Average time (ms): 97.760
+Quartiles: 71.116 - 88.216 - 96.797 - 105.841 - 162.860
+
+Player: MAsT_IEV_MI_5_20000_1.0
+Average evaluations: 384692
+Quartiles: 229029 - 340927 - 377904 - 423786 - 686309
+Average time (ms): 99.759
+Quartiles: 65.969 - 90.573 - 98.946 - 107.165 - 170.548
+
+Player: MAsT_IEV_MI_5_20000_1.1
+Average evaluations: 384563
+Quartiles: 235806 - 335411 - 378077 - 423352 - 712864
+Average time (ms): 99.426
+Quartiles: 66.689 - 89.491 - 98.135 - 107.705 - 159.479
+
+Player: MAsT_IEV_MI_5_20000_1.2
+Average evaluations: 380135
+Quartiles: 236548 - 334551 - 375195 - 416559 - 713368
+Average time (ms): 98.658
+Quartiles: 70.781 - 89.511 - 97.738 - 106.076 - 154.019
+
+Player: MAsT_IEV_MI_5_20000_1.5
+Average evaluations: 382327
+Quartiles: 228861 - 338072 - 375369 - 417787 - 739578
+Average time (ms): 99.173
+Quartiles: 64.858 - 90.070 - 98.595 - 107.220 - 155.122
+
+Player: MAsT_IEV_MI_5_20000_1.75
+Average evaluations: 385780
+Quartiles: 225785 - 339511 - 379289 - 420797 - 726623
+Average time (ms): 99.757
+Quartiles: 63.560 - 90.262 - 98.614 - 108.059 - 153.140
+
+Player: MAsT_IEV_MI_5_20000_2.0
+Average evaluations: 383586
+Quartiles: 231567 - 336014 - 376540 - 421306 - 711115
+Average time (ms): 99.540
+Quartiles: 66.093 - 89.681 - 98.477 - 107.804 - 168.368
+
+Player: MAsT_IEV_MI_5_20000_2.25
+Average evaluations: 383852
+Quartiles: 225401 - 337456 - 377184 - 422621 - 864070
+Average time (ms): 99.351
+Quartiles: 67.642 - 89.484 - 97.554 - 107.621 - 166.968
+
+Player: MAsT_IEV_MI_5_20000_2.5
+Average evaluations: 384698
+Quartiles: 236513 - 337347 - 378170 - 425781 - 689653
+Average time (ms): 99.753
+Quartiles: 69.779 - 89.822 - 98.911 - 107.987 - 155.334
+
+Player: MAsT_IEV_MI_5_20000_2.75
+Average evaluations: 386359
+Quartiles: 236524 - 340200 - 381373 - 424614 - 760707
+Average time (ms): 100.129
+Quartiles: 68.727 - 90.620 - 98.868 - 108.156 - 175.732
+
+Player: MAsT_IEV_MI_5_20000_3.0
+Average evaluations: 383946
+Quartiles: 219443 - 335466 - 378086 - 421862 - 912274
+Average time (ms): 99.517
+Quartiles: 64.756 - 89.822 - 98.228 - 107.365 - 175.339
+
+Player: MAsT_IEV_MI_5_20000_3.5
+Average evaluations: 386263
+Quartiles: 243230 - 339225 - 378823 - 423840 - 686729
+Average time (ms): 99.868
+Quartiles: 68.280 - 90.109 - 98.534 - 107.512 - 155.086
+
+Player: MAsT_IEV_MI_5_20000_4.0
+Average evaluations: 388025
+Quartiles: 227453 - 343402 - 382903 - 424798 - 906579
+Average time (ms): 100.109
+Quartiles: 67.192 - 90.883 - 98.756 - 108.117 - 168.972
+
+Player: MAsT_IEV_MI_5_20000_4.5
+Average evaluations: 385506
+Quartiles: 235811 - 341166 - 379231 - 425505 - 672040
+Average time (ms): 99.356
+Quartiles: 67.755 - 90.221 - 98.408 - 107.350 - 149.118
+
+Player: MAsT_IEV_MI_5_20000_5.0
+Average evaluations: 381888
+Quartiles: 235563 - 335982 - 371894 - 419823 - 903180
+Average time (ms): 99.117
+Quartiles: 70.836 - 90.256 - 97.836 - 107.046 - 191.771
+
+Player: MAsT_IEV_MI_5_20000_6.0
+Average evaluations: 382609
+Quartiles: 231866 - 337050 - 375670 - 419775 - 732948
+Average time (ms): 99.328
+Quartiles: 67.065 - 89.647 - 97.941 - 106.672 - 171.185
+
+Player: MAsT_IEV_MI_5_20000_7.0
+Average evaluations: 383198
+Quartiles: 228932 - 341597 - 376323 - 419579 - 613822
+Average time (ms): 99.301
+Quartiles: 68.464 - 90.751 - 98.591 - 106.820 - 156.645
+
+Player: MAsT_IEV_MI_5_20000_8.0
+Average evaluations: 381752
+Quartiles: 247305 - 335410 - 372819 - 415356 - 963080
+Average time (ms): 101.005
+Quartiles: 67.633 - 92.083 - 99.335 - 108.228 - 216.665
+
+Player: MAsT_IEV_MI_5_20000_9.0
+Average evaluations: 382629
+Quartiles: 242616 - 336030 - 376640 - 423314 - 772702
+Average time (ms): 99.352
+Quartiles: 69.327 - 89.604 - 99.070 - 107.504 - 164.084
+
+Player: MAsT_IEV_MI_5_20000_10.0
+Average evaluations: 383446
+Quartiles: 224450 - 338060 - 376725 - 423477 - 672425
+Average time (ms): 99.423
+Quartiles: 68.185 - 90.155 - 98.366 - 107.744 - 156.499
+
+Player: MAsT_IEV_MI_5_20000_20.0
+Average evaluations: 385542
+Quartiles: 251518 - 340397 - 375734 - 424851 - 798481
+Average time (ms): 99.767
+Quartiles: 72.459 - 90.538 - 98.673 - 107.502 - 169.303
+
+Player: MAsT_IEV_MI_5_20000_50.0
+Average evaluations: 383740
+Quartiles: 222822 - 338427 - 376007 - 420217 - 766360
+Average time (ms): 98.959
+Quartiles: 64.250 - 89.708 - 97.585 - 106.916 - 172.170
+
+Player: MAsT_IEV_MI_5_20000_100.0
+Average evaluations: 388784
+Quartiles: 228745 - 341895 - 380544 - 429492 - 718293
+Average time (ms): 100.150
+Quartiles: 64.763 - 90.115 - 98.892 - 108.911 - 154.714
+
+Player: MAsT_IEV_MI_5_20000_200.0
+Average evaluations: 389713
+Quartiles: 252501 - 341229 - 380128 - 422739 - 963957
+Average time (ms): 100.138
+Quartiles: 71.730 - 90.399 - 98.125 - 107.610 - 214.994
+
+Player: MAsT_IEV_MI_5_20000_500.0
+Average evaluations: 380855
+Quartiles: 222535 - 329069 - 372941 - 418922 - 829792
+Average time (ms): 99.007
+Quartiles: 66.794 - 88.980 - 97.658 - 107.477 - 168.381
+
+Player: MAsT_IEV_MI_5_20000_1000.0
+Average evaluations: 385068
+Quartiles: 213587 - 336560 - 376641 - 424911 - 855857
+Average time (ms): 99.691
+Quartiles: 67.206 - 90.585 - 98.812 - 107.488 - 181.015
+
+Player: MAsT_IEV_MI_5_50000_1.0
+Average evaluations: 393820
+Quartiles: 233101 - 345047 - 382106 - 434115 - 819529
+Average time (ms): 101.457
+Quartiles: 67.653 - 91.495 - 99.830 - 109.023 - 183.266
+
+Player: MAsT_IEV_MI_5_50000_1.1
+Average evaluations: 394416
+Quartiles: 245385 - 347818 - 386489 - 432860 - 765462
+Average time (ms): 101.161
+Quartiles: 70.214 - 91.581 - 99.492 - 109.414 - 183.747
+
+Player: MAsT_IEV_MI_5_50000_1.2
+Average evaluations: 390315
+Quartiles: 240890 - 340955 - 383004 - 431162 - 683531
+Average time (ms): 100.464
+Quartiles: 68.867 - 90.884 - 98.821 - 109.380 - 157.608
+
+Player: MAsT_IEV_MI_5_50000_1.5
+Average evaluations: 395459
+Quartiles: 256708 - 343759 - 385913 - 431922 - 986523
+Average time (ms): 101.803
+Quartiles: 70.994 - 91.846 - 100.148 - 109.698 - 197.583
+
+Player: MAsT_IEV_MI_5_50000_1.75
+Average evaluations: 392480
+Quartiles: 238342 - 342526 - 383742 - 428987 - 794793
+Average time (ms): 100.838
+Quartiles: 67.060 - 90.682 - 99.014 - 108.821 - 193.074
+
+Player: MAsT_IEV_MI_5_50000_2.0
+Average evaluations: 393365
+Quartiles: 240291 - 345500 - 383705 - 432179 - 731771
+Average time (ms): 100.915
+Quartiles: 70.938 - 91.205 - 99.093 - 109.234 - 179.450
+
+Player: MAsT_IEV_MI_5_50000_2.25
+Average evaluations: 394509
+Quartiles: 221769 - 342986 - 384599 - 433467 - 706498
+Average time (ms): 101.489
+Quartiles: 69.279 - 91.239 - 99.907 - 109.525 - 157.673
+
+Player: MAsT_IEV_MI_5_50000_2.5
+Average evaluations: 388049
+Quartiles: 240872 - 341304 - 379887 - 425876 - 703263
+Average time (ms): 100.388
+Quartiles: 70.257 - 90.592 - 98.752 - 108.106 - 170.026
+
+Player: MAsT_IEV_MI_5_50000_2.75
+Average evaluations: 390202
+Quartiles: 250644 - 340635 - 382545 - 430745 - 1162815
+Average time (ms): 100.536
+Quartiles: 68.596 - 90.807 - 99.253 - 108.616 - 234.794
+
+Player: MAsT_IEV_MI_5_50000_3.0
+Average evaluations: 394548
+Quartiles: 243297 - 345142 - 383929 - 432959 - 905261
+Average time (ms): 102.489
+Quartiles: 71.742 - 92.178 - 100.478 - 111.104 - 212.708
+
+Player: MAsT_IEV_MI_5_50000_3.5
+Average evaluations: 390889
+Quartiles: 247287 - 343279 - 384606 - 428677 - 684503
+Average time (ms): 101.316
+Quartiles: 72.339 - 91.317 - 99.607 - 109.712 - 165.609
+
+Player: MAsT_IEV_MI_5_50000_4.0
+Average evaluations: 391185
+Quartiles: 228094 - 341020 - 382916 - 430853 - 741548
+Average time (ms): 102.051
+Quartiles: 69.861 - 91.419 - 100.052 - 111.255 - 164.102
+
+Player: MAsT_IEV_MI_5_50000_4.5
+Average evaluations: 392874
+Quartiles: 244580 - 345224 - 385185 - 434775 - 730425
+Average time (ms): 101.951
+Quartiles: 69.915 - 91.957 - 100.641 - 110.143 - 165.059
+
+Player: MAsT_IEV_MI_5_50000_5.0
+Average evaluations: 396003
+Quartiles: 248234 - 346711 - 386758 - 435351 - 731650
+Average time (ms): 102.419
+Quartiles: 69.507 - 92.601 - 100.650 - 111.129 - 160.366
+
+Player: MAsT_IEV_MI_5_50000_6.0
+Average evaluations: 395534
+Quartiles: 226152 - 344612 - 383774 - 435672 - 742309
+Average time (ms): 102.569
+Quartiles: 70.967 - 92.242 - 100.502 - 111.265 - 169.850
+
+Player: MAsT_IEV_MI_5_50000_7.0
+Average evaluations: 392597
+Quartiles: 244346 - 344259 - 386521 - 428530 - 775832
+Average time (ms): 102.336
+Quartiles: 67.955 - 92.403 - 101.016 - 110.279 - 170.207
+
+Player: MAsT_IEV_MI_5_50000_8.0
+Average evaluations: 388021
+Quartiles: 243905 - 341519 - 379089 - 427575 - 683315
+Average time (ms): 101.113
+Quartiles: 69.895 - 91.149 - 100.058 - 109.089 - 165.208
+
+Player: MAsT_IEV_MI_5_50000_9.0
+Average evaluations: 393053
+Quartiles: 242517 - 344718 - 385264 - 431588 - 842460
+Average time (ms): 101.845
+Quartiles: 68.047 - 92.186 - 100.427 - 109.933 - 170.423
+
+Player: MAsT_IEV_MI_5_50000_10.0
+Average evaluations: 390103
+Quartiles: 250606 - 342632 - 382771 - 425914 - 878616
+Average time (ms): 101.387
+Quartiles: 69.045 - 91.556 - 99.866 - 109.299 - 176.844
+
+Player: MAsT_IEV_MI_5_50000_20.0
+Average evaluations: 392140
+Quartiles: 228747 - 345108 - 385558 - 428032 - 803845
+Average time (ms): 101.573
+Quartiles: 68.468 - 91.682 - 100.611 - 109.605 - 174.688
+
+Player: MAsT_IEV_MI_5_50000_50.0
+Average evaluations: 395416
+Quartiles: 225842 - 345775 - 385022 - 435649 - 827967
+Average time (ms): 102.109
+Quartiles: 66.094 - 91.738 - 100.338 - 110.695 - 172.838
+
+Player: MAsT_IEV_MI_5_50000_100.0
+Average evaluations: 396169
+Quartiles: 249763 - 345258 - 386474 - 433486 - 783707
+Average time (ms): 102.618
+Quartiles: 66.689 - 92.883 - 101.023 - 110.457 - 170.866
+
+Player: MAsT_IEV_MI_5_50000_200.0
+Average evaluations: 393332
+Quartiles: 241065 - 343786 - 384195 - 430716 - 901468
+Average time (ms): 102.127
+Quartiles: 66.812 - 91.476 - 101.021 - 111.178 - 183.027
+
+Player: MAsT_IEV_MI_5_50000_500.0
+Average evaluations: 392386
+Quartiles: 250546 - 339391 - 378825 - 434828 - 850485
+Average time (ms): 101.740
+Quartiles: 72.472 - 91.321 - 99.666 - 110.228 - 191.485
+
+Player: MAsT_IEV_MI_5_50000_1000.0
+Average evaluations: 388918
+Quartiles: 222275 - 341233 - 378907 - 427262 - 802672
+Average time (ms): 100.540
+Quartiles: 66.421 - 91.161 - 98.575 - 108.932 - 153.268
+
+Player: MAsT_IEV_MI_5_100000_1.0
+Average evaluations: 395444
+Quartiles: 259839 - 350670 - 384774 - 432976 - 812621
+Average time (ms): 101.816
+Quartiles: 73.199 - 92.227 - 100.311 - 109.621 - 174.610
+
+Player: MAsT_IEV_MI_5_100000_1.1
+Average evaluations: 392506
+Quartiles: 234519 - 347080 - 382847 - 426765 - 964024
+Average time (ms): 100.835
+Quartiles: 69.808 - 91.117 - 99.544 - 108.649 - 191.483
+
+Player: MAsT_IEV_MI_5_100000_1.2
+Average evaluations: 394285
+Quartiles: 236664 - 343967 - 384838 - 431959 - 920634
+Average time (ms): 101.527
+Quartiles: 70.033 - 91.127 - 99.287 - 109.065 - 197.908
+
+Player: MAsT_IEV_MI_5_100000_1.5
+Average evaluations: 391932
+Quartiles: 250557 - 340477 - 381426 - 433374 - 845702
+Average time (ms): 101.124
+Quartiles: 70.957 - 90.848 - 98.807 - 109.593 - 215.074
+
+Player: MAsT_IEV_MI_5_100000_1.75
+Average evaluations: 400965
+Quartiles: 245455 - 351887 - 392635 - 440709 - 722310
+Average time (ms): 102.762
+Quartiles: 68.015 - 92.985 - 101.181 - 110.832 - 169.101
+
+Player: MAsT_IEV_MI_5_100000_2.0
+Average evaluations: 393265
+Quartiles: 230279 - 346221 - 384792 - 431773 - 786436
+Average time (ms): 100.951
+Quartiles: 67.958 - 91.106 - 99.798 - 108.518 - 176.056
+
+Player: MAsT_IEV_MI_5_100000_2.25
+Average evaluations: 396391
+Quartiles: 225985 - 344926 - 390092 - 437563 - 785930
+Average time (ms): 101.994
+Quartiles: 63.026 - 91.922 - 100.213 - 110.092 - 169.432
+
+Player: MAsT_IEV_MI_5_100000_2.5
+Average evaluations: 391837
+Quartiles: 249451 - 341606 - 381527 - 430108 - 1297507
+Average time (ms): 101.002
+Quartiles: 72.602 - 91.511 - 99.239 - 108.424 - 291.719
+
+Player: MAsT_IEV_MI_5_100000_2.75
+Average evaluations: 394549
+Quartiles: 241185 - 344070 - 383846 - 435464 - 876971
+Average time (ms): 101.152
+Quartiles: 70.889 - 91.027 - 99.339 - 109.197 - 180.365
+
+Player: MAsT_IEV_MI_5_100000_3.0
+Average evaluations: 399807
+Quartiles: 249183 - 347294 - 391631 - 437504 - 803781
+Average time (ms): 102.052
+Quartiles: 68.449 - 91.726 - 99.976 - 111.322 - 179.335
+
+Player: MAsT_IEV_MI_5_100000_3.5
+Average evaluations: 393305
+Quartiles: 217788 - 344918 - 386433 - 432187 - 831046
+Average time (ms): 101.502
+Quartiles: 64.226 - 91.700 - 100.105 - 109.878 - 181.694
+
+Player: MAsT_IEV_MI_5_100000_4.0
+Average evaluations: 393437
+Quartiles: 249685 - 342177 - 385047 - 432172 - 965769
+Average time (ms): 100.916
+Quartiles: 70.257 - 90.842 - 99.068 - 108.939 - 195.671
+
+Player: MAsT_IEV_MI_5_100000_4.5
+Average evaluations: 396034
+Quartiles: 231592 - 344428 - 388179 - 440484 - 725868
+Average time (ms): 101.758
+Quartiles: 68.678 - 91.483 - 101.064 - 110.309 - 162.512
+
+Player: MAsT_IEV_MI_5_100000_5.0
+Average evaluations: 396120
+Quartiles: 243536 - 345900 - 388671 - 435857 - 788930
+Average time (ms): 101.629
+Quartiles: 68.109 - 91.441 - 100.394 - 109.563 - 181.989
+
+Player: MAsT_IEV_MI_5_100000_6.0
+Average evaluations: 391748
+Quartiles: 254518 - 342723 - 381468 - 426259 - 664402
+Average time (ms): 101.160
+Quartiles: 70.192 - 91.573 - 99.558 - 108.917 - 153.546
+
+Player: MAsT_IEV_MI_5_100000_7.0
+Average evaluations: 392932
+Quartiles: 242601 - 345153 - 383130 - 430433 - 700395
+Average time (ms): 101.196
+Quartiles: 69.376 - 90.745 - 99.516 - 109.748 - 169.612
+
+Player: MAsT_IEV_MI_5_100000_8.0
+Average evaluations: 399341
+Quartiles: 234335 - 348546 - 390182 - 439580 - 816075
+Average time (ms): 102.169
+Quartiles: 67.840 - 91.500 - 101.104 - 111.230 - 182.960
+
+Player: MAsT_IEV_MI_5_100000_9.0
+Average evaluations: 394290
+Quartiles: 249776 - 345896 - 384348 - 434217 - 746343
+Average time (ms): 101.969
+Quartiles: 68.431 - 91.567 - 100.625 - 110.189 - 208.434
+
+Player: MAsT_IEV_MI_5_100000_10.0
+Average evaluations: 395873
+Quartiles: 242171 - 348200 - 386653 - 436314 - 848659
+Average time (ms): 101.732
+Quartiles: 69.783 - 91.368 - 100.517 - 110.222 - 183.722
+
+Player: MAsT_IEV_MI_5_100000_20.0
+Average evaluations: 396593
+Quartiles: 234724 - 347831 - 387299 - 431336 - 765231
+Average time (ms): 102.677
+Quartiles: 68.136 - 92.404 - 101.117 - 111.366 - 175.897
+
+Player: MAsT_IEV_MI_5_100000_50.0
+Average evaluations: 396102
+Quartiles: 243218 - 346547 - 388936 - 435258 - 769411
+Average time (ms): 102.005
+Quartiles: 71.106 - 91.822 - 100.794 - 110.248 - 170.400
+
+Player: MAsT_IEV_MI_5_100000_100.0
+Average evaluations: 394922
+Quartiles: 253388 - 343504 - 387200 - 434827 - 1064165
+Average time (ms): 101.941
+Quartiles: 70.837 - 91.395 - 100.829 - 110.277 - 202.309
+
+Player: MAsT_IEV_MI_5_100000_200.0
+Average evaluations: 394310
+Quartiles: 256816 - 348804 - 384779 - 433332 - 693293
+Average time (ms): 101.794
+Quartiles: 72.456 - 91.575 - 100.767 - 110.481 - 164.196
+
+Player: MAsT_IEV_MI_5_100000_500.0
+Average evaluations: 394353
+Quartiles: 255080 - 344692 - 386752 - 431305 - 709566
+Average time (ms): 102.017
+Quartiles: 69.019 - 92.275 - 100.416 - 110.408 - 164.698
+
+Player: MAsT_IEV_MI_5_100000_1000.0
+Average evaluations: 396230
+Quartiles: 240329 - 348393 - 389827 - 432497 - 1050090
+Average time (ms): 101.960
+Quartiles: 70.336 - 92.096 - 100.571 - 109.616 - 214.144
