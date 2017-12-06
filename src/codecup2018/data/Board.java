@@ -141,7 +141,13 @@ public abstract class Board {
             }
             System.err.printf("%" + (2 * (7 - h) + 1) + "s%n", "");
         }
-        System.err.println("nFree: " + board.getNFreeSpots());
+        System.err.print("nFree: " + board.getNFreeSpots());
+        
+        if (board instanceof BitBoard) {
+            System.err.println(" freeConnections: " + ((BitBoard) board).freeEdgeCount);
+        } else {
+            System.err.println();
+        }
     }
     
     public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package codecup2018;
 
+import codecup2018.tools.RandomPositionGenerator;
 import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
 import codecup2018.evaluator.IncrementalExpectedValue;
@@ -18,7 +19,7 @@ public class RandomPositionCollisionTest {
 
     @Test
     public void runTest() throws NoSuchFieldException, IllegalAccessException {
-        List<Board> testBoards = RandomPostionGenerator.generateAllTestBoards(1000);
+        List<Board> testBoards = RandomPositionGenerator.generateAllTestBoards(1000);
 
         for (StandardPlayer player : players) {
             int[] collisions = new int[testBoards.size()];

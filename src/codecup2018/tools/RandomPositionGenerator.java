@@ -1,4 +1,4 @@
-package codecup2018;
+package codecup2018.tools;
 
 import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-public class RandomPostionGenerator {
+public class RandomPositionGenerator {
 
-    static Collection<Object[]> generateTestData(int n) {
+    public static Collection<Object[]> generateTestData(int n) {
         List<Board> testBoards = generateAllTestBoards(n);
         Collection<Object[]> data = new ArrayList<>();
 
@@ -28,7 +28,7 @@ public class RandomPostionGenerator {
         return data;
     }
 
-    static List<Board> generateAllTestBoards(int n) {
+    public static List<Board> generateAllTestBoards(int n) {
         Random rand = new Random(598959643);
         List<Board> boards = new ArrayList<>();
 
