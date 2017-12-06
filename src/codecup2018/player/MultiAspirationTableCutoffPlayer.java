@@ -10,8 +10,9 @@ import java.util.Arrays;
 
 public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
 
-    public static boolean DEBUG_FINAL_VALUE = true;
+    public static boolean DEBUG_FINAL_VALUE = false;
     private static final boolean DEBUG_AB = false;
+    private static final int DEBUG_TURN = -1;
 
     public static int INITIAL_WINDOW_SIZE = 5000;
     public static double WINDOW_FACTOR = 1.75;
@@ -91,7 +92,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
         }
 
         if (DEBUG_AB || DEBUG_FINAL_VALUE) {
-            System.err.println("Final: " + eval);
+            System.err.println("Turn " + turn + " final: " + eval);
         }
 
         prevScore = eval;
@@ -109,7 +110,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
             return Board.buildMove((byte) 0, (byte) 0, player * endgameEvaluator.evaluate(board));
         }
 
-        if (DEBUG_AB) {
+        if (DEBUG_AB || turn == DEBUG_TURN) {
             System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sRunning negamax with %d plies left, interval=[%d, %d] and board state:%n", getName(), "", depth, alpha, beta);
             Board.print(board);
         }
@@ -129,15 +130,13 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
             if (entry.depthSearched >= depth && (entry.type == TranspositionEntry.EXACT
                     || (entry.type == TranspositionEntry.UPPER_BOUND && entryEval <= alpha)
                     || (entry.type == TranspositionEntry.LOWER_BOUND && entryEval >= beta))) {
-                if (DEBUG_AB) {
+                if (DEBUG_AB || turn == DEBUG_TURN) {
                     System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "s%s transposition table result: %d%n", getName(), "", (entry.type == TranspositionEntry.EXACT ? "Exact" : (entry.type == TranspositionEntry.LOWER_BOUND ? "Lower bound" : "Upper bound")), entryEval);
                 }
                 return entry.bestMove;
             }
 
             // Try the stored best move first
-            // Store the move out of an abundance of caution; if entry.bestMove was changed due to
-            // a table cell collision, undoing the new move could really mess up the search.
             bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, beta);
             bestEval = Board.getMoveEval(bestMove);
 
@@ -167,7 +166,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
                             myAlpha = eval;
 
                             if (beta <= myAlpha) {
-                                if (DEBUG_AB) {
+                                if (DEBUG_AB || turn == DEBUG_TURN) {
                                     System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta cut-off%n", getName(), "");
                                 }
                                 break;
@@ -177,7 +176,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
                 }
             }
         } else {
-            if (DEBUG_AB) {
+            if (DEBUG_AB || turn == DEBUG_TURN) {
                 System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta-cutoff from stored move%n", getName(), "");
             }
         }
@@ -200,7 +199,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
     }
 
     private int evaluateMove(int move, byte player, byte depth, int alpha, int beta) {
-        if (DEBUG_AB) {
+        if (DEBUG_AB || turn == DEBUG_TURN) {
             System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sEvaluating move %s%n", getName(), "", Board.moveToString(move));
         }
 
@@ -212,7 +211,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
         board.undoMove(move);
         evaluator.undoMove(move);
 
-        if (DEBUG_AB) {
+        if (DEBUG_AB || turn == DEBUG_TURN) {
             System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sGot back a score of %d%n", getName(), "", Board.getMoveEval(move));
         }
 

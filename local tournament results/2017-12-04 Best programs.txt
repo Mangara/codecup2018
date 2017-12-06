@@ -68,3 +68,32 @@ Comparisons:
     MAsTC_EV_MI_6 > NM_MF_MFM_10 with p = 0.000000
     MAsT_EV_MI_6 > Expy_NH with p = 0.000000
     MAsTC_EV_MI_6 > MAsT_EV_MI_6 with p = 0.380109
+
+
+Players:
+0: Rando
+1: Expy_NH
+2: MAsTC_IEV_MI_6
+3: MAsTC_IEV_LM_4
+
+Number of wins:
+         0    1    2    3
+    0    0    0    0    0
+    1  200    0   26   55
+    2  200  142    0   80
+    3  200  115   69    0
+
+Average score:
+           0     1     2     3
+     0  0.00 -26.0 -25.5 -25.3
+     1  26.0  0.00 -2.08-0.925
+     2  25.5  2.08  0.00 0.190
+     3  25.3 0.925-0.190  0.00
+
+Comparisons:
+    MAsTC_EV_MI_6 > MAsTC_IEV_LM_4 with p = -0.040429
+    Expy_NH > Rando with p = 0.000000
+    MAsTC_EV_MI_6 > Rando with p = 0.000000
+    MAsTC_IEV_LM_4 > Rando with p = 0.000000
+    MAsTC_EV_MI_6 > Expy_NH with p = 0.000000
+    MAsTC_IEV_LM_4 > Expy_NH with p = 0.000000

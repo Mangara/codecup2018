@@ -32,7 +32,7 @@ public class BitBoard extends Board {
     private long oppValues = 0;
     private short myUsed = 0;
     private short oppUsed = 0;
-    private int freeEdgeCount = 0; // The number of edges in the subgraph induced by the free tiles
+    public int freeEdgeCount = 0; // The number of edges in the subgraph induced by the free tiles
 
     // Transposition table cached values
     private int key;
@@ -40,7 +40,7 @@ public class BitBoard extends Board {
 
     public BitBoard() {
         free = BOARD;
-        freeEdgeCount = 3 * 2 + 18 * 4 + 15 * 6; // Corners, edge, center
+        freeEdgeCount = (3 * 2 + 18 * 4 + 15 * 6)/2; // Corners, edge, center
         initializeTranspositionTableValues();
     }
 
@@ -55,7 +55,7 @@ public class BitBoard extends Board {
 
                 if (val == FREE) {
                     free |= posMask;
-                    freeEdgeCount += 2 * getFreeSpotsAround(pos);
+                    freeEdgeCount += getFreeSpotsAround(pos);
                 } else if (val == BLOCKED) {
                     // Nothing
                 } else if (val > 0) {
@@ -153,7 +153,7 @@ public class BitBoard extends Board {
     @Override
     public void block(byte pos) {
         free &= ~posMask(pos);
-        freeEdgeCount -= 2 * getFreeSpotsAround(pos);
+        freeEdgeCount -= getFreeSpotsAround(pos);
     }
 
     @Override
@@ -162,8 +162,13 @@ public class BitBoard extends Board {
         long posMask = posMask(pos);
         byte value = getMoveVal(move);
 
+        /*///DEBUG
+        System.err.println("Board before move " + moveToString(move));
+        Board.print(this);
+        //*/
+        
         free &= ~posMask;
-        freeEdgeCount -= 2 * getFreeSpotsAround(pos);
+        freeEdgeCount -= getFreeSpotsAround(pos);
 
         if (value > 0) {
             myTiles |= posMask;
@@ -180,6 +185,11 @@ public class BitBoard extends Board {
         int newIndex = index - FREE + value;
         key ^= KEY_POSITION_NUMBERS[index] ^ KEY_POSITION_NUMBERS[newIndex];
         hash ^= HASH_POSITION_NUMBERS[index] ^ HASH_POSITION_NUMBERS[newIndex];
+        
+        /*///DEBUG
+        System.err.println("Board after move " + moveToString(move));
+        Board.print(this);
+        //*/
     }
 
     @Override
@@ -189,7 +199,7 @@ public class BitBoard extends Board {
         byte value = getMoveVal(move);
         
         free |= posMask;
-        freeEdgeCount += 2 * getFreeSpotsAround(pos);
+        freeEdgeCount += getFreeSpotsAround(pos);
 
         if (value > 0) {
             myTiles &= ~posMask;

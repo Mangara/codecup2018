@@ -1,10 +1,12 @@
 package codecup2018;
 
+import codecup2018.tools.RandomPositionGenerator;
 import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
 import codecup2018.evaluator.CountingEvaluator;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.evaluator.IncrementalExpectedValue;
+import codecup2018.movegenerator.LikelyMoves;
 import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.player.MultiAspirationTableCutoffPlayer;
 import codecup2018.player.MultiAspirationTablePlayer;
@@ -18,16 +20,20 @@ import org.junit.Test;
 public class RandomPositionPerformanceTest {
 
     private final List<StandardPlayer> players = Arrays.<StandardPlayer>asList(
-            new NegaMaxPlayer("NM_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
+            //new NegaMaxPlayer("NM_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new AspirationTablePlayer("AsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-            new MultiAspirationTablePlayer("MAsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)
+            //new MultiAspirationTablePlayer("MAsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
+            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
+            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_2", new IncrementalExpectedValue(), new LikelyMoves(), 2),
+            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3),
+            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
+            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5)
     );
 
     @Test
     public void runTest() throws NoSuchFieldException, IllegalAccessException {
-        List<Board> testBoards = RandomPostionGenerator.generateAllTestBoards(1000);
+        List<Board> testBoards = RandomPositionGenerator.generateAllTestBoards(1000);
 
         for (StandardPlayer player : players) {
             CountingEvaluator count = makeEvaluatorCount(player);

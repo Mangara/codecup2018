@@ -1,7 +1,9 @@
 package codecup2018.movegenerator;
 
 import codecup2018.data.Board;
+import codecup2018.tools.RandomPositionGenerator;
 import java.util.Arrays;
+import java.util.List;
 
 public class LikelyMoves implements MoveGenerator {
 
@@ -12,7 +14,9 @@ public class LikelyMoves implements MoveGenerator {
 
         byte[] free = board.getFreeSpots();
 
-        int[] moves = new int[free.length * values.length];
+        int nHoles = countHoles(board, free);
+        
+        int[] moves = new int[(free.length - nHoles) * values.length + nHoles];
 
         // Moves with many open squares should be processed first
         int moveIndex = 0;
@@ -20,7 +24,7 @@ public class LikelyMoves implements MoveGenerator {
             byte pos = free[i];
             int freeSpots = board.getFreeSpotsAround(pos);
             int holeValue = board.getHoleValue(pos);
-            int sortingScore = -10000 * freeSpots + holeValue;
+            int sortingScore = -10000 * freeSpots + (player1 ? holeValue : -holeValue);
 
             if (freeSpots == 0) { // Always fill holes with our lowest remaining tile
                 moves[moveIndex] = Board.buildMove(pos, min, sortingScore);
@@ -37,7 +41,7 @@ public class LikelyMoves implements MoveGenerator {
 
         // Assign values in the proper order (so that they do not affect sorting behaviour)
         int valueIndex = 0;
-        for (int i = 0; i < moves.length && Board.getMoveEval(moves[i]) != 0; i++) {
+        for (int i = 0; i < moves.length && Board.getMoveEval(moves[i]) <= -9000; i++) {
             moves[i] = Board.setMoveVal(moves[i], values[valueIndex]);
 
             valueIndex++;
@@ -79,25 +83,27 @@ public class LikelyMoves implements MoveGenerator {
             for (byte v = 15; v > 0; v--) {
                 if (!board.hasOppUsed(v)) {
                     max = (byte) -v;
+                    break;
                 }
             }
 
             for (byte v = 1; v <= 15; v++) {
                 if (!board.hasOppUsed(v)) {
                     min = (byte) -v;
+                    break;
                 }
             }
 
             if (-max > 8 && -min < 8) {
                 for (byte v = 8; v < -max; v++) {
-                    if (!board.haveIUsed(v)) {
+                    if (!board.hasOppUsed(v)) {
                         med = (byte) -v;
                         break;
                     }
                 }
             }
         }
-
+        
         if (max == min) {
             return new byte[]{max};
         } else if (med == 0 || med == max || med == min) {
@@ -108,6 +114,46 @@ public class LikelyMoves implements MoveGenerator {
             } else {
                 return new byte[]{max, med, min};
             }
+        }
+    }
+    
+    private int countHoles(Board board, byte[] free) {
+        int holes = 0;
+        
+        for (byte pos : free) {
+            if (board.getFreeSpotsAround(pos) == 0) {
+                holes++;
+            }
+        }
+        
+        return holes;
+    }
+    
+    public static void main(String[] args) {
+        LikelyMoves lm = new LikelyMoves();
+        List<Board> boards = RandomPositionGenerator.generateAllTestBoards(3);
+        
+        for (Board board : boards) {
+            // Player 1
+            Board.print(board);
+            int[] moves = lm.generateMoves(board, true);
+            
+            System.err.print("Likely moves: [");
+            for (int move : moves) {
+                System.err.print(Board.moveToString(move) + ", ");
+            }
+            System.err.println("]");
+            
+            // Player 2
+            board.applyMove(moves[0]);
+            Board.print(board);
+            moves = lm.generateMoves(board, false);
+            
+            System.err.print("Likely moves: [");
+            for (int move : moves) {
+                System.err.print(Board.moveToString(move) + ", ");
+            }
+            System.err.println("]");
         }
     }
 }

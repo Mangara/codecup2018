@@ -1,5 +1,6 @@
 package codecup2018;
 
+import codecup2018.tools.RandomPositionGenerator;
 import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
 import codecup2018.evaluator.IncrementalExpectedValue;
@@ -38,7 +39,7 @@ public class RandomPositionCorrectnessTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return RandomPostionGenerator.generateTestData(1000); // 1000
+        return RandomPositionGenerator.generateTestData(1000); // 1000
     }
 
     @Test
