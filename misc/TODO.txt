@@ -2,8 +2,6 @@
 
 - Try running with compiler flags to see what's being inlined vs what isn't: -XX:+PrintCompilation -XX:+UnlockDiagnosticVMOptions -XX:+PrintInlining
  
-- Make Board track the number of free-free connections. This allows us to detect the endgame.
-
 - Make a new board that uses bitboards for free positions, my tiles, and opponent tiles, but a 1D array for values.
 
 - Make the board maintain/update the holevalues and free spots around each free tile. We need these often enough that this should be worth it.
@@ -14,6 +12,8 @@
 == Tournaments
 
 == Players
+
+- Set alpha/beta based on Transposition table entry even if it doesn't cause a cut-off: https://people.csail.mit.edu/plaat/mtdf.html
 
 - Add more useful debug output for the competition bot (time taken per move, final value?)
 
@@ -30,8 +30,6 @@
 
 == Move generation
 
-- Don't just use the maximum value. Start at 15, 8, and 1. Move pointer down, up, and up, respectively. For player1, try medium-valued moves first, so that these are preferred in case of a tie. Only try holes with the lowest value move.
-
 - Sort moves that generate holes closer to the front. Perhaps include something like "the lowest number of free spots around a neighbouring free spot"?
 
 - Order moves by expected value? (ExpectedOrder MoveGenerator, and perhaps a general OrderBy(Evaluator)) Is there a fast way we can do just expected value?
@@ -39,7 +37,7 @@
 
 == Board state evaluation
 
-- Try total hole value (should outperform median at the start). May be a good `approximation' of expected value, as it relies only on local information.
+
 
 
 
@@ -75,8 +73,13 @@ X Use a single integer (int) to represent each move. There are only 3 components
 X PerformanceTest that plays full games versus identical opponents. If we keep generating the same moves, this will give a fair comparison of number of positions evaluated.
 X Re-do aspiration search with slowly widening windows.
 X In an endgame situation (only holes left), return the MedianFree evaluation instead of continuing the tree search. This would be easy in IEV, since we maintain the number of connections between free nodes. I'm not sure it would make the program stronger, but it's worth a shot.
+X Don't just use the maximum value. Start at 15, 8, and 1. Move pointer down, up, and up, respectively. For player1, try medium-valued moves first, so that these are preferred in case of a tie. Only try holes with the lowest value move.
+X Make Board track the number of free-free connections. This allows us to detect the endgame.
 
 === WONTFIX
 
 - Add multithreading support to tournaments?
  => Too much effort (making players that work well with multi-threading) for too little gain
+ 
+- Try total hole value (should outperform median at the start). May be a good `approximation' of expected value, as it relies only on local information.
+ => I don't think this will really add much

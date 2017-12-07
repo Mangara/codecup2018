@@ -23,7 +23,7 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 200;
+    private static final int GAMES = 1000;
 
     public static void main(String[] args) {
         runTournament(Arrays.<Player>asList(
@@ -31,8 +31,14 @@ public class Tournament {
                 new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
                 //new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6),
                 //new MultiAspirationTablePlayer("MAsT_EV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6),
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3),
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4),
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
                 new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4)
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3),
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5),
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_6", new IncrementalExpectedValue(), new LikelyMoves(), 6)
                 //new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
         ));
     }
@@ -175,15 +181,9 @@ public class Tournament {
 
     private static double computeP(double avg, double stdDev) {
         double t = avg * Math.sqrt(GAMES) / stdDev; // test value, GAMES - 1 DoF
-        double tt = t / Math.sqrt(2);
-        double erftt;
-
-        if (t < 1) {
-            erftt = (2 / Math.sqrt(Math.PI)) * (tt - Math.pow(tt, 3) / 3 + Math.pow(tt, 5) / 10 - Math.pow(tt, 7) / 42);
-        } else {
-            erftt = 1 - (Math.exp(-tt * tt) / Math.sqrt(Math.PI)) * (1 / tt - 0.5 / Math.pow(tt, 3) + 0.75 / Math.pow(tt, 5) - 1.875 / Math.pow(tt, 7));
-        }
-
+        double tt2 = -t * t / 2;
+        double erftt = (2 / Math.sqrt(Math.PI)) * Math.sqrt(-Math.expm1(tt2)) * (Math.sqrt(Math.PI) / 2 + 31 * Math.exp(tt2) / 200 - 341 * Math.exp(2 * tt2) / 8000);
+        
         return 1 - 0.5 * (erftt + 1);
     }
 }

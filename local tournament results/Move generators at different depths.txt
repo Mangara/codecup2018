@@ -1,0 +1,115 @@
+Players:
+0: Rando
+1: Expy_NH
+2: MAsTC_IEV_MI_1
+3: MAsTC_IEV_MI_2
+4: MAsTC_IEV_MI_3
+5: MAsTC_IEV_MI_4
+6: MAsTC_IEV_MI_5
+7: MAsTC_IEV_LM_1
+8: MAsTC_IEV_LM_2
+9: MAsTC_IEV_LM_3
+10: MAsTC_IEV_LM_4
+11: MAsTC_IEV_LM_5
+
+Number of wins:
+         0    1      2    3    4    5    6      7    8    9   10   11
+    0    0    0      0    0    0    0    0      0    0    0    0    0
+    1  248    0     79   76   76   56   49     90   71   58   52   55
+
+    2  250  112      0   94   81   78   68    105   84   76   74   62
+    3  250  111     89    0   96   84   81     98   82   86   72   75
+    4  250  117    108   86    0   83   75    106   82   83   83   89
+    5  250  147    111  103  106    0   90    124   89   90   88   85
+    6  250  140    131  101  108   83    0    121  105  101  100   91
+
+    7  250  109     88   82   79   54   66      0   91   84   80   73
+    8  250  114     97  103  103   94   77     94    0   90   75   72
+    9  250  131    113   92   92   90   75     97   87    0   81   68
+   10  250  151    116  121  114   97   89    121  116  106    0   93
+   11  249  150    128  113   92   86   74    115  107  118   93    0
+
+Average score:
+           0     1        2      3      4      5      6        7      8      9     10     11
+     0  0.00 -27.1    -23.8  -25.3  -24.7  -25.4  -25.1    -25.2  -25.8  -25.4  -25.8  -26.3
+     1  27.1  0.00   -0.496 -0.436 -0.688  -1.21  -1.30   -0.180 -0.468 -0.912  -1.19  -1.25
+
+     2  23.8 0.496        0  0.076 -0.244 -0.344 -0.656    0.196  0.020 -0.284 -0.488 -0.596
+     3  25.3 0.436   -0.076      0  0.040 -0.288 -0.340    0.140 -0.140 -0.136 -0.584 -0.296
+     4  24.7 0.688    0.244 -0.040      0 -0.236 -0.424    0.284 -0.192 -0.120 -0.372 -0.108
+     5  25.4  1.21    0.344  0.288  0.236      0 -0.076    0.636  0.048  0.040 -0.060 -0.064
+     6  25.1  1.30    0.656  0.340  0.424  0.076      0    0.628  0.180  0.252  0.128  0.112
+
+     7  25.2 0.180   -0.196 -0.140 -0.284 -0.636 -0.628        0 -0.052 -0.104 -0.428 -0.460
+     8  25.8 0.468   -0.020  0.140  0.192 -0.048 -0.180    0.052      0 -0.028 -0.528 -0.376
+     9  25.4 0.912    0.284  0.136  0.120 -0.040 -0.252    0.104  0.028      0 -0.164 -0.408
+    10  25.8  1.19    0.488  0.584  0.372  0.060 -0.128    0.428  0.528  0.164      0  0.004
+    11  26.3  1.25    0.596  0.296  0.108  0.064 -0.112    0.460  0.376  0.408 -0.004      0
+
+Comparisons:
+    MAsTC_IEV_LM_3 > MAsTC_IEV_LM_1 with p = -2.903649
+    MAsTC_IEV_LM_2 > MAsTC_IEV_MI_2 with p = -1.825207
+    MAsTC_IEV_LM_5 > MAsTC_IEV_MI_3 with p = -0.877359
+    MAsTC_IEV_LM_3 > MAsTC_IEV_MI_2 with p = -0.813954
+    MAsTC_IEV_MI_5 > MAsTC_IEV_LM_5 with p = -0.735516
+    MAsTC_IEV_MI_2 > MAsTC_IEV_LM_1 with p = -0.718124
+    MAsTC_IEV_MI_5 > MAsTC_IEV_LM_4 with p = -0.643045
+    MAsTC_IEV_LM_3 > MAsTC_IEV_MI_3 with p = -0.288199
+    MAsTC_IEV_LM_1 > Expy_NH with p = -0.083426
+    MAsTC_IEV_MI_5 > MAsTC_IEV_LM_2 with p = -0.072174
+    MAsTC_IEV_LM_4 > MAsTC_IEV_LM_3 with p = -0.061549
+    Expy_NH > Rando with p = 0.000000
+    MAsTC_IEV_MI_1 > Rando with p = 0.000000
+    MAsTC_IEV_MI_2 > Rando with p = 0.000000
+    MAsTC_IEV_MI_3 > Rando with p = 0.000000
+    MAsTC_IEV_MI_4 > Rando with p = 0.000000
+    MAsTC_IEV_MI_5 > Rando with p = 0.000000
+    MAsTC_IEV_LM_1 > Rando with p = 0.000000
+    MAsTC_IEV_LM_2 > Rando with p = 0.000000
+    MAsTC_IEV_LM_3 > Rando with p = 0.000000
+    MAsTC_IEV_LM_4 > Rando with p = 0.000000
+    MAsTC_IEV_LM_5 > Rando with p = 0.000000
+    MAsTC_IEV_MI_4 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_5 > Expy_NH with p = 0.000000
+    MAsTC_IEV_LM_4 > Expy_NH with p = 0.000000
+    MAsTC_IEV_LM_5 > Expy_NH with p = 0.000000
+    MAsTC_IEV_LM_3 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_4 > MAsTC_IEV_LM_1 with p = 0.000000
+    MAsTC_IEV_MI_5 > MAsTC_IEV_LM_1 with p = 0.000000
+    MAsTC_IEV_MI_5 > MAsTC_IEV_MI_1 with p = 0.000000
+    MAsTC_IEV_LM_5 > MAsTC_IEV_MI_1 with p = 0.000000
+    MAsTC_IEV_LM_4 > MAsTC_IEV_MI_2 with p = 0.000000
+    MAsTC_IEV_MI_3 > Expy_NH with p = 0.000000
+    MAsTC_IEV_LM_4 > MAsTC_IEV_LM_2 with p = 0.000002
+    MAsTC_IEV_LM_4 > MAsTC_IEV_MI_1 with p = 0.000003
+    MAsTC_IEV_LM_5 > MAsTC_IEV_LM_3 with p = 0.000009
+    MAsTC_IEV_MI_1 > Expy_NH with p = 0.000034
+    MAsTC_IEV_MI_5 > MAsTC_IEV_MI_3 with p = 0.000047
+    MAsTC_IEV_LM_5 > MAsTC_IEV_LM_1 with p = 0.000054
+    MAsTC_IEV_LM_4 > MAsTC_IEV_LM_1 with p = 0.000108
+    MAsTC_IEV_MI_2 > Expy_NH with p = 0.000143
+    MAsTC_IEV_LM_2 > Expy_NH with p = 0.000205
+    MAsTC_IEV_LM_5 > MAsTC_IEV_LM_2 with p = 0.000483
+    MAsTC_IEV_MI_5 > MAsTC_IEV_MI_2 with p = 0.001169
+    MAsTC_IEV_LM_4 > MAsTC_IEV_MI_3 with p = 0.001487
+    MAsTC_IEV_MI_4 > MAsTC_IEV_MI_1 with p = 0.001661
+    MAsTC_IEV_LM_5 > MAsTC_IEV_MI_2 with p = 0.002843
+    MAsTC_IEV_LM_3 > MAsTC_IEV_MI_1 with p = 0.004059
+    MAsTC_IEV_MI_5 > MAsTC_IEV_LM_3 with p = 0.005080
+    MAsTC_IEV_MI_3 > MAsTC_IEV_LM_1 with p = 0.005147
+    MAsTC_IEV_MI_4 > MAsTC_IEV_MI_2 with p = 0.007684
+    MAsTC_IEV_MI_3 > MAsTC_IEV_MI_1 with p = 0.007773
+    MAsTC_IEV_MI_4 > MAsTC_IEV_MI_3 with p = 0.012493
+    MAsTC_IEV_LM_2 > MAsTC_IEV_MI_3 with p = 0.013590
+    MAsTC_IEV_MI_1 > MAsTC_IEV_LM_1 with p = 0.023532
+    MAsTC_IEV_MI_5 > MAsTC_IEV_MI_4 with p = 0.223464
+    MAsTC_IEV_MI_1 > MAsTC_IEV_MI_2 with p = 0.261765
+    MAsTC_IEV_LM_5 > MAsTC_IEV_MI_4 with p = 0.282113
+    MAsTC_IEV_LM_4 > MAsTC_IEV_MI_4 with p = 0.293572
+    MAsTC_IEV_LM_2 > MAsTC_IEV_LM_1 with p = 0.336442
+    MAsTC_IEV_MI_4 > MAsTC_IEV_LM_2 with p = 0.352970
+    MAsTC_IEV_MI_2 > MAsTC_IEV_MI_3 with p = 0.353567
+    MAsTC_IEV_MI_4 > MAsTC_IEV_LM_3 with p = 0.358636
+    MAsTC_IEV_LM_3 > MAsTC_IEV_LM_2 with p = 0.410383
+    MAsTC_IEV_MI_1 > MAsTC_IEV_LM_2 with p = 0.430952
+    MAsTC_IEV_LM_4 > MAsTC_IEV_LM_5 with p = 0.484901

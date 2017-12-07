@@ -14,8 +14,8 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
     private static final boolean DEBUG_AB = false;
     private static final int DEBUG_TURN = -1;
 
-    public static int INITIAL_WINDOW_SIZE = 5000;
-    public static double WINDOW_FACTOR = 1.75;
+    private final static int INITIAL_WINDOW_SIZE = 5000;
+    private final static double WINDOW_FACTOR = 1.75;
 
     private final byte maxDepth;
     private final Evaluator endgameEvaluator = new MedianFree();
@@ -138,6 +138,18 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
 
             // Try the stored best move first
             bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, beta);
+            
+            /*///PROFILING
+            int move = entry.bestMove;
+            board.applyMove(move);
+            evaluator.applyMove(move);
+
+            bestMove = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -beta, -myAlpha)));
+
+            board.undoMove(move);
+            evaluator.undoMove(move);
+            //*/
+            
             bestEval = Board.getMoveEval(bestMove);
 
             if (bestEval > myAlpha) {
@@ -154,6 +166,16 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
                 }
 
                 move = evaluateMove(move, player, depth, myAlpha, beta);
+                
+                /*///PROFILING
+                board.applyMove(move);
+                evaluator.applyMove(move);
+
+                move = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -beta, -myAlpha)));
+
+                board.undoMove(move);
+                evaluator.undoMove(move);
+                //*/
 
                 if (move > bestMove) {
                     int eval = Board.getMoveEval(move);

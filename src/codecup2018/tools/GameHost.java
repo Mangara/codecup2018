@@ -30,7 +30,7 @@ public class GameHost {
         setRandom(new Random(614944651));
         
         //GameHost.runGame(new SimpleMaxPlayer("Expy_MI", new ExpectedValue(), new MaxInfluenceMoves()), new RandomPlayer("Rando", new AllMoves()), true);
-        GameHost.runGame(new SimpleMaxPlayer("Expy_MI", new ExpectedValue(), new MaxInfluenceMoves()), new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4), false);
+        GameHost.runGame(new SimpleMaxPlayer("Expy_MI", new ExpectedValue(), new MaxInfluenceMoves()), new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5), false);
         
         //GameHost.runGame(new RandomPlayer("Rando", new AllMoves()), new AlphaBetaPlayer("AB_IEV_AM_2", new IncrementalExpectedValue(), new AllMoves(), 2), true);
         //GameHost.runGame(new RandomPlayer("RAND_BestExp", new BestMoves(new ExpectedValue(), 5)), new GUIPlayer("GUI"), true);
