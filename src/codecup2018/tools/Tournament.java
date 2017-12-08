@@ -15,6 +15,7 @@ import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.SimpleMaxPlayer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,7 +40,7 @@ public class Tournament {
                 new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
                 new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5),
                 new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_6", new IncrementalExpectedValue(), new LikelyMoves(), 6)
-                //new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
+        //new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
         ));
     }
 
@@ -130,19 +131,24 @@ public class Tournament {
 
         // Print averages
         int AVG_CELL_WIDTH = 6;
+        DecimalFormat smallValueFormat = new DecimalFormat("0.000 ");
 
         System.out.println("Average score:");
 
-        System.out.printf("%" + AVG_CELL_WIDTH + "s", "");
+        System.out.printf("%" + AVG_CELL_WIDTH + "s ", "");
         for (int i = 0; i < players.size(); i++) {
-            System.out.printf("%" + AVG_CELL_WIDTH + "d", i);
+            System.out.printf("%" + AVG_CELL_WIDTH + "d ", i);
         }
         System.out.println();
 
         for (int i = 0; i < players.size(); i++) {
-            System.out.printf("%" + AVG_CELL_WIDTH + "d", i);
+            System.out.printf("%" + AVG_CELL_WIDTH + "d ", i);
             for (int j = 0; j < players.size(); j++) {
-                System.out.printf("%" + AVG_CELL_WIDTH + "." + (AVG_CELL_WIDTH - 3) + "g", avgScore[i][j]);
+                if (avgScore[i][j] < 0.1) {
+                    System.out.print(smallValueFormat.format(avgScore[i][j]));
+                } else {
+                    System.out.printf("%" + AVG_CELL_WIDTH + "." + (AVG_CELL_WIDTH - 3) + "f ", avgScore[i][j]);
+                }
             }
             System.out.println();
         }
@@ -183,7 +189,7 @@ public class Tournament {
         double t = avg * Math.sqrt(GAMES) / stdDev; // test value, GAMES - 1 DoF
         double tt2 = -t * t / 2;
         double erftt = (2 / Math.sqrt(Math.PI)) * Math.sqrt(-Math.expm1(tt2)) * (Math.sqrt(Math.PI) / 2 + 31 * Math.exp(tt2) / 200 - 341 * Math.exp(2 * tt2) / 8000);
-        
+
         return 1 - 0.5 * (erftt + 1);
     }
 }

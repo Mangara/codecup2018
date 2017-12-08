@@ -46,9 +46,12 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
     protected int selectMove() {
         if (board.isGameInEndGame()) {
             endgamePlayer.initialize(board);
-            return endgamePlayer.selectMove();
+            //return endgamePlayer.selectMove();
+            
+            ////DEBUG
+            return Board.setMoveEval(endgamePlayer.selectMove(), endgameEvaluator.evaluate(board));
         }
-        
+
         int window = INITIAL_WINDOW_SIZE;
         int alpha = prevScore - window / 2, beta = prevScore + window / 2;
         int move, eval;
@@ -105,7 +108,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
         if (depth == 0 || board.isGameOver()) {
             return Board.buildMove((byte) 0, (byte) 0, player * evaluator.evaluate(board));
         }
-        
+
         if (board.isGameInEndGame()) {
             return Board.buildMove((byte) 0, (byte) 0, player * endgameEvaluator.evaluate(board));
         }
@@ -118,6 +121,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
         int bestMove = Board.MIN_EVAL_MOVE;
         int bestEval = Board.MIN_EVAL;
         int myAlpha = alpha;
+        int myBeta = beta;
 
         // Check the transposition table
         TranspositionEntry entry = transpositionTable[board.getTranspositionTableKey() & TABLE_KEY_MASK];
@@ -127,18 +131,37 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
             // Return the stored evaluation if it matches what we're looking for
             int entryEval = Board.getMoveEval(entry.bestMove);
 
-            if (entry.depthSearched >= depth && (entry.type == TranspositionEntry.EXACT
-                    || (entry.type == TranspositionEntry.UPPER_BOUND && entryEval <= alpha)
-                    || (entry.type == TranspositionEntry.LOWER_BOUND && entryEval >= beta))) {
-                if (DEBUG_AB || turn == DEBUG_TURN) {
-                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "s%s transposition table result: %d%n", getName(), "", (entry.type == TranspositionEntry.EXACT ? "Exact" : (entry.type == TranspositionEntry.LOWER_BOUND ? "Lower bound" : "Upper bound")), entryEval);
+            if (entry.depthSearched >= depth) {
+                switch (entry.type) {
+                    case TranspositionEntry.EXACT:
+                        if (DEBUG_AB || turn == DEBUG_TURN) {
+                            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "sExact transposition table result: %d%n", getName(), "", entryEval);
+                        }
+                        return entry.bestMove;
+                    case TranspositionEntry.LOWER_BOUND:
+                        if (entryEval >= beta) {
+                            if (DEBUG_AB || turn == DEBUG_TURN) {
+                                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "sLower bound transposition table result: %d%n", getName(), "", entryEval);
+                            }
+                            return entry.bestMove;
+                        }
+                        myAlpha = Math.max(myAlpha, entryEval);
+                        break;
+                    case TranspositionEntry.UPPER_BOUND:
+                        if (entryEval <= alpha) {
+                            if (DEBUG_AB || turn == DEBUG_TURN) {
+                                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1)) + "sUpper bound transposition table result: %d%n", getName(), "", entryEval);
+                            }
+                            return entry.bestMove;
+                        }
+                        myBeta = Math.min(myBeta, entryEval);
+                        break;
                 }
-                return entry.bestMove;
             }
 
             // Try the stored best move first
-            bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, beta);
-            
+            bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, myBeta);
+
             /*///PROFILING
             int move = entry.bestMove;
             board.applyMove(move);
@@ -149,7 +172,6 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
             board.undoMove(move);
             evaluator.undoMove(move);
             //*/
-            
             bestEval = Board.getMoveEval(bestMove);
 
             if (bestEval > myAlpha) {
@@ -157,7 +179,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
             }
         }
 
-        if (myAlpha < beta) { // No cut-off yet
+        if (myAlpha < myBeta) { // No cut-off yet
             int[] moves = generator.generateMoves(board, player > 0);
 
             for (int move : moves) {
@@ -165,8 +187,8 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
                     continue; // We already tried this one
                 }
 
-                move = evaluateMove(move, player, depth, myAlpha, beta);
-                
+                move = evaluateMove(move, player, depth, myAlpha, myBeta);
+
                 /*///PROFILING
                 board.applyMove(move);
                 evaluator.applyMove(move);
@@ -176,7 +198,6 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
                 board.undoMove(move);
                 evaluator.undoMove(move);
                 //*/
-
                 if (move > bestMove) {
                     int eval = Board.getMoveEval(move);
 
@@ -187,7 +208,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
                         if (eval > myAlpha) {
                             myAlpha = eval;
 
-                            if (beta <= myAlpha) {
+                            if (myBeta <= myAlpha) {
                                 if (DEBUG_AB || turn == DEBUG_TURN) {
                                     System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta cut-off%n", getName(), "");
                                 }
