@@ -7,6 +7,15 @@ public class MedianFree implements Evaluator {
 
     @Override
     public int evaluate(Board board) {
+        // Find out how many moves I have left (this varies depending on if I'm the true player1 or player2)
+        int movesLeft = 0;
+        
+        for (byte v = 1; v <= 15; v++) {
+            if (!board.haveIUsed(v)) {
+                movesLeft++;
+            }
+        }
+        
         // Find the value of all free spaces
         byte[] free = board.getFreeSpots();
 
@@ -15,9 +24,9 @@ public class MedianFree implements Evaluator {
         }
 
         // Return the one that wouldnt be filled in if the players just took
-        // turns filling in free spaces with 0
+        // turns optimally filling in free spaces with 0
         Arrays.sort(free);
-        return 10000 * free[(free.length - 1) / 2];
+        return 10000 * free[movesLeft];
     }
 
     @Override
@@ -35,5 +44,5 @@ public class MedianFree implements Evaluator {
     @Override
     public void undoMove(int move) {
     }
-
+    
 }
