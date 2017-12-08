@@ -1,0 +1,88 @@
+Players:
+0: Rando
+1: Expy_NH
+2: MAsTC_IEV_MI_3
+3: MAsTC_IEV_MI_4
+4: MAsTC_IEV_MI_5
+5: MAsTC_IEV_MI_6
+6: MAsTC_IEV_LM_3
+7: MAsTC_IEV_LM_4
+8: MAsTC_IEV_LM_5
+9: MAsTC_IEV_LM_6
+
+Number of wins:
+         0    1    2    3    4    5    6    7    8    9
+    0    0    4    0    0    0    0    0    0    0    0
+    1  995    0  274  198  206  151  273  204  194  135
+    2 1000  522    0  340  284  236  354  292  290  238
+    3  997  596  406    0  356  303  427  374  340  284
+    4 1000  584  431  379    0  286  414  355  337  261
+    5 1000  706  537  453  442    0  478  429  428  320
+    6 1000  488  363  326  319  294    0  300  294  212
+    7 1000  596  451  370  377  341  433    0  333  245
+    8 1000  585  411  392  343  298  428  375    0  266
+    9 1000  718  528  453  448  444  556  500  490    0
+
+Average score:
+     -     0     1     2     3     4     5     6     7     8     9
+     0  0.00 -27.1 -24.6 -24.9 -24.9 -26.0 -25.5 -25.7 -25.7 -26.0
+     1  27.1  0.00 -0.837 -1.25 -1.14 -1.97 -0.706 -1.23 -1.22 -1.94
+     2  24.6 0.837  0.00 -0.270 -0.432 -0.817 -0.0260 -0.438 -0.322 -0.737
+     3  24.9  1.25 0.270  0.00 -0.0780 -0.387 0.316 -0.0170 -0.115 -0.448
+     4  24.9  1.14 0.432 0.0780  0.00 -0.373 0.255 -0.0500 -0.0160 -0.471
+     5  26.0  1.97 0.817 0.387 0.373  0.00 0.536 0.190 0.213 -0.341
+     6  25.5 0.706 0.0260 -0.316 -0.255 -0.536  0.00 -0.363 -0.368 -0.932
+     7  25.7  1.23 0.438 0.0170 0.0500 -0.190 0.363  0.00 -0.0430 -0.554
+     8  25.7  1.22 0.322 0.115 0.0160 -0.213 0.368 0.0430  0.00 -0.478
+     9  26.0  1.94 0.737 0.448 0.471 0.341 0.932 0.554 0.478  0.00
+
+Comparisons:
+    Expy_NH > Rando with p = 0.000000
+    MAsTC_IEV_MI_3 > Rando with p = 0.000000
+    MAsTC_IEV_MI_4 > Rando with p = 0.000000
+    MAsTC_IEV_MI_5 > Rando with p = 0.000000
+    MAsTC_IEV_MI_6 > Rando with p = 0.000000
+    MAsTC_IEV_LM_3 > Rando with p = 0.000000
+    MAsTC_IEV_LM_4 > Rando with p = 0.000000
+    MAsTC_IEV_LM_5 > Rando with p = 0.000000
+    MAsTC_IEV_LM_6 > Rando with p = 0.000000
+    MAsTC_IEV_MI_3 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_4 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_5 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_6 > Expy_NH with p = 0.000000
+    MAsTC_IEV_LM_3 > Expy_NH with p = 0.000000
+    MAsTC_IEV_LM_4 > Expy_NH with p = 0.000000
+    MAsTC_IEV_LM_5 > Expy_NH with p = 0.000000
+    MAsTC_IEV_LM_6 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_6 > MAsTC_IEV_MI_3 with p = 0.000000
+    MAsTC_IEV_LM_6 > MAsTC_IEV_MI_3 with p = 0.000000
+    MAsTC_IEV_LM_6 > MAsTC_IEV_LM_3 with p = 0.000000
+    MAsTC_IEV_LM_6 > MAsTC_IEV_LM_4 with p = 0.000000
+    MAsTC_IEV_LM_6 > MAsTC_IEV_LM_5 with p = 0.000000
+    MAsTC_IEV_LM_6 > MAsTC_IEV_MI_5 with p = 0.000000
+    MAsTC_IEV_MI_6 > MAsTC_IEV_LM_3 with p = 0.000000
+    MAsTC_IEV_MI_5 > MAsTC_IEV_MI_3 with p = 0.000000
+    MAsTC_IEV_LM_6 > MAsTC_IEV_MI_4 with p = 0.000000
+    MAsTC_IEV_LM_4 > MAsTC_IEV_MI_3 with p = 0.000000
+    MAsTC_IEV_LM_5 > MAsTC_IEV_LM_3 with p = 0.000000
+    MAsTC_IEV_MI_6 > MAsTC_IEV_MI_5 with p = 0.000000
+    MAsTC_IEV_LM_4 > MAsTC_IEV_LM_3 with p = 0.000000
+    MAsTC_IEV_MI_6 > MAsTC_IEV_MI_4 with p = 0.000000
+    MAsTC_IEV_LM_5 > MAsTC_IEV_MI_3 with p = 0.000000
+    MAsTC_IEV_MI_4 > MAsTC_IEV_LM_3 with p = 0.000000
+    MAsTC_IEV_LM_6 > MAsTC_IEV_MI_6 with p = 0.000000
+    MAsTC_IEV_MI_5 > MAsTC_IEV_LM_3 with p = 0.000001
+    MAsTC_IEV_MI_4 > MAsTC_IEV_MI_3 with p = 0.000003
+    MAsTC_IEV_MI_6 > MAsTC_IEV_LM_5 with p = 0.000078
+    MAsTC_IEV_MI_6 > MAsTC_IEV_LM_4 with p = 0.001218
+    MAsTC_IEV_LM_5 > MAsTC_IEV_MI_4 with p = 0.016308
+    MAsTC_IEV_MI_5 > MAsTC_IEV_MI_4 with p = 0.074763
+    MAsTC_IEV_LM_4 > MAsTC_IEV_MI_5 with p = 0.172390
+    MAsTC_IEV_LM_5 > MAsTC_IEV_LM_4 with p = 0.214717
+    MAsTC_IEV_LM_3 > MAsTC_IEV_MI_3 with p = 0.296100
+    MAsTC_IEV_LM_5 > MAsTC_IEV_MI_5 with p = 0.370030
+    MAsTC_IEV_LM_4 > MAsTC_IEV_MI_4 with p = 0.385714
+
+LM_6 > MI_6 > [LM_4, LM_5, MI_5, MI_4] > [LM_3, MI_3] > Expy_NH > Rando
+
+LM_4 ~= LM_5 (slightly worse head-to-head, but better against some others, including MI_6 and MI_5)
