@@ -43,27 +43,6 @@
 
 == Board state evaluation
 
-- Fix MedianFree:
-
-                 3               
-               1  -4             
-             0 -13   8           
-           X  11   X   X         
-         2  -3 -12   5  15       
-       6 -14  14   7 -15  -2     
-    -9   0  -7   X   0   9  -8   
-  13  -6 -11  12  -1 -10   0   X 
-nFree: 4 freeConnections: 0
-NM_IEV_MI_5: C5=10 eval: -90000
-MAsT_IEV_MI_5: C5=10 eval: -90000
-MAsTC_IEV_MI_5: F2=4 eval: -100000 (= MedianFree evaluation)
-
-Holes:
-C1: -1
-B7: -9
-C5: -10
-F2: -19
-
 
 
 === DONE

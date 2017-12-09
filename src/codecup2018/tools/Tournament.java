@@ -24,7 +24,7 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 1000;
+    private static final int GAMES = 7;
 
     public static void main(String[] args) {
         runTournament(Arrays.<Player>asList(
@@ -33,13 +33,13 @@ public class Tournament {
                 //new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6),
                 //new MultiAspirationTablePlayer("MAsT_EV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6),
                 new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3),
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4),
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3),
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5),
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_6", new IncrementalExpectedValue(), new LikelyMoves(), 6)
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4),
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3)
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5)
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_6", new IncrementalExpectedValue(), new LikelyMoves(), 6)
         //new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
         ));
     }
@@ -144,10 +144,16 @@ public class Tournament {
         for (int i = 0; i < players.size(); i++) {
             System.out.printf("%" + AVG_CELL_WIDTH + "d ", i);
             for (int j = 0; j < players.size(); j++) {
-                if (avgScore[i][j] < 0.1) {
-                    System.out.print(smallValueFormat.format(avgScore[i][j]));
+                if (i == j) {
+                    System.out.print("     0 ");
+                } else if (Math.abs(avgScore[i][j]) < 0.1) {
+                    if (avgScore[i][j] >= 0) {
+                        System.out.print(" " + smallValueFormat.format(avgScore[i][j]));
+                    } else {
+                        System.out.print(smallValueFormat.format(avgScore[i][j]));
+                    }
                 } else {
-                    System.out.printf("%" + AVG_CELL_WIDTH + "." + (AVG_CELL_WIDTH - 3) + "f ", avgScore[i][j]);
+                    System.out.printf("%" + AVG_CELL_WIDTH + "." + (AVG_CELL_WIDTH - 3) + "g ", avgScore[i][j]);
                 }
             }
             System.out.println();
