@@ -11,9 +11,10 @@ import java.io.InputStreamReader;
 public class Runner {
 
     public static void main(String[] args) throws IOException {
-        Player p = getPlayer();
         Player.TIMING = true;
+        MultiAspirationTableCutoffPlayer.DEBUG_FINAL_VALUE = true;
         
+        Player p = getPlayer();
         p.play(new BufferedReader(new InputStreamReader(System.in)), System.out);
     }
     
