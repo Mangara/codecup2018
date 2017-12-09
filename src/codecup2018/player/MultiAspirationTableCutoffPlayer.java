@@ -46,10 +46,10 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
     protected int selectMove() {
         if (board.isGameInEndGame()) {
             endgamePlayer.initialize(board);
-            //return endgamePlayer.selectMove();
+            return endgamePlayer.selectMove();
             
             ////DEBUG
-            return Board.setMoveEval(endgamePlayer.selectMove(), endgameEvaluator.evaluate(board));
+            //return Board.setMoveEval(endgamePlayer.selectMove(), endgameEvaluator.evaluate(board));
         }
 
         int window = INITIAL_WINDOW_SIZE;
