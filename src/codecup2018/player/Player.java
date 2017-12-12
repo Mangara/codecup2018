@@ -12,6 +12,7 @@ public abstract class Player {
     public static boolean DEBUG = false;
     protected Board board;
     protected final String name;
+    protected int turn;
 
     public Player(String name) {
         this.name = name;
@@ -41,7 +42,7 @@ public abstract class Player {
         }
 
         if (TIMING) {
-            System.err.println("Initialization took " + (System.currentTimeMillis() - start) + " ms.");
+            System.err.printf("Initialization took %d ms.%n", System.currentTimeMillis() - start);
         }
 
         for (String input = in.readLine(); !(input == null || "Quit".equals(input)); input = in.readLine()) {
@@ -56,7 +57,7 @@ public abstract class Player {
             int move = move();
 
             if (TIMING) {
-                System.err.println("Move took " + (System.currentTimeMillis() - start) + " ms.");
+                System.err.printf("Move %d took %d ms.%n", turn, System.currentTimeMillis() - start);
             }
 
             out.println(Board.moveToString(move));
@@ -65,10 +66,12 @@ public abstract class Player {
 
     public void initialize() {
         initialize(new BitBoard());
+        turn = 1;
     }
 
     public void initialize(Board currentBoard) {
         board = currentBoard;
+        turn = Math.max(1, 31 - currentBoard.getNFreeSpots());
     }
 
     public void block(byte pos) {
@@ -77,6 +80,7 @@ public abstract class Player {
 
     public void processMove(int move, boolean mine) {
         board.applyMove(mine ? move : Board.setMoveVal(move, (byte) -Board.getMoveVal(move)));
+        turn++;
     }
 
     public int move() {
