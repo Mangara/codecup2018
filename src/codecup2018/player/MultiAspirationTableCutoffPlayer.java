@@ -27,7 +27,6 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
     private final TranspositionEntry[] transpositionTable = new TranspositionEntry[TABLE_SIZE];
 
     private int prevScore = 0;
-    private byte turn = 1;
 
     public MultiAspirationTableCutoffPlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth) {
         super(name, evaluator, generator);
@@ -235,7 +234,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
             entry.bestMove = bestMove;
             entry.depthSearched = depth;
             entry.type = (bestEval > alpha ? (bestEval < beta ? TranspositionEntry.EXACT : TranspositionEntry.LOWER_BOUND) : TranspositionEntry.UPPER_BOUND);
-            entry.turn = turn;
+            entry.turn = (byte) turn;
         }
 
         return bestMove;
@@ -249,7 +248,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
         board.applyMove(move);
         evaluator.applyMove(move);
 
-        move = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -beta, -alpha)));
+        int result = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -beta, -alpha)));
 
         board.undoMove(move);
         evaluator.undoMove(move);
@@ -258,7 +257,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
             System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sGot back a score of %d%n", getName(), "", Board.getMoveEval(move));
         }
 
-        return move;
+        return result;
     }
 
     private class TranspositionEntry {
