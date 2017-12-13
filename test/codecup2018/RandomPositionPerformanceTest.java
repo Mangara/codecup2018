@@ -33,7 +33,7 @@ public class RandomPositionPerformanceTest {
 
     @Test
     public void runTest() throws NoSuchFieldException, IllegalAccessException {
-        List<Board> testBoards = RandomPositionGenerator.generateAllTestBoards(1000);
+        List<Board> testBoards = RandomPositionGenerator.generateRealisticTestBoards(1000);
 
         for (StandardPlayer player : players) {
             CountingEvaluator count = makeEvaluatorCount(player);

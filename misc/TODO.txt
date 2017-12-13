@@ -1,11 +1,5 @@
 == Architecture
 
-- Make a CachingBoard that:
- x Stores the values in a single 64-length 1D array 
- x Stores the hole values and number of free spots around each spot in the same way
- x To read, just return the array value
- x To update, add/subtract the required value from all neighbouring spots. Spots off the board will never be read, so it doesn't matter if they hold arbitrary values and we don't need to check for them.
-
 - Try a version of the CachingBoard that uses a bitboard for free positions, my tiles, and opponent tiles?
 
 - Try enumerating all free spots with a simple loop through all bit positions instead of the current (expensive) calls to Long. If we want to get really fancy, we can do this depending on the number.
@@ -16,12 +10,14 @@
 
 == Players
 
+- In endgame evaluation, add standard evaluation/100.
+
 - Implement iterative deepening. This will directly translate speed improvements into quality improvements. Use different aspiration windows for the first call (which uses the previous move value) and subsequent ones (which use the previous iteration value).
 
 - Implement killer move heuristic: keep track of moves that cause beta cutoffs and try them first. Possibly per-ply? First perhaps just print moves that cause beta-cutoffs to get a sense of what they look like.
 
 - Look into clock management
- x For a bunch of random games, and my games on the server, figure out how much time I needed to search each move to a fixed depth. Assign clock time proportional to this.
+ x For a bunch of random games, (and my games on the server?), figure out how much time I needed to search each move to a fixed depth. Assign clock time proportional to this.
 
 - Do not try the best stored move if it results from a fail low? In this case, many of the subtrees were most likely not explored very deeply (fast beta cutoffs) and the best move is perhaps not very meaningful...
 
@@ -31,14 +27,11 @@
 
 - Implement principal variation search / negascout:
  x https://www.ics.uci.edu/~eppstein/180a/990202b.html
- x 
 
 - Make a UCB player
 
 
 == Move generation
-
-- In MaxInfluence, play holes with min
 
 - Sort moves that generate holes closer to the front. Perhaps include something like "the lowest number of free spots around a neighbouring free spot"?
 
@@ -90,6 +83,13 @@ X Don't just use the maximum value. Start at 15, 8, and 1. Move pointer down, up
 X Make Board track the number of free-free connections. This allows us to detect the endgame.
 X Set alpha/beta based on Transposition table entry even if it doesn't cause a cut-off: https://people.csail.mit.edu/plaat/mtdf.html
 X Add more useful debug output for the competition bot (time taken per move, final value?)
+X In MaxInfluence, play holes with min
+X Make a CachingBoard that:
+ x Stores the values in a single 64-length 1D array 
+ x Stores the hole values and number of free spots around each spot in the same way
+ x To read, just return the array value
+ x To update, add/subtract the required value from all neighbouring spots. Spots off the board will never be read, so it doesn't matter if they hold arbitrary values and we don't need to check for them.
+ 
 
 === WONTFIX
 

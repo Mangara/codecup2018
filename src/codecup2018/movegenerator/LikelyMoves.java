@@ -123,7 +123,7 @@ public class LikelyMoves implements MoveGenerator {
 
     public static void main(String[] args) {
         LikelyMoves lm = new LikelyMoves();
-        List<Board> boards = RandomPositionGenerator.generateAllTestBoards(100);
+        List<Board> boards = RandomPositionGenerator.generateRealisticTestBoards(100);
 
         for (Board board : boards) {
             // Player 1

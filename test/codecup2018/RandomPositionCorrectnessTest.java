@@ -40,7 +40,7 @@ public class RandomPositionCorrectnessTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
-        return RandomPositionGenerator.generateTestData(1000); // 1000
+        return RandomPositionGenerator.generateRealisticTestData(1000); // 1000
     }
 
     @Test

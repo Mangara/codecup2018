@@ -154,6 +154,12 @@ public class BitBoard extends Board {
     public void block(byte pos) {
         free &= ~posMask(pos);
         freeEdgeCount -= getFreeSpotsAround(pos);
+        
+        // Update hash values
+        int index = 32 * pos + FREE + 15;
+        int newIndex = index - FREE + BLOCKED;
+        key ^= KEY_POSITION_NUMBERS[index] ^ KEY_POSITION_NUMBERS[newIndex];
+        hash ^= HASH_POSITION_NUMBERS[index] ^ HASH_POSITION_NUMBERS[newIndex];
     }
 
     @Override
