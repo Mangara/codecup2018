@@ -1,5 +1,6 @@
 package codecup2018.tools;
 
+import codecup2018.data.ArrayBoard;
 import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
 import codecup2018.evaluator.ExpectedValue;
@@ -17,8 +18,8 @@ import java.util.Set;
 
 public class RandomPositionGenerator {
 
-    public static Collection<Object[]> generateTestData(int n) {
-        List<Board> testBoards = generateAllTestBoards(n);
+    public static Collection<Object[]> generateRealisticTestData(int n) {
+        List<Board> testBoards = generateRealisticTestBoards(n);
         Collection<Object[]> data = new ArrayList<>();
 
         for (Board testBoard : testBoards) {
@@ -28,19 +29,31 @@ public class RandomPositionGenerator {
         return data;
     }
 
-    public static List<Board> generateAllTestBoards(int n) {
+    public static List<Board> generateRealisticTestBoards(int n) {
         Random rand = new Random(598959643);
         List<Board> boards = new ArrayList<>();
 
         // Generate some pseudo-random test boards
         while (boards.size() < n) {
-            boards.addAll(generateTestBoards(rand));
+            boards.addAll(generateRealisticTestBoards(rand));
         }
 
         return boards.subList(0, n);
     }
+    
+    public static List<byte[][]> generateRandomTestBoards(int n) {
+        Random rand = new Random(598949643);
+        List<byte[][]> boards = new ArrayList<>();
 
-    private static List<Board> generateTestBoards(Random rand) {
+        // Generate some pseudo-random test boards
+        while (boards.size() < n) {
+            boards.add(generateRandomTestBoard(rand));
+        }
+
+        return boards;
+    }
+
+    private static List<Board> generateRealisticTestBoards(Random rand) {
         // Generate a pseudo-random game
         double SELECTION_CHANCE = 0.1; // Sample 10% of positions
         Player p1 = new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves());
@@ -96,6 +109,58 @@ public class RandomPositionGenerator {
         }
 
         return testPositions;
+    }
+
+    private static byte[][] generateRandomTestBoard(Random rand) {
+        byte[][] board = new byte[8][8];
+        boolean[] used1 = new boolean[16];
+        boolean[] used2 = new boolean[16];
+        
+        // Block 5 spaces
+        Set<Integer> blocked = new HashSet<>();
+
+        while (blocked.size() < 5) {
+            blocked.add(rand.nextInt(36));
+        }
+
+        int location = 0;
+        for (byte a = 0; a < 8; a++) {
+            for (byte b = 0; b < 8 - a; b++) {
+                if (blocked.contains(location)) {
+                    board[a][b] = Board.BLOCKED;
+                }
+                location++;
+            }
+        }
+        
+        // Pick random
+        boolean player1 = true;
+        for (int turns = rand.nextInt(31); turns > 0; turns--) {
+            byte a, b;
+            do {
+                a = (byte) rand.nextInt(8);
+                b = (byte) rand.nextInt(8);
+            } while (!(Board.isValidPos(Board.getPos(a, b)) && board[a][b] == Board.FREE));
+            
+            byte v;
+            do {
+                v = (byte) (1 + rand.nextInt(15));
+            } while ((player1 && used1[v]) || (!player1 && used2[v]));
+            
+            //System.err.printf("Turn: %d. Move: %s%n", turns, Board.moveToString(Board.buildMove(Board.getPos(a, b), (turns % 2 == 0 ? v : (byte) -v), 0)));
+            
+            board[a][b] = (player1 ? v : (byte) -v);
+            
+            if (player1) {
+                used1[v] = true;
+            } else {
+                used2[v] = true;
+            }
+            
+            player1 = !player1;
+        }
+        
+        return board;
     }
 
 }

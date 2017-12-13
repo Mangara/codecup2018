@@ -19,7 +19,7 @@ public class RandomPositionCollisionTest {
 
     @Test
     public void runTest() throws NoSuchFieldException, IllegalAccessException {
-        List<Board> testBoards = RandomPositionGenerator.generateAllTestBoards(1000);
+        List<Board> testBoards = RandomPositionGenerator.generateRealisticTestBoards(1000);
 
         for (StandardPlayer player : players) {
             int[] collisions = new int[testBoards.size()];

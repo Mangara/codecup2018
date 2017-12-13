@@ -7,8 +7,8 @@ public abstract class Board {
     public static final byte BLOCKED = 16;
     public static final byte FREE = 0;
 
-    protected static final int[] KEY_POSITION_NUMBERS = new int[64 * 32];
-    protected static final long[] HASH_POSITION_NUMBERS = new long[64 * 32];
+    public static final int[] KEY_POSITION_NUMBERS = new int[64 * 32];
+    public static final long[] HASH_POSITION_NUMBERS = new long[64 * 32];
 
     static {
         Random rand = new Random(611382272);
@@ -103,6 +103,10 @@ public abstract class Board {
     public static final byte getPos(byte a, byte b) {
         return (byte) (8 * a + b);
     }
+    
+    public static final boolean isValidPos(int pos) {
+        return (pos & 0b111) + (pos >>> 3) < 8;
+    }
 
     public static final byte[] getCoordinates(byte pos) {
         return new byte[]{(byte) (pos / 8), (byte) (pos % 8)};
@@ -142,11 +146,6 @@ public abstract class Board {
             System.err.printf("%" + (2 * (7 - h) + 1) + "s%n", "");
         }
         System.err.print("nFree: " + board.getNFreeSpots());
-
-        if (board instanceof BitBoard) {
-            System.err.println(" freeConnections: " + ((BitBoard) board).freeEdgeCount);
-        } else {
-            System.err.println();
-        }
+        System.err.println();
     }
 }
