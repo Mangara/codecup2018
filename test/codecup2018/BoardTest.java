@@ -309,20 +309,20 @@ public class BoardTest {
 
         for (int i = 0; i < N_TESTS; i++) {
             // Copy
-            data.add(new Object[]{situations.get(i), new ArrayBoard(new GridBoard(situations.get(i)))});
-            data.add(new Object[]{situations.get(i), new BitBoard(new GridBoard(situations.get(i)))});
+            //data.add(new Object[]{situations.get(i), new ArrayBoard(new GridBoard(situations.get(i)))});
+            //data.add(new Object[]{situations.get(i), new BitBoard(new GridBoard(situations.get(i)))});
             data.add(new Object[]{situations.get(i), new CachingBoard(new GridBoard(situations.get(i)))});
         }
         for (int i = 0; i < N_TESTS; i++) {
             // Set up from scratch
-            data.add(new Object[]{situations.get(i), setUpBoard(situations.get(i), new ArrayBoard(), rand)});
-            data.add(new Object[]{situations.get(i), setUpBoard(situations.get(i), new BitBoard(), rand)});
+            //data.add(new Object[]{situations.get(i), setUpBoard(situations.get(i), new ArrayBoard(), rand)});
+            //data.add(new Object[]{situations.get(i), setUpBoard(situations.get(i), new BitBoard(), rand)});
             data.add(new Object[]{situations.get(i), setUpBoard(situations.get(i), new CachingBoard(), rand)});
         }
         for (int i = 0; i < N_TESTS; i++) {
             // Set up with undo
-            data.add(setUpUndoBoard(situations.get(i), new ArrayBoard(), rand));
-            data.add(setUpUndoBoard(situations.get(i), new BitBoard(), rand));
+            //data.add(setUpUndoBoard(situations.get(i), new ArrayBoard(), rand));
+            //data.add(setUpUndoBoard(situations.get(i), new BitBoard(), rand));
             data.add(setUpUndoBoard(situations.get(i), new CachingBoard(), rand));
         }
 
