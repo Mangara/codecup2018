@@ -1,16 +1,15 @@
 package codecup2018;
 
-import codecup2018.tools.RandomPositionGenerator;
+import codecup2018.data.ArrayBoard;
 import codecup2018.data.BitBoard;
+import codecup2018.tools.RandomPositionGenerator;
 import codecup2018.data.Board;
+import codecup2018.data.CachingBoard;
 import codecup2018.evaluator.CountingEvaluator;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.evaluator.IncrementalExpectedValue;
-import codecup2018.movegenerator.LikelyMoves;
-import codecup2018.movegenerator.MaxInfluenceMoves;
+import codecup2018.movegenerator.MaxInfluenceMinMoves;
 import codecup2018.player.MultiAspirationTableCutoffPlayer;
-import codecup2018.player.MultiAspirationTablePlayer;
-import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.StandardPlayer;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -24,11 +23,11 @@ public class RandomPositionPerformanceTest {
             //new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new AspirationTablePlayer("AsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new MultiAspirationTablePlayer("MAsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_2", new IncrementalExpectedValue(), new LikelyMoves(), 2),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5)
+            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MIN_6", new IncrementalExpectedValue(), new MaxInfluenceMinMoves(), 6)
+            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_2", new IncrementalExpectedValue(), new LikelyMoves(), 2),
+            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3),
+            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
+            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5)
     );
 
     @Test
@@ -45,7 +44,7 @@ public class RandomPositionPerformanceTest {
 
             for (int i = 0; i < testBoards.size(); i++) {
                 Board board = testBoards.get(i);
-                player.initialize(new BitBoard(board));
+                player.initialize(new CachingBoard(board));
 
                 long start = System.nanoTime();
                 player.move();

@@ -213,7 +213,7 @@ public class ArrayBoard extends Board {
     @Override
     public boolean isLegalMove(int move) {
         byte val = getMoveVal(move);
-        return isFree(getMovePos(move)) && ((val > 0 && !haveIUsed(val)) || (val < 0 && !hasOppUsed(val)));
+        return isFree(getMovePos(move)) && ((val > 0 && !haveIUsed(val)) || (val < 0 && !hasOppUsed((byte) -val)));
     }
 
     @Override

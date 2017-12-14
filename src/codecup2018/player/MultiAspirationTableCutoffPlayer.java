@@ -159,14 +159,14 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
             }
 
             // Try the stored best move first
-            bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, myBeta);
+            //bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, myBeta);
 
-            /*///PROFILING
+            ////PROFILING
             int move = entry.bestMove;
             board.applyMove(move);
             evaluator.applyMove(move);
 
-            bestMove = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -beta, -myAlpha)));
+            bestMove = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -myBeta, -myAlpha)));
 
             board.undoMove(move);
             evaluator.undoMove(move);
@@ -186,13 +186,13 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
                     continue; // We already tried this one
                 }
 
-                move = evaluateMove(move, player, depth, myAlpha, myBeta);
+                //move = evaluateMove(move, player, depth, myAlpha, myBeta);
 
-                /*///PROFILING
+                ////PROFILING
                 board.applyMove(move);
                 evaluator.applyMove(move);
 
-                move = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -beta, -myAlpha)));
+                move = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -myBeta, -myAlpha)));
 
                 board.undoMove(move);
                 evaluator.undoMove(move);
