@@ -33,6 +33,12 @@
 
 == Move generation
 
+- When generating moves, only include the worst hole.
+
+- If there is a component of size 2, can we ignore one of them? If there is a free spot with 1 free neighbour, and that neighbour has a hole value that is worse for me, is it ever a good idea to play here? Or always better to play the neighbour?
+
+- Can we maintain free positions sorted in likely moves order? It may be worth the overhead to store them in a sorted set.
+
 - Sort moves that generate holes closer to the front. Perhaps include something like "the lowest number of free spots around a neighbouring free spot"?
 
 - Order moves by expected value? (ExpectedOrder MoveGenerator, and perhaps a general OrderBy(Evaluator)) Is there a fast way we can do just expected value?
