@@ -1,8 +1,7 @@
 package codecup2018.tools;
 
-import codecup2018.*;
-import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
+import codecup2018.data.BitBoard;
 import codecup2018.evaluator.CountingEvaluator;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.evaluator.ExpectedValue;

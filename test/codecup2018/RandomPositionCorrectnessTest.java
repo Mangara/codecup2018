@@ -1,8 +1,8 @@
 package codecup2018;
 
 import codecup2018.tools.RandomPositionGenerator;
-import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
+import codecup2018.data.BitBoard;
 import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.player.MultiAspirationTableCutoffPlayer;

@@ -3,8 +3,8 @@ package codecup2018.data;
 public class CachingBoard extends Board {
 
     private final byte[] values = new byte[64]; // The values on the board
-    private final int[] holeValues = new int[64]; // The sum of neighbouring tiles
-    private final int[] freeNeighbours = new int[64]; // The number of free neighbouring spots
+    private final byte[] holeValues = new byte[73]; // The sum of neighbouring tiles
+    private final byte[] freeNeighbours = new byte[73]; // The number of free neighbouring spots
 
     // Bit-vectors encoding the values used by each player
     private short myUsed = 0;
@@ -54,7 +54,7 @@ public class CachingBoard extends Board {
             for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
                 if (values[pos] == FREE) {
                     freeSpots++;
-                    freeEdgeCount += freeNeighbours[pos];
+                    freeEdgeCount += freeNeighbours[pos + 8];
                 }
             }
         }
@@ -78,32 +78,26 @@ public class CachingBoard extends Board {
         hash ^= HASH_POSITION_NUMBERS[index] ^ HASH_POSITION_NUMBERS[newIndex];
     }
 
-    private void updateCacheValue(int[] cache, byte pos, int val) {
-        if (pos >= 8) {
-            cache[pos - 8] += val;
-        }
-        if (pos > 7) { // pos >= 7 && pos != 7
-            cache[pos - 7] += val;
-        }
-        if (pos >= 1 && pos != 8) {
-            cache[pos - 1] += val;
+    private void updateCacheValue(byte[] cache, byte pos, int val) {
+        cache[pos] += val;
+        if (pos != 8) {
+            cache[pos + 7] += val;
         }
         if (pos != 7) {
             cache[pos + 1] += val;
+            cache[pos + 9] += val;
         }
         if (pos != 0) {
-            cache[pos + 7] += val;
+            cache[pos + 15] += val;
         }
-        if (pos != 56) {
-            cache[pos + 8] += val;
-        }
+        cache[pos + 16] += val;
     }
 
     @Override
     public void block(byte pos) {
         set(pos, BLOCKED);
         freeSpots--;
-        freeEdgeCount -= freeNeighbours[pos];
+        freeEdgeCount -= freeNeighbours[pos + 8];
         
         updateCacheValue(freeNeighbours, pos, -1);
     }
@@ -115,7 +109,7 @@ public class CachingBoard extends Board {
 
         set(pos, val);
         freeSpots--;
-        freeEdgeCount -= freeNeighbours[pos];
+        freeEdgeCount -= freeNeighbours[pos + 8];
         
         if (val > 0) {
             myUsed |= (1 << val);
@@ -134,7 +128,7 @@ public class CachingBoard extends Board {
 
         set(pos, FREE);
         freeSpots++;
-        freeEdgeCount += freeNeighbours[pos];
+        freeEdgeCount += freeNeighbours[pos + 8];
         
         if (val > 0) {
             myUsed ^= (1 << val);
@@ -168,12 +162,12 @@ public class CachingBoard extends Board {
 
     @Override
     public int getHoleValue(byte pos) {
-        return holeValues[pos];
+        return holeValues[pos + 8];
     }
 
     @Override
     public int getFreeSpotsAround(byte pos) {
-        return freeNeighbours[pos];
+        return freeNeighbours[pos + 8];
     }
 
     @Override
@@ -222,12 +216,12 @@ public class CachingBoard extends Board {
     private void initializeFreeNeighbours() {
         for (byte a = 0; a < 8; a++) {
             for (byte pos = (byte) (8 * a); pos < 7 * a + 8; pos++) {
-                freeNeighbours[pos] += (isValidPos(pos - 8) && values[pos - 8] == FREE ? 1 : 0);
-                freeNeighbours[pos] += (isValidPos(pos - 7) && values[pos - 7] == FREE && pos != 7 ? 1 : 0);
-                freeNeighbours[pos] += (isValidPos(pos - 1) && values[pos - 1] == FREE && pos != 8 ? 1 : 0);
-                freeNeighbours[pos] += (isValidPos(pos + 1) && values[pos + 1] == FREE && pos != 7 ? 1 : 0);
-                freeNeighbours[pos] += (isValidPos(pos + 7) && values[pos + 7] == FREE && pos != 0 ? 1 : 0);
-                freeNeighbours[pos] += (isValidPos(pos + 8) && values[pos + 8] == FREE ? 1 : 0);
+                freeNeighbours[pos + 8] += (isValidPos(pos - 8) && values[pos - 8] == FREE ? 1 : 0);
+                freeNeighbours[pos + 8] += (isValidPos(pos - 7) && values[pos - 7] == FREE && pos != 7 ? 1 : 0);
+                freeNeighbours[pos + 8] += (isValidPos(pos - 1) && values[pos - 1] == FREE && pos != 8 ? 1 : 0);
+                freeNeighbours[pos + 8] += (isValidPos(pos + 1) && values[pos + 1] == FREE && pos != 7 ? 1 : 0);
+                freeNeighbours[pos + 8] += (isValidPos(pos + 7) && values[pos + 7] == FREE && pos != 0 ? 1 : 0);
+                freeNeighbours[pos + 8] += (isValidPos(pos + 8) && values[pos + 8] == FREE ? 1 : 0);
             }
         }
     }
@@ -243,9 +237,5 @@ public class CachingBoard extends Board {
                 hash ^= HASH_POSITION_NUMBERS[index];
             }
         }
-    }
-
-    public static void main(String[] args) {
-        new CachingBoard();
     }
 }

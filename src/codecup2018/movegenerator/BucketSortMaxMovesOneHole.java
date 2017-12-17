@@ -2,7 +2,7 @@ package codecup2018.movegenerator;
 
 import codecup2018.data.Board;
 
-public class BucketSortMaxMoves implements MoveGenerator {
+public class BucketSortMaxMovesOneHole implements MoveGenerator {
 
     private final int[][] freeSorted = new int[7][31];
 
@@ -17,16 +17,40 @@ public class BucketSortMaxMoves implements MoveGenerator {
         for (int i = 0; i < free.length; i++) {
             byte pos = free[i];
             int freeAround = board.getFreeSpotsAround(pos);
-            freeSorted[freeAround][index[freeAround]++] = Board.buildMove(pos, (freeAround == 0 ? min : max), 0);
+            freeSorted[freeAround][index[freeAround]++] = Board.buildMove(pos, max, 0);
         }
 
-        int[] moves = new int[free.length];
+        int[] moves = new int[free.length - (index[0] > 1 ? index[0] - 1 : 0)];
         int movesIndex = 0;
 
         // Moves with many open squares should be processed first
-        for (int i = 6; i >= 0; i--) {
+        for (int i = 6; i > 0; i--) {
             System.arraycopy(freeSorted[i], 0, moves, movesIndex, index[i]);
             movesIndex += index[i];
+        }
+
+        // Only include the worst hole
+        if (index[0] > 1) {
+            int worstHoleValue = 76;
+            int worstHole = 0;
+            
+            for (int i = 0; i < index[0]; i++) {
+                int hole = freeSorted[0][i];
+                int holeValue = board.getHoleValue(Board.getMovePos(hole));
+                
+                if (!player1) {
+                    holeValue *= -1;
+                }
+                
+                if (holeValue < worstHoleValue) {
+                    worstHoleValue = holeValue;
+                    worstHole = hole;
+                }
+            }
+            
+            moves[movesIndex] = Board.setMoveVal(worstHole, min);
+        } else if (index[0] == 1) {
+            moves[movesIndex] = Board.setMoveVal(freeSorted[0][0], min);
         }
 
         return moves;

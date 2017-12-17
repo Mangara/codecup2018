@@ -1,7 +1,7 @@
 package codecup2018.player;
 
-import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
+import codecup2018.data.BitBoard;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintStream;

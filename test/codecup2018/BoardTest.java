@@ -1,7 +1,6 @@
 package codecup2018;
 
 import codecup2018.data.ArrayBoard;
-import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
 import codecup2018.data.CachingBoard;
 import codecup2018.tools.RandomPositionGenerator;
@@ -303,7 +302,7 @@ public class BoardTest {
     public static Collection<Object[]> instancesToTest() {
         Random rand = new Random(6748093);
         List<Object[]> data = new ArrayList<>();
-        int N_TESTS = 1000;
+        int N_TESTS = 100;
 
         List<byte[][]> situations = RandomPositionGenerator.generateRandomTestBoards(N_TESTS);
 
