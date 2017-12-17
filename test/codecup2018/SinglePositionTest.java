@@ -1,8 +1,8 @@
 package codecup2018;
 
 import codecup2018.data.ArrayBoard;
-import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
+import codecup2018.data.BitBoard;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.NoHolesMax;

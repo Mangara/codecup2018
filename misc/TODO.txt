@@ -33,8 +33,6 @@
 
 == Move generation
 
-- When generating moves, only include the worst hole.
-
 - If there is a component of size 2, can we ignore one of them? If there is a free spot with 1 free neighbour, and that neighbour has a hole value that is worse for me, is it ever a good idea to play here? Or always better to play the neighbour?
 
 - Can we maintain free positions sorted in likely moves order? It may be worth the overhead to store them in a sorted set.
@@ -95,7 +93,7 @@ X Make a CachingBoard that:
  x Stores the hole values and number of free spots around each spot in the same way
  x To read, just return the array value
  x To update, add/subtract the required value from all neighbouring spots. Spots off the board will never be read, so it doesn't matter if they hold arbitrary values and we don't need to check for them.
- 
+X When generating moves, only include the worst hole. 
 
 === WONTFIX
 

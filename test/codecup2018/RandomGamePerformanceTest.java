@@ -1,19 +1,19 @@
 package codecup2018;
 
-import codecup2018.data.BitBoard;
 import codecup2018.data.Board;
-import codecup2018.data.CachingBoard;
+import codecup2018.data.BitBoard;
 import codecup2018.evaluator.CountingEvaluator;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.BucketSortMaxMoves;
-import codecup2018.movegenerator.LikelyMoves;
+import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
 import codecup2018.movegenerator.MaxInfluenceMinMoves;
 import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.movegenerator.NoHoles;
 import codecup2018.player.MultiAspirationTableCutoffPlayer;
+import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.RankSelectPlayer;
@@ -28,15 +28,18 @@ import org.junit.Test;
 
 public class RandomGamePerformanceTest {
 
-    private static final int N_GAMES = 100;
+    private static final int N_GAMES = 250;
 
     private final List<StandardPlayer> players = Arrays.<StandardPlayer>asList(
-            //new NegaMaxPlayer("NM_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
+            //new NegaMaxPlayer("NM_IEV_BSM_6", new IncrementalExpectedValue(), new BucketSortMaxMoves(), 6),
+            //new NegaMaxPlayer("NM_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6)
             //new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new AspirationTablePlayer("AsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new MultiAspirationTablePlayer("MAsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MIN_6", new IncrementalExpectedValue(), new MaxInfluenceMinMoves(), 6),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM_6", new IncrementalExpectedValue(), new BucketSortMaxMoves(), 6)
+            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6),
+            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MIN_6", new IncrementalExpectedValue(), new MaxInfluenceMinMoves(), 6),
+            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM_6", new IncrementalExpectedValue(), new BucketSortMaxMoves(), 6),
+            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6)
             //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_2", new IncrementalExpectedValue(), new LikelyMoves(), 2),
             //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3),
             //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4)
@@ -66,8 +69,8 @@ public class RandomGamePerformanceTest {
                 Player opponent = opponents.get(i % opponents.size());
 
                 Board board = GameHost.setUpBoard();
-                player.initialize(new CachingBoard(board));
-                opponent.initialize(new CachingBoard(board));
+                player.initialize(new BitBoard(board));
+                opponent.initialize(new BitBoard(board));
 
                 long start, time = 0;
 
