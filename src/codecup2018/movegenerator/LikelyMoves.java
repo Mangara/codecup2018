@@ -1,9 +1,7 @@
 package codecup2018.movegenerator;
 
 import codecup2018.data.Board;
-import codecup2018.tools.RandomPositionGenerator;
 import java.util.Arrays;
-import java.util.List;
 
 public class LikelyMoves implements MoveGenerator {
 
@@ -18,7 +16,7 @@ public class LikelyMoves implements MoveGenerator {
             byte pos = free[i];
             int freeSpots = board.getFreeSpotsAround(pos);
             int holeValue = board.getHoleValue(pos);
-            int sortingScore = -1 * (10000 * freeSpots + (player1 ? -holeValue : holeValue));
+            int sortingScore = -10000 * freeSpots - (player1 ? -holeValue : holeValue);
 
             positions[i] = Board.buildMove(pos, (byte) 0, sortingScore);
         }
@@ -118,34 +116,6 @@ public class LikelyMoves implements MoveGenerator {
             } else {
                 return new byte[]{max, med, min};
             }
-        }
-    }
-
-    public static void main(String[] args) {
-        LikelyMoves lm = new LikelyMoves();
-        List<Board> boards = RandomPositionGenerator.generateRealisticTestBoards(100);
-
-        for (Board board : boards) {
-            // Player 1
-            Board.print(board);
-            int[] moves = lm.generateMoves(board, true);
-
-            System.err.print("Likely moves: [");
-            for (int move : moves) {
-                System.err.print(Board.moveToString(move) + ", ");
-            }
-            System.err.println("]");
-
-            // Player 2
-            board.applyMove(moves[0]);
-            Board.print(board);
-            moves = lm.generateMoves(board, false);
-
-            System.err.print("Likely moves: [");
-            for (int move : moves) {
-                System.err.print(Board.moveToString(move) + ", ");
-            }
-            System.err.println("]");
         }
     }
 }

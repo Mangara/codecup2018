@@ -5,6 +5,7 @@ Name: Messier31 (black hole at the center of the Andromeda galaxy)
 - Disconnected free components can be played independently, except for the fact that each remaining number can be used at most once.
 
 - Playing in larger free components should be favored over closing holes. (Unless you think you can trick your opponent to play sub-optimally in the larger component?)
+ x Not necessarily. It is sometimes good to close a hole to `pass' in the larger component. This lets you react to the opponent, instead of the other way around.
 
 - Even in the mid-game, situations may arise where some holes can no longer contribute to the final score, because they will be filled in no matter what happens in the remaining components.
  x This is quite restrictive, though: if you're losing, you may prefer to keep that (-1)-hole open

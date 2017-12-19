@@ -10,8 +10,6 @@
 
 == Players
 
-- In endgame evaluation, add standard evaluation/100.
-
 - Implement iterative deepening. This will directly translate speed improvements into quality improvements. Use different aspiration windows for the first call (which uses the previous move value) and subsequent ones (which use the previous iteration value).
 
 - Implement killer move heuristic: keep track of moves that cause beta cutoffs and try them first. Possibly per-ply? First perhaps just print moves that cause beta-cutoffs to get a sense of what they look like.
@@ -28,7 +26,9 @@
 - Implement principal variation search / negascout:
  x https://www.ics.uci.edu/~eppstein/180a/990202b.html
 
-- Make a UCB player
+- Implement RAVE / alpha-AMAF for UCB
+- Store the evaluation value in each node and slowly transfer from evaluation -> rave value -> UCB value
+- Only expand a node (generate its possible moves) when it has been hit a certain number of times
 
 
 == Move generation
@@ -94,6 +94,9 @@ X Make a CachingBoard that:
  x To read, just return the array value
  x To update, add/subtract the required value from all neighbouring spots. Spots off the board will never be read, so it doesn't matter if they hold arbitrary values and we don't need to check for them.
 X When generating moves, only include the worst hole. 
+X In endgame evaluation, add standard evaluation/100.
+X Make a UCB player
+
 
 === WONTFIX
 

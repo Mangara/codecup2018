@@ -69,6 +69,19 @@ public class BucketSortMaxMovesOneHole implements MoveGenerator {
             }
         }
 
+        System.err.println("ERROR: No value left for active player.");
+        Board.print(board);
+        
+        for (int i = 15; i >= 1; i--) {
+            System.err.printf("%6d", i);
+        }
+        System.err.println();
+        for (byte i = 15; i >= 1; i--) {
+            System.err.printf("%6b", player1 ? board.haveIUsed(i) : board.hasOppUsed(i));
+        }
+        System.err.println();
+        
+        
         throw new IllegalArgumentException();
     }
 
