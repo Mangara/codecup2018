@@ -32,5 +32,6 @@ public abstract class StandardPlayer extends Player {
         int m = (mine ? move : Board.setMoveVal(move, (byte) -Board.getMoveVal(move)));
         board.applyMove(m);
         evaluator.applyMove(m);
+        turn++;
     }
 }

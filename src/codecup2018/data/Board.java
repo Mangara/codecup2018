@@ -57,11 +57,21 @@ public abstract class Board {
     public abstract int getTranspositionTableKey();
 
     public abstract long getHash();
+    
+    public int getFinalScore() {
+        if (!isGameOver()) {
+            System.err.println("getFinalScore called when game is not over.");
+            return 0;
+        }
+        
+        return getHoleValue(getFreeSpots()[0]);
+    }
 
     // Move-related utility methods
     public static final int MOVE_POS_MASK = (1 << 6) - 1;           // 00000000000000000000000000111111
     public static final int MOVE_VAL_MASK = ((1 << 5) - 1) << 6;    // 00000000000000000000011111000000
     public static final int MOVE_EVAL_MASK = ((1 << 21) - 1) << 11; // 11111111111111111111100000000000
+    public static final int MOVE_NOT_EVAL_MASK = ~MOVE_EVAL_MASK;   // 00000000000000000000011111111111
     public static final int MIN_EVAL = -750001;
     public static final int MAX_EVAL = 750001;
     public static final int MIN_EVAL_MOVE = buildMove((byte) 0, (byte) 0, MIN_EVAL);
@@ -78,6 +88,10 @@ public abstract class Board {
     public static final int getMoveEval(int move) {
         return move >> 11;
     }
+    
+    public static final boolean equalMoves(int move1, int move2) {
+        return (move1 & MOVE_NOT_EVAL_MASK) == (move2 & MOVE_NOT_EVAL_MASK);
+    }
 
     public static final int setMovePos(int move, byte pos) {
         return (move & ~MOVE_POS_MASK) | pos;
@@ -88,11 +102,11 @@ public abstract class Board {
     }
 
     public static final int setMoveEval(int move, int eval) {
-        return (move & ~MOVE_EVAL_MASK) | (eval << 11);
+        return (move & MOVE_NOT_EVAL_MASK) | (eval << 11);
     }
 
     public static final int negateEval(int move) {
-        return (move & ~MOVE_EVAL_MASK) | ((-(move >> 11) << 11) & MOVE_EVAL_MASK);
+        return (move & MOVE_NOT_EVAL_MASK) | ((-(move >> 11) << 11) & MOVE_EVAL_MASK);
     }
 
     public static final int buildMove(byte pos, byte val, int eval) {

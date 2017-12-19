@@ -4,9 +4,11 @@ import codecup2018.Pair;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.evaluator.MedianFree;
+import codecup2018.evaluator.MixedEvaluator;
 import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.BucketSortMaxMoves;
 import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
+import codecup2018.movegenerator.LikelyMoves;
 import codecup2018.movegenerator.MaxInfluenceMinMoves;
 import codecup2018.movegenerator.MaxInfluenceMoves;
 import codecup2018.movegenerator.MostFreeMax;
@@ -16,6 +18,7 @@ import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.SimpleMaxPlayer;
+import codecup2018.player.UpperConfidenceBoundsPlayer;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,20 +34,24 @@ public class Tournament {
         runTournament(Arrays.<Player>asList(
                 new RandomPlayer("Rando", new AllMoves()),
                 new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
+                new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10),
                 //new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6),
                 //new MultiAspirationTablePlayer("MAsT_EV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6), // (best so far)
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM_6", new IncrementalExpectedValue(), new BucketSortMaxMoves(), 6),
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6),
-                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MIN_6", new IncrementalExpectedValue(), new MaxInfluenceMinMoves(), 6), // (best so far)
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6),
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM_6", new IncrementalExpectedValue(), new BucketSortMaxMoves(), 6),
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4),
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6), // (best so far)
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MIN_6", new IncrementalExpectedValue(), new MaxInfluenceMinMoves(), 6),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3)
-                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
+                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5)
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_6", new IncrementalExpectedValue(), new LikelyMoves(), 6)
-                new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
+                new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_500", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 500),
+                new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_5000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 5000),
+                new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_50000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 50000)
         ));
     }
 

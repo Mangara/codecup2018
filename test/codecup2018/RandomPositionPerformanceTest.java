@@ -6,11 +6,8 @@ import codecup2018.data.BitBoard;
 import codecup2018.evaluator.CountingEvaluator;
 import codecup2018.evaluator.Evaluator;
 import codecup2018.evaluator.IncrementalExpectedValue;
-import codecup2018.movegenerator.BucketSortMaxMoves;
-import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
-import codecup2018.movegenerator.MaxInfluenceMinMoves;
-import codecup2018.movegenerator.MaxInfluenceMoves;
-import codecup2018.player.MultiAspirationTableCutoffPlayer;
+import codecup2018.movegenerator.AllMoves;
+import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.StandardPlayer;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -20,14 +17,14 @@ import org.junit.Test;
 public class RandomPositionPerformanceTest {
 
     private final List<StandardPlayer> players = Arrays.<StandardPlayer>asList(
-            //new NegaMaxPlayer("NM_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
+            new NegaMaxPlayer("NM_IEV_AM_30", new IncrementalExpectedValue(), new AllMoves(), 30)
             //new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new AspirationTablePlayer("AsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
             //new MultiAspirationTablePlayer("MAsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MIN_6", new IncrementalExpectedValue(), new MaxInfluenceMinMoves(), 6),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM_6", new IncrementalExpectedValue(), new BucketSortMaxMoves(), 6),
-            new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6)
+            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6),
+            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MIN_6", new IncrementalExpectedValue(), new MaxInfluenceMinMoves(), 6),
+            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM_6", new IncrementalExpectedValue(), new BucketSortMaxMoves(), 6),
+            //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6)
             //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_2", new IncrementalExpectedValue(), new LikelyMoves(), 2),
             //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3),
             //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
@@ -36,7 +33,7 @@ public class RandomPositionPerformanceTest {
 
     @Test
     public void runTest() throws NoSuchFieldException, IllegalAccessException {
-        List<Board> testBoards = RandomPositionGenerator.generateRealisticTestBoards(1000);
+        List<Board> testBoards = RandomPositionGenerator.generateRealisticTestBoards(2);
 
         for (StandardPlayer player : players) {
             CountingEvaluator count = makeEvaluatorCount(player);

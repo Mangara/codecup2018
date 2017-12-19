@@ -12,6 +12,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
 
     public static boolean DEBUG_FINAL_VALUE = false;
     private static final boolean DEBUG_AB = false;
+    private static final boolean DEBUG_BETA = false;
     private static final int DEBUG_TURN = -1;
 
     private final static int INITIAL_WINDOW_SIZE = 5000;
@@ -98,7 +99,6 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
         }
 
         prevScore = eval;
-        turn++;
 
         return move;
     }
@@ -109,7 +109,7 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
         }
 
         if (board.isGameInEndGame()) {
-            return Board.buildMove((byte) 0, (byte) 0, player * endgameEvaluator.evaluate(board));
+            return Board.buildMove((byte) 0, (byte) 0, player * (endgameEvaluator.evaluate(board) + evaluator.evaluate(board) / 100));
         }
 
         if (DEBUG_AB || turn == DEBUG_TURN) {
@@ -208,8 +208,8 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
                             myAlpha = eval;
 
                             if (myBeta <= myAlpha) {
-                                if (DEBUG_AB || turn == DEBUG_TURN) {
-                                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta cut-off%n", getName(), "");
+                                if (DEBUG_AB || turn == DEBUG_TURN || DEBUG_BETA) {
+                                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta cut-off from move %s%n", getName(), "", Board.moveToString(bestMove));
                                 }
                                 break;
                             }
@@ -218,8 +218,8 @@ public class MultiAspirationTableCutoffPlayer extends StandardPlayer {
                 }
             }
         } else {
-            if (DEBUG_AB || turn == DEBUG_TURN) {
-                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta-cutoff from stored move%n", getName(), "");
+            if (DEBUG_AB || turn == DEBUG_TURN || DEBUG_BETA) {
+                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBeta-cutoff from stored move %s%n", getName(), "", Board.moveToString(bestMove));
             }
         }
 
