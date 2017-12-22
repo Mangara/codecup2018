@@ -52,8 +52,6 @@ public abstract class Board {
 
     public abstract boolean isGameInEndGame();
 
-    public abstract boolean isLegalMove(int move);
-
     public abstract int getTranspositionTableKey();
 
     public abstract long getHash();
@@ -76,6 +74,7 @@ public abstract class Board {
     public static final int MAX_EVAL = 750001;
     public static final int MIN_EVAL_MOVE = buildMove((byte) 0, (byte) 0, MIN_EVAL);
     public static final int MAX_EVAL_MOVE = buildMove((byte) 0, (byte) 0, MAX_EVAL);
+    public static final int ILLEGAL_MOVE = buildMove((byte) 63, (byte) 0, 0);
 
     public static final byte getMovePos(int move) {
         return (byte) (move & MOVE_POS_MASK);
@@ -112,6 +111,12 @@ public abstract class Board {
     public static final int buildMove(byte pos, byte val, int eval) {
         return (eval << 11) | (val + 15 << 6) | pos;
     }
+    
+    public final boolean isLegalMove(int move) {
+        byte pos = getMovePos(move);
+        byte val = getMoveVal(move);
+        return isValidPos(pos) && isFree(getMovePos(move)) && ((val > 0 && !haveIUsed(val)) || (val < 0 && !hasOppUsed((byte) -val)));
+    }
 
     // Position-related utility methods
     public static final byte getPos(byte a, byte b) {
@@ -145,6 +150,20 @@ public abstract class Board {
 
     public static final String moveToString(int move) {
         return posToString(getMovePos(move)) + '=' + getMoveVal(move);
+    }
+    
+    public static final String movesToString(int[] moves) {
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        
+        for (int i = 0; i < moves.length; i++) {
+            if (i > 0) {
+                sb.append(", ");
+            }
+            sb.append(moveToString(moves[i]));
+        }
+        
+        return sb.append(']').toString();
     }
 
     public static final void print(Board board) {

@@ -266,12 +266,6 @@ public class BitBoard extends Board {
         return freeEdgeCount == 0;
     }
 
-    @Override
-    public boolean isLegalMove(int move) {
-        byte val = getMoveVal(move);
-        return isFree(getMovePos(move)) && ((val > 0 && !haveIUsed(val)) || (val < 0 && !hasOppUsed((byte) -val)));
-    }
-
     private void initializeTranspositionTableValues() {
         key = 0;
         hash = 0;

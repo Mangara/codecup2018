@@ -4,12 +4,15 @@ import codecup2018.data.Board;
 import codecup2018.data.BitBoard;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.IncrementalExpectedValue;
+import codecup2018.evaluator.MedianFree;
 import codecup2018.evaluator.MixedEvaluator;
 import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
 import codecup2018.movegenerator.MaxInfluenceMoves;
+import codecup2018.movegenerator.MostFreeMax;
 import codecup2018.movegenerator.NoHoles;
 import codecup2018.player.MultiAspirationTableCutoffPlayer;
+import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.RankSelectPlayer;
@@ -21,11 +24,13 @@ import java.util.Random;
 
 public class ExplorationConstantExperiment {
 
-    private static final int N_GAMES = 1000;
+    private static final int N_GAMES = 250;
 
     private static List<Integer> initialHeuristicWeight = Arrays.asList(
             //1, 2, 3, 
-            4, 5, 6, 7, 8, 9, 10, 15, 20, 30, 40, 50, 100, 200, 500, 1000, 2000, 5000
+            //4, 5, 6, 7, 8, 9, 10, 15, 20, 30, 
+            40, 50, 100, 200, 500, 1000
+            //, 2000, 5000
     );
 
     private static List<Double> ucbParameter = Arrays.asList(
@@ -50,10 +55,11 @@ public class ExplorationConstantExperiment {
                 UpperConfidenceBoundsPlayer player = new UpperConfidenceBoundsPlayer(String.format("UCB_ME_BSM1_20000_%d_%f", weight, ucb), new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 20000);
 
                 List<Player> opponents = Arrays.<Player>asList(
-                        new RankSelectPlayer("Ranky_MI_0.8", new MaxInfluenceMoves(), 0.8, new Random(256745367354L)),
+                        /*new RankSelectPlayer("Ranky_MI_0.8", new MaxInfluenceMoves(), 0.8, new Random(256745367354L)),
                         new RandomPlayer("Rando", new AllMoves(), new Random(1567245267354L)),
                         new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
-                        new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4)
+                        new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4)*/
+                        new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
                 );
 
                 int[] scores = new int[N_GAMES];

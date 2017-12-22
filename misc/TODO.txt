@@ -20,6 +20,7 @@
 - Do not try the best stored move if it results from a fail low? In this case, many of the subtrees were most likely not explored very deeply (fast beta cutoffs) and the best move is perhaps not very meaningful...
 
 - Store both an upper and lower bound in a transposition table entry?
+- Update transposition table entries when the depth is the same, but the result is better?
 
 - Try null-move pruning: allow a player to pass (if previous move was not a pass). If this already produces a cut-off, any move would have. This is valid so long as a move is always better than no move, which I think is true here. Not quite: if you wait until your opponent has placed all their stones, it is trivial to win. We should only allow null moves when the opponent won't run out of moves before we reach the max depth.
 
@@ -27,6 +28,7 @@
  x https://www.ics.uci.edu/~eppstein/180a/990202b.html
 
 - Implement RAVE / alpha-AMAF for UCB
+ x Perhaps just store the average value for each move?
 - Store the evaluation value in each node and slowly transfer from evaluation -> rave value -> UCB value
 - Only expand a node (generate its possible moves) when it has been hit a certain number of times
 
