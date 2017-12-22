@@ -510,11 +510,6 @@ public class BoardTest {
         }
 
         @Override
-        public boolean isLegalMove(int move) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        }
-
-        @Override
         public int getTranspositionTableKey() {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
