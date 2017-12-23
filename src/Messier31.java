@@ -9,19 +9,19 @@ import java.util.Random;
 public class Messier31 {
 public static void main(String[]args)throws IOException{
 Player.TIMING=true;
-MultiAspirationTableCutoffPlayer.DEBUG_FINAL_VALUE=true;
+KillerMultiAspirationTableCutoffPlayer.DEBUG_FINAL_VALUE=true;
 Player p=getPlayer();
 p.play(new BufferedReader(new InputStreamReader(System.in)),System.out);
 }
 public static Player getPlayer(){
-return new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_6",new IncrementalExpectedValue(),new MaxInfluenceMoves(),6);
+return new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_7",new IncrementalExpectedValue(),new BucketSortMaxMovesOneHole(),7);
 }
 }
 abstract class Board {
 public static final byte BLOCKED=16;
 public static final byte FREE=0;
-protected static final int[]KEY_POSITION_NUMBERS=new int[64*32];
-protected static final long[]HASH_POSITION_NUMBERS=new long[64*32];
+public static final int[]KEY_POSITION_NUMBERS=new int[64*32];
+public static final long[]HASH_POSITION_NUMBERS=new long[64*32];
 static{
 Random rand=new Random(611382272);
 for(int i=0;i<64*32;i++){
@@ -42,16 +42,24 @@ public abstract int getFreeSpotsAround(byte pos);
 public abstract byte[]getFreeSpots();
 public abstract boolean isGameOver();
 public abstract boolean isGameInEndGame();
-public abstract boolean isLegalMove(int move);
 public abstract int getTranspositionTableKey();
 public abstract long getHash();
+public int getFinalScore(){
+if(!isGameOver()){
+System.err.println("getFinalScore called when game is not over.");
+return 0;
+}
+return getHoleValue(getFreeSpots()[0]);
+}
 public static final int MOVE_POS_MASK=(1<<6)-1;
 public static final int MOVE_VAL_MASK=((1<<5)-1)<<6;
 public static final int MOVE_EVAL_MASK=((1<<21)-1)<<11;
+public static final int MOVE_NOT_EVAL_MASK=~MOVE_EVAL_MASK;
 public static final int MIN_EVAL=-750001;
 public static final int MAX_EVAL=750001;
 public static final int MIN_EVAL_MOVE=buildMove((byte)0,(byte)0,MIN_EVAL);
 public static final int MAX_EVAL_MOVE=buildMove((byte)0,(byte)0,MAX_EVAL);
+public static final int ILLEGAL_MOVE=buildMove((byte)63,(byte)0,0);
 public static final byte getMovePos(int move){
 return(byte)(move&MOVE_POS_MASK);
 }
@@ -61,6 +69,9 @@ return(byte)(((move&MOVE_VAL_MASK)>>6)-15);
 public static final int getMoveEval(int move){
 return move>>11;
 }
+public static final boolean equalMoves(int move1,int move2){
+return(move1&MOVE_NOT_EVAL_MASK)==(move2&MOVE_NOT_EVAL_MASK);
+}
 public static final int setMovePos(int move,byte pos){
 return(move&~MOVE_POS_MASK)|pos;
 }
@@ -68,16 +79,24 @@ public static final int setMoveVal(int move,byte val){
 return(move&~MOVE_VAL_MASK)|(val+15<<6);
 }
 public static final int setMoveEval(int move,int eval){
-return(move&~MOVE_EVAL_MASK)|(eval<<11);
+return(move&MOVE_NOT_EVAL_MASK)|(eval<<11);
 }
 public static final int negateEval(int move){
-return(move&~MOVE_EVAL_MASK)|((-(move>>11)<<11)&MOVE_EVAL_MASK);
+return(move&MOVE_NOT_EVAL_MASK)|((-(move>>11)<<11)&MOVE_EVAL_MASK);
 }
 public static final int buildMove(byte pos,byte val,int eval){
 return(eval<<11)|(val+15<<6)|pos;
 }
+public final boolean isLegalMove(int move){
+byte pos=getMovePos(move);
+byte val=getMoveVal(move);
+return isValidPos(pos)&&isFree(getMovePos(move))&&((val>0&&!haveIUsed(val))||(val<0&&!hasOppUsed((byte)-val)));
+}
 public static final byte getPos(byte a,byte b){
 return(byte)(8*a+b);
+}
+public static final boolean isValidPos(int pos){
+return(pos&0b111)+(pos>>>3)<8;
 }
 public static final byte[]getCoordinates(byte pos){
 return new byte[]{(byte)(pos/8),(byte)(pos%8)};
@@ -97,6 +116,17 @@ return buildMove((byte)(8*(move.charAt(0)-'A')+move.charAt(1)-'1'),(byte)Integer
 public static final String moveToString(int move){
 return posToString(getMovePos(move))+'='+getMoveVal(move);
 }
+public static final String movesToString(int[]moves){
+StringBuilder sb=new StringBuilder();
+sb.append('[');
+for(int i=0;i<moves.length;i++){
+if(i>0){
+sb.append(",");
+}
+sb.append(moveToString(moves[i]));
+}
+return sb.append(']').toString();
+}
 public static final void print(Board board){
 for(byte h=0;h<8;h++){
 System.err.printf("%"+(2*(7-h)+1)+"s","");
@@ -110,11 +140,7 @@ System.err.print(value==Board.BLOCKED?"  X":String.format("%3d",value));
 System.err.printf("%"+(2*(7-h)+1)+"s%n","");
 }
 System.err.print("nFree:"+board.getNFreeSpots());
-if(board instanceof BitBoard){
-System.err.println(" freeConnections:"+((BitBoard)board).freeEdgeCount);
-}else{
 System.err.println();
-}
 }
 }
 class BitBoard extends Board {
@@ -241,6 +267,10 @@ return total;
 public void block(byte pos){
 free&=~posMask(pos);
 freeEdgeCount-=getFreeSpotsAround(pos);
+int index=32*pos+FREE+15;
+int newIndex=index-FREE+BLOCKED;
+key^=KEY_POSITION_NUMBERS[index]^KEY_POSITION_NUMBERS[newIndex];
+hash^=HASH_POSITION_NUMBERS[index]^HASH_POSITION_NUMBERS[newIndex];
 }
 @Override
 public void applyMove(int move){
@@ -318,11 +348,6 @@ return getNFreeSpots()==1;
 public boolean isGameInEndGame(){
 return freeEdgeCount==0;
 }
-@Override
-public boolean isLegalMove(int move){
-byte val=getMoveVal(move);
-return isFree(getMovePos(move))&&((val>0&&!haveIUsed(val))||(val<0&&!hasOppUsed(val)));
-}
 private void initializeTranspositionTableValues(){
 key=0;
 hash=0;
@@ -348,6 +373,7 @@ public static boolean TIMING=false;
 public static boolean DEBUG=false;
 protected Board board;
 protected final String name;
+protected int turn;
 public Player(String name){
 this.name=name;
 }
@@ -368,7 +394,7 @@ byte pos=Board.parsePos(in.readLine());
 block(pos);
 }
 if(TIMING){
-System.err.println("Initialization took "+(System.currentTimeMillis()-start)+" ms.");
+System.err.printf("Initialization took%d ms.%n",System.currentTimeMillis()-start);
 }
 for(String input=in.readLine();!(input==null||"Quit".equals(input));input=in.readLine()){
 if(TIMING){
@@ -379,22 +405,25 @@ processMove(Board.parseMove(input),false);
 }
 int move=move();
 if(TIMING){
-System.err.println("Move took "+(System.currentTimeMillis()-start)+" ms.");
+System.err.printf("Move%d took%d ms.%n",turn,System.currentTimeMillis()-start);
 }
 out.println(Board.moveToString(move));
 }
 }
 public void initialize(){
 initialize(new BitBoard());
+turn=1;
 }
 public void initialize(Board currentBoard){
 board=currentBoard;
+turn=Math.max(1,31-currentBoard.getNFreeSpots());
 }
 public void block(byte pos){
 board.block(pos);
 }
 public void processMove(int move,boolean mine){
 board.applyMove(mine?move:Board.setMoveVal(move,(byte)-Board.getMoveVal(move)));
+turn++;
 }
 public int move(){
 int move=selectMove();
@@ -426,6 +455,7 @@ public void processMove(int move,boolean mine){
 int m=(mine?move:Board.setMoveVal(move,(byte)-Board.getMoveVal(move)));
 board.applyMove(m);
 evaluator.applyMove(m);
+turn++;
 }
 }
 class SimpleMaxPlayer extends StandardPlayer {
@@ -452,12 +482,14 @@ bestMove=move;
 return bestMove;
 }
 }
-class MultiAspirationTableCutoffPlayer extends StandardPlayer {
+class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
 public static boolean DEBUG_FINAL_VALUE=false;
 private static final boolean DEBUG_AB=false;
+private static final boolean DEBUG_BETA=false;
 private static final int DEBUG_TURN=-1;
 private final static int INITIAL_WINDOW_SIZE=5000;
 private final static double WINDOW_FACTOR=1.75;
+private final static int NUM_KILLERS=2;
 private final byte maxDepth;
 private final Evaluator endgameEvaluator=new MedianFree();
 private final Player endgamePlayer=new SimpleMaxPlayer("Expy",new ExpectedValue(),new AllMoves());
@@ -466,10 +498,14 @@ private final static int TABLE_SIZE=1<<TABLE_SIZE_POWER;
 private final static int TABLE_KEY_MASK=TABLE_SIZE-1;
 private final TranspositionEntry[]transpositionTable=new TranspositionEntry[TABLE_SIZE];
 private int prevScore=0;
-private byte turn=1;
-public MultiAspirationTableCutoffPlayer(String name,Evaluator evaluator,MoveGenerator generator,int depth){
+private final int[][]killerMoves;
+public KillerMultiAspirationTableCutoffPlayer(String name,Evaluator evaluator,MoveGenerator generator,int depth){
 super(name,evaluator,generator);
 this.maxDepth=(byte)depth;
+killerMoves=new int[maxDepth+2][NUM_KILLERS];
+for(int[]killers:killerMoves){
+Arrays.fill(killers,Board.ILLEGAL_MOVE);
+}
 }
 @Override
 public void initialize(Board currentBoard){
@@ -521,7 +557,14 @@ if(DEBUG_AB||DEBUG_FINAL_VALUE){
 System.err.println("Turn "+turn+" final:"+eval);
 }
 prevScore=eval;
-turn++;
+for(int i=killerMoves.length-1;i>=0;i--){
+if(i>1){
+killerMoves[i]=killerMoves[i-2];
+}else{
+killerMoves[i]=new int[NUM_KILLERS];
+Arrays.fill(killerMoves[i],Board.ILLEGAL_MOVE);
+}
+}
 return move;
 }
 private int negamax(byte player,byte depth,int alpha,int beta){
@@ -529,7 +572,7 @@ if(depth==0||board.isGameOver()){
 return Board.buildMove((byte)0,(byte)0,player*evaluator.evaluate(board));
 }
 if(board.isGameInEndGame()){
-return Board.buildMove((byte)0,(byte)0,player*endgameEvaluator.evaluate(board));
+return Board.buildMove((byte)0,(byte)0,player*(endgameEvaluator.evaluate(board)+evaluator.evaluate(board)/100));
 }
 if(DEBUG_AB||turn==DEBUG_TURN){
 System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sRunning negamax with%d plies left,interval=[%d,%d]and board state:%n",getName(),"",depth,alpha,beta);
@@ -547,42 +590,53 @@ if(entry.depthSearched>=depth){
 switch(entry.type){
 case TranspositionEntry.EXACT:
 if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1))+"sExact transposition table result:%d%n",getName(),"",entryEval);
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sExact transposition table result:%d%n",getName(),"",entryEval);
 }
 return entry.bestMove;
 case TranspositionEntry.LOWER_BOUND:
 if(entryEval>=beta){
 if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1))+"sLower bound transposition table result:%d%n",getName(),"",entryEval);
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sLower bound transposition table result:%d%n",getName(),"",entryEval);
 }
 return entry.bestMove;
+}
+if(DEBUG_AB||turn==DEBUG_TURN){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sInitializing alpha from transposition table result:%d%n",getName(),"",entryEval);
 }
 myAlpha=Math.max(myAlpha,entryEval);
 break;
 case TranspositionEntry.UPPER_BOUND:
 if(entryEval<=alpha){
 if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1))+"sUpper bound transposition table result:%d%n",getName(),"",entryEval);
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sUpper bound transposition table result:%d%n",getName(),"",entryEval);
 }
 return entry.bestMove;
+}
+if(DEBUG_AB||turn==DEBUG_TURN){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sInitializing beta from transposition table result:%d%n",getName(),"",entryEval);
 }
 myBeta=Math.min(myBeta,entryEval);
 break;
 }
 }
+if(depth==1){
+bestMove=entry.bestMove;
+bestEval=entryEval;
+}else{
 bestMove=evaluateMove(entry.bestMove,player,depth,myAlpha,myBeta);
 bestEval=Board.getMoveEval(bestMove);
 if(bestEval>myAlpha){
 myAlpha=bestEval;
 }
 }
-if(myAlpha<myBeta){
-int[]moves=generator.generateMoves(board,player>0);
-for(int move:moves){
-if(tableMatch&&Board.getMovePos(move)==Board.getMovePos(entry.bestMove)&&Board.getMoveVal(move)==Board.getMoveVal(entry.bestMove)){
-continue;
 }
+if(myAlpha<myBeta){
+for(int move:killerMoves[depth]){
+if(board.isLegalMove(move)&&!(tableMatch&&Board.equalMoves(move,entry.bestMove))){
 move=evaluateMove(move,player,depth,myAlpha,myBeta);
+if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBefore processing killer move:bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n",getName(),"",Board.moveToString(bestMove),bestEval,myAlpha,myBeta);
+}
 if(move>bestMove){
 int eval=Board.getMoveEval(move);
 if(eval>bestEval){
@@ -591,18 +645,56 @@ bestEval=eval;
 if(eval>myAlpha){
 myAlpha=eval;
 if(myBeta<=myAlpha){
-if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta cut-off%n",getName(),"");
+if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta-cutoff from killer move%s%n",getName(),"",Board.moveToString(bestMove));
 }
+updateKillerMoves(depth,bestMove);
 break;
 }
 }
 }
 }
+if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sAfter processing killer move:bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n",getName(),"",Board.moveToString(bestMove),bestEval,myAlpha,myBeta);
+}
+}
 }
 }else{
-if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta-cutoff from stored move%n",getName(),"");
+if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta-cutoff from stored move%s%n",getName(),"",Board.moveToString(bestMove));
+}
+updateKillerMoves(depth,bestMove);
+}
+if(myAlpha<myBeta){
+int[]moves=generator.generateMoves(board,player>0);
+for(int move:moves){
+if((tableMatch&&Board.equalMoves(move,entry.bestMove))||matchesKiller(move,depth)){
+continue;
+}
+move=evaluateMove(move,player,depth,myAlpha,myBeta);
+if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBefore processing move:bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n",getName(),"",Board.moveToString(bestMove),bestEval,myAlpha,myBeta);
+}
+if(move>bestMove){
+int eval=Board.getMoveEval(move);
+if(eval>bestEval){
+bestMove=move;
+bestEval=eval;
+if(eval>myAlpha){
+myAlpha=eval;
+if(myBeta<=myAlpha){
+if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta cut-off from move%s%n",getName(),"",Board.moveToString(bestMove));
+}
+updateKillerMoves(depth,bestMove);
+break;
+}
+}
+}
+}
+if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sAfter processing move:bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n",getName(),"",Board.moveToString(bestMove),bestEval,myAlpha,myBeta);
+}
 }
 }
 if(entry==null){
@@ -614,7 +706,10 @@ entry.hash=board.getHash();
 entry.bestMove=bestMove;
 entry.depthSearched=depth;
 entry.type=(bestEval>alpha?(bestEval<beta?TranspositionEntry.EXACT:TranspositionEntry.LOWER_BOUND):TranspositionEntry.UPPER_BOUND);
-entry.turn=turn;
+entry.turn=(byte)turn;
+}else if(tableMatch&&entry.depthSearched==depth){
+entry.bestMove=bestMove;
+entry.type=(bestEval>alpha?(bestEval<beta?TranspositionEntry.EXACT:TranspositionEntry.LOWER_BOUND):TranspositionEntry.UPPER_BOUND);
 }
 return bestMove;
 }
@@ -624,13 +719,52 @@ System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sEvaluating move%s%n",getName
 }
 board.applyMove(move);
 evaluator.applyMove(move);
-move=Board.setMoveEval(move,-Board.getMoveEval(negamax((byte)-player,(byte)(depth-1),-beta,-alpha)));
+int result=Board.setMoveEval(move,-Board.getMoveEval(negamax((byte)-player,(byte)(depth-1),-beta,-alpha)));
 board.undoMove(move);
 evaluator.undoMove(move);
 if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sGot back a score of%d%n",getName(),"",Board.getMoveEval(move));
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sGot back a score of%d%n",getName(),"",Board.getMoveEval(result));
 }
-return move;
+return result;
+}
+private void updateKillerMoves(byte depth,int move){
+if(DEBUG_AB||turn==DEBUG_TURN){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sUpdating killer moves with new move%s. Old:%s",getName(),"",Board.moveToString(move),killersToString());
+}
+int[]killers=killerMoves[depth];
+for(int i=0;i<NUM_KILLERS;i++){
+if(Board.equalMoves(killers[0],move)){
+break;
+}
+int temp=killers[i];
+killers[i]=move;
+move=temp;
+}
+if(DEBUG_AB||turn==DEBUG_TURN){
+System.err.printf(" New:%s%n",killersToString());
+}
+}
+private String killersToString(){
+StringBuilder sb=new StringBuilder();
+for(int i=0;i<killerMoves.length;i++){
+sb.append(' ').append(Integer.toString(i)).append(":[");
+for(int j=0;j<killerMoves[0].length;j++){
+if(j>0){
+sb.append(',');
+}
+sb.append(Board.moveToString(killerMoves[i][j]));
+}
+sb.append(']');
+}
+return sb.toString();
+}
+private boolean matchesKiller(int move,byte depth){
+for(int i=0;i<NUM_KILLERS;i++){
+if(Board.equalMoves(move,killerMoves[depth][i])){
+return true;
+}
+}
+return false;
 }
 private class TranspositionEntry{
 static final byte EXACT=3,LOWER_BOUND=4,UPPER_BOUND=5;
@@ -825,21 +959,71 @@ freeValues.add(player1?v:(byte)-v);
 return freeValues;
 }
 }
-class MaxInfluenceMoves implements MoveGenerator {
+class BucketSortMaxMovesOneHole implements MoveGenerator {
+private final int[][]freeSorted=new int[7][31];
 @Override
 public int[]generateMoves(final Board board,boolean player1){
-byte v=getMaxValueLeft(board,player1);
+byte max=getMaxValueLeft(board,player1);
+byte min=getMinValueLeft(board,player1);
 byte[]free=board.getFreeSpots();
-int[]moves=new int[free.length];
+byte[]index=new byte[7];
 for(int i=0;i<free.length;i++){
 byte pos=free[i];
-moves[i]=Board.buildMove(pos,v,-board.getFreeSpotsAround(pos));
+int freeAround=board.getFreeSpotsAround(pos);
+freeSorted[freeAround][index[freeAround]++]=Board.buildMove(pos,max,0);
 }
-Arrays.sort(moves);
+int[]moves=new int[free.length-(index[0]>1?index[0]-1:0)];
+int movesIndex=0;
+for(int i=6;i>0;i--){
+System.arraycopy(freeSorted[i],0,moves,movesIndex,index[i]);
+movesIndex+=index[i];
+}
+if(index[0]>1){
+int worstHoleValue=76;
+int worstHole=0;
+for(int i=0;i<index[0];i++){
+int hole=freeSorted[0][i];
+int holeValue=board.getHoleValue(Board.getMovePos(hole));
+if(!player1){
+holeValue*=-1;
+}
+if(holeValue<worstHoleValue){
+worstHoleValue=holeValue;
+worstHole=hole;
+}
+}
+moves[movesIndex]=Board.setMoveVal(worstHole,min);
+}else if(index[0]==1){
+moves[movesIndex]=Board.setMoveVal(freeSorted[0][0],min);
+}
 return moves;
 }
 private byte getMaxValueLeft(Board board,boolean player1){
 for(byte v=15;v>0;v--){
+if(player1){
+if(!board.haveIUsed(v)){
+return v;
+}
+}else{
+if(!board.hasOppUsed(v)){
+return(byte)-v;
+}
+}
+}
+System.err.println("ERROR:No value left for active player.");
+Board.print(board);
+for(int i=15;i>=1;i--){
+System.err.printf("%6d",i);
+}
+System.err.println();
+for(byte i=15;i>=1;i--){
+System.err.printf("%6b",player1?board.haveIUsed(i):board.hasOppUsed(i));
+}
+System.err.println();
+throw new IllegalArgumentException();
+}
+private byte getMinValueLeft(Board board,boolean player1){
+for(byte v=1;v<=15;v++){
 if(player1){
 if(!board.haveIUsed(v)){
 return v;

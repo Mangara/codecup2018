@@ -10,16 +10,16 @@ import java.util.Arrays;
 
 public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
 
-    public static boolean DEBUG_FINAL_VALUE = true;
-    private static final boolean DEBUG_AB = true;
-    private static final boolean DEBUG_BETA = true;
+    public static boolean DEBUG_FINAL_VALUE = false;
+    private static final boolean DEBUG_AB = false;
+    private static final boolean DEBUG_BETA = false;
     private static final int DEBUG_TURN = -1;
 
     private final static int INITIAL_WINDOW_SIZE = 5000;
     private final static double WINDOW_FACTOR = 1.75;
+    private final static int NUM_KILLERS = 2;
 
     private final byte maxDepth;
-    private final int numKillers;
     private final Evaluator endgameEvaluator = new MedianFree();
     private final Player endgamePlayer = new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves());
 
@@ -32,11 +32,10 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
 
     private final int[][] killerMoves;
 
-    public KillerMultiAspirationTableCutoffPlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth, int numKillers) {
+    public KillerMultiAspirationTableCutoffPlayer(String name, Evaluator evaluator, MoveGenerator generator, int depth) {
         super(name, evaluator, generator);
         this.maxDepth = (byte) depth;
-        this.numKillers = numKillers;
-        killerMoves = new int[maxDepth + 2][numKillers];
+        killerMoves = new int[maxDepth + 2][NUM_KILLERS];
         for (int[] killers : killerMoves) {
             Arrays.fill(killers, Board.ILLEGAL_MOVE);
         }
@@ -113,7 +112,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
             if (i > 1) {
                 killerMoves[i] = killerMoves[i - 2];
             } else {
-                killerMoves[i] = new int[numKillers];
+                killerMoves[i] = new int[NUM_KILLERS];
                 Arrays.fill(killerMoves[i], Board.ILLEGAL_MOVE);
             }
         }
@@ -357,7 +356,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
 
         int[] killers = killerMoves[depth];
 
-        for (int i = 0; i < numKillers; i++) {
+        for (int i = 0; i < NUM_KILLERS; i++) {
             if (Board.equalMoves(killers[0], move)) {
                 break; // return
             }
@@ -391,7 +390,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
     }
 
     private boolean matchesKiller(int move, byte depth) {
-        for (int i = 0; i < numKillers; i++) {
+        for (int i = 0; i < NUM_KILLERS; i++) {
             if (Board.equalMoves(move, killerMoves[depth][i])) {
                 return true;
             }

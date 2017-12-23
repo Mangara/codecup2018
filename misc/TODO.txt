@@ -12,8 +12,6 @@
 
 - Implement iterative deepening. This will directly translate speed improvements into quality improvements. Use different aspiration windows for the first call (which uses the previous move value) and subsequent ones (which use the previous iteration value).
 
-- Implement killer move heuristic: keep track of moves that cause beta cutoffs and try them first. Possibly per-ply? First perhaps just print moves that cause beta-cutoffs to get a sense of what they look like.
-
 - Look into clock management
  x For a bunch of random games, (and my games on the server?), figure out how much time I needed to search each move to a fixed depth. Assign clock time proportional to this.
 
@@ -98,7 +96,7 @@ X Make a CachingBoard that:
 X When generating moves, only include the worst hole. 
 X In endgame evaluation, add standard evaluation/100.
 X Make a UCB player
-
+X Implement killer move heuristic: keep track of moves that cause beta cutoffs and try them first. Possibly per-ply? First perhaps just print moves that cause beta-cutoffs to get a sense of what they look like.
 
 === WONTFIX
 

@@ -24,15 +24,14 @@ public class SubmissionPackager {
                 Paths.get("src", "codecup2018", "player", "Player.java"),
                 Paths.get("src", "codecup2018", "player", "StandardPlayer.java"),
                 Paths.get("src", "codecup2018", "player", "SimpleMaxPlayer.java"),
-                Paths.get("src", "codecup2018", "player", "MultiAspirationTableCutoffPlayer.java"),
+                Paths.get("src", "codecup2018", "player", "KillerMultiAspirationTableCutoffPlayer.java"),
                 Paths.get("src", "codecup2018", "evaluator", "Evaluator.java"),
                 Paths.get("src", "codecup2018", "evaluator", "ExpectedValue.java"),
                 Paths.get("src", "codecup2018", "evaluator", "MedianFree.java"),
                 Paths.get("src", "codecup2018", "evaluator", "IncrementalExpectedValue.java"),
                 Paths.get("src", "codecup2018", "movegenerator", "MoveGenerator.java"),
                 Paths.get("src", "codecup2018", "movegenerator", "AllMoves.java"),
-                //Paths.get("src", "codecup2018", "movegenerator", "MostFreeMax.java"),
-                Paths.get("src", "codecup2018", "movegenerator", "MaxInfluenceMoves.java"),
+                Paths.get("src", "codecup2018", "movegenerator", "BucketSortMaxMovesOneHole.java"),
                 mainClass
         );
         Path outputFile = Paths.get("src", "Messier31.java");
@@ -173,6 +172,6 @@ public class SubmissionPackager {
     }
 
     private String pack(String line) {
-        return line.replaceAll("//.*$", "").replaceAll("([\\(\\)\\{\\}\\[\\],+\\-/%*=?:;<>|\\&\\^!]) ", "$1").replaceAll(" ([\\(\\)\\{\\}\\[\\],+\\-/%*=?:;<>|\\&\\^!])", "$1").trim();
+        return line.replaceAll("//.*$", "").replaceAll("([\\(\\)\\{\\}\\[\\],+\\-/%*=?:;<>|\\&\\^!]) ", "$1").replaceAll(" ([\\(\\)\\{\\}\\[\\],+\\-/*=?:;<>|\\&\\^!])", "$1").trim();
     }
 }

@@ -11,8 +11,8 @@ import java.util.List;
 
 public class UpperConfidenceBoundsPlayer extends StandardPlayer {
 
-    public static double UCB_PARAMETER = 2;
-    public static int INITIAL_HEURISTIC_WEIGHT = 10;
+    public static double UCB_PARAMETER = 0.1;
+    public static int INITIAL_HEURISTIC_WEIGHT = 200;
     private static final boolean DEBUG_UCB = false;
     private final int expansions;
     private final GameTreeNode[] lineOfPlay = new GameTreeNode[31];
