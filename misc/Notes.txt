@@ -21,6 +21,8 @@ Name: Messier31 (black hole at the center of the Andromeda galaxy)
 - For 2-holes, we can compute the smallest number needed to 'flip' the current winner.
 
 - Playing a move is always better than passing (not playing anything). This means that null-move pruning should work well and not introduce any search instability. It also implies a 1st player advantage.
+ x Not true at all. In the extreme case, if the opponent plays all their pieces and then you play all your pieces, you win easily.
+ x In the mid-game this expresses itself as filling a hole: this essentially 'passes' the turn in the other components by playing a move that could have been postponed to the end of the game first. This allows you to react to the opponent's moves instead of them reacting to you.
 
 When playing randomly:
 - The order of playing numbers does not matter
@@ -40,3 +42,5 @@ This means that a result of alpha or beta, by itself, is never enough.
 - There are (36 choose 5) = 376992 possible boards. It may be possible to pre-compute a good first move for all of these.
 
 - I expect each TranspositionEntry to take 24 bytes (8 (class) + 8 (long) + 1 (byte) + 4 (int) + 1 (byte) + 1 (byte) = 23 => (alignment) 24 bytes). If that is correct, I could use 20-22 bit keys to store ~1-4 million entries in 24-96 MB.
+
+- Result from UCB parameter tests: for non-RAVE version with heuristic seeding, UCB parameter 0.1 and initial heuristic weight 200 is a good trade-off.

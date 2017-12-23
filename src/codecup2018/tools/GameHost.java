@@ -29,7 +29,7 @@ public class GameHost {
         //Player p1 = new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles());
         
         //Player p1 = new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_5000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 50000);
-        Player p1 = new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4, 5);
+        Player p1 = new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4);
         Player p2 = new RandomPlayer("Rando", new AllMoves());
         
         

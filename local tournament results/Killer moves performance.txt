@@ -1,0 +1,47 @@
+Player: MAsTC_IEV_BSM1_6
+Average evaluations: 2537343
+Quartiles: 1757629 - 2242216 - 2498201 - 2808415 - 4072580
+Average time (ms): 356.342
+Quartiles: 216.614 - 308.885 - 349.848 - 399.363 - 571.281
+
+Player: KMAsTC_IEV_BSM1_6_0
+Average evaluations: 2507312
+Quartiles: 1740567 - 2214996 - 2477981 - 2784998 - 3914879
+Average time (ms): 323.237
+Quartiles: 196.083 - 273.958 - 316.203 - 365.926 - 538.475
+
+Player: KMAsTC_IEV_BSM1_6_1
+Average evaluations: 2071582
+Quartiles: 1582628 - 1859775 - 2073531 - 2283816 - 2508233
+Average time (ms): 247.437
+Quartiles: 171.902 - 218.068 - 250.214 - 270.565 - 458.848
+
+Player: KMAsTC_IEV_BSM1_6_2
+Average evaluations: 2059651
+Quartiles: 1606503 - 1846103 - 2070551 - 2266502 - 2492816
+Average time (ms): 240.212
+Quartiles: 161.360 - 215.105 - 240.886 - 264.837 - 333.306
+
+Player: KMAsTC_IEV_BSM1_6_3
+Average evaluations: 2103575
+Quartiles: 1651932 - 1884930 - 2114426 - 2313908 - 2607149
+Average time (ms): 247.982
+Quartiles: 171.544 - 219.652 - 249.562 - 270.208 - 357.352
+
+Player: KMAsTC_IEV_BSM1_6_4
+Average evaluations: 2141494
+Quartiles: 1676882 - 1922983 - 2126358 - 2360656 - 2684590
+Average time (ms): 253.646
+Quartiles: 172.956 - 229.188 - 254.141 - 278.639 - 374.612
+
+Player: KMAsTC_IEV_BSM1_6_5
+Average evaluations: 2202596
+Quartiles: 1703624 - 1983093 - 2209439 - 2404039 - 2728938
+Average time (ms): 255.827
+Quartiles: 177.387 - 228.736 - 254.772 - 282.876 - 429.797
+
+Player: KMAsTC_IEV_BSM1_6_6
+Average evaluations: 2250169
+Quartiles: 1718595 - 2047041 - 2251457 - 2466979 - 2802089
+Average time (ms): 265.452
+Quartiles: 185.944 - 237.194 - 265.062 - 294.590 - 358.849
