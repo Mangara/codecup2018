@@ -66,33 +66,29 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
         boolean failHigh = false;
 
         while (true) {
-            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+            if (DEBUG_AB || DEBUG_FINAL_VALUE || turn == DEBUG_TURN) {
                 System.err.printf("Searching [%d, %d]", alpha, beta);
             }
 
             move = negamax((byte) 1, (byte) (maxDepth + 1), alpha, beta);
             eval = Board.getMoveEval(move);
 
-            if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+            if (DEBUG_AB || DEBUG_FINAL_VALUE || turn == DEBUG_TURN) {
                 System.err.printf(" => %d%n", eval);
             }
 
             if (eval <= alpha) { // Fail low
                 failLow = true;
-
-                beta = eval + 1;
-                alpha = beta - window;
+                alpha = eval - window;
             } else if (eval >= beta) { // Fail high
                 failHigh = true;
-
-                alpha = eval - 1;
-                beta = alpha + window;
+                beta = eval + window;
             } else {
                 break;
             }
 
             if (failLow && failHigh) {
-                System.err.println("Search is unstable");
+                System.err.println("Search is unstable on turn " + turn);
                 move = negamax((byte) 1, (byte) (maxDepth + 1), Board.MIN_EVAL, Board.MAX_EVAL);
                 eval = Board.getMoveEval(move);
                 break;
@@ -101,7 +97,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
             window *= WINDOW_FACTOR;
         }
 
-        if (DEBUG_AB || DEBUG_FINAL_VALUE) {
+        if (DEBUG_AB || DEBUG_FINAL_VALUE || turn == DEBUG_TURN) {
             System.err.println("Turn " + turn + " final: " + eval);
         }
 
@@ -145,7 +141,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
 
         if (tableMatch) {
             int entryEval = Board.getMoveEval(entry.bestMove);
-            
+
             // Return the stored evaluation if it matches what we're looking for
             if (entry.depthSearched >= depth) {
                 switch (entry.type) {
@@ -184,9 +180,17 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
             if (depth == 1) { // At depth 1, the move will return the same result as last time, regardless of alpha and beta
                 bestMove = entry.bestMove;
                 bestEval = entryEval;
-            } else { 
+
+                if (DEBUG_AB || turn == DEBUG_TURN) {
+                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sInitializing best move from transposition table: %s => %d%n", getName(), "", Board.moveToString(bestMove), bestEval);
+                }
+                
+                if (bestEval > myAlpha) {
+                    myAlpha = bestEval;
+                }
+            } else {
                 // Try the stored best move first
-                bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, myBeta);
+                bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, myBeta, " stored");
                 /*///PROFILING
                 int move = entry.bestMove;
                 board.applyMove(move);
@@ -209,7 +213,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
         if (myAlpha < myBeta) {
             for (int move : killerMoves[depth]) {
                 if (board.isLegalMove(move) && !(tableMatch && Board.equalMoves(move, entry.bestMove))) {
-                    move = evaluateMove(move, player, depth, myAlpha, myBeta);
+                    move = evaluateMove(move, player, depth, myAlpha, myBeta, " killer");
 
                     /*///PROFILING
                     board.applyMove(move);
@@ -221,7 +225,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
                     evaluator.undoMove(move);
                     //*/
                     if (DEBUG_AB || turn == DEBUG_TURN || DEBUG_BETA) {
-                        System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBefore processing killer move: bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n", getName(), "", Board.moveToString(bestMove), bestEval, myAlpha, myBeta);
+                        //System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBefore processing killer move: bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n", getName(), "", Board.moveToString(bestMove), bestEval, myAlpha, myBeta);
                     }
 
                     if (move > bestMove) {
@@ -247,7 +251,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
                     }
 
                     if (DEBUG_AB || turn == DEBUG_TURN || DEBUG_BETA) {
-                        System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sAfter processing killer move: bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n", getName(), "", Board.moveToString(bestMove), bestEval, myAlpha, myBeta);
+                        //System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sAfter processing killer move: bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n", getName(), "", Board.moveToString(bestMove), bestEval, myAlpha, myBeta);
                     }
                 }
             }
@@ -266,7 +270,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
                     continue; // We already tried this one
                 }
 
-                move = evaluateMove(move, player, depth, myAlpha, myBeta);
+                move = evaluateMove(move, player, depth, myAlpha, myBeta, "");
                 /*///PROFILING
                 board.applyMove(move);
                 evaluator.applyMove(move);
@@ -278,7 +282,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
                 //*/
 
                 if (DEBUG_AB || turn == DEBUG_TURN || DEBUG_BETA) {
-                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBefore processing move: bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n", getName(), "", Board.moveToString(bestMove), bestEval, myAlpha, myBeta);
+                    //System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sBefore processing move: bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n", getName(), "", Board.moveToString(bestMove), bestEval, myAlpha, myBeta);
                 }
 
                 if (move > bestMove) {
@@ -303,7 +307,7 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
                 }
 
                 if (DEBUG_AB || turn == DEBUG_TURN || DEBUG_BETA) {
-                    System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sAfter processing move: bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n", getName(), "", Board.moveToString(bestMove), bestEval, myAlpha, myBeta);
+                    //System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sAfter processing move: bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n", getName(), "", Board.moveToString(bestMove), bestEval, myAlpha, myBeta);
                 }
             }
         }
@@ -329,9 +333,13 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
         return bestMove;
     }
 
-    private int evaluateMove(int move, byte player, byte depth, int alpha, int beta) {
+    private int evaluateMove(int move, byte player, byte depth, int alpha, int beta, String type) {
         if (DEBUG_AB || turn == DEBUG_TURN) {
-            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sEvaluating move %s%n", getName(), "", Board.moveToString(move));
+            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sEvaluating%s move %s", getName(), "", type, Board.moveToString(move));
+
+            if (depth > 1) {
+                System.err.println();
+            }
         }
 
         board.applyMove(move);
@@ -343,7 +351,11 @@ public class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
         evaluator.undoMove(move);
 
         if (DEBUG_AB || turn == DEBUG_TURN) {
-            System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sGot back a score of %d%n", getName(), "", Board.getMoveEval(result));
+            if (depth > 1) {
+                System.err.printf("%s:%" + (2 * (maxDepth - depth + 1) + 1) + "sGot back a score of %d%n", getName(), "", Board.getMoveEval(result));
+            } else {
+                System.err.printf(" => %d%n", Board.getMoveEval(result));
+            }
         }
 
         return result;
