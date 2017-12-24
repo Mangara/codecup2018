@@ -2,12 +2,13 @@ package codecup2018.tools;
 
 import codecup2018.data.Board;
 import codecup2018.data.BitBoard;
+import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.IncrementalExpectedValue;
-import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
+import codecup2018.movegenerator.NoHoles;
 import codecup2018.player.KillerMultiAspirationTableCutoffPlayer;
 import codecup2018.player.Player;
-import codecup2018.player.RandomPlayer;
+import codecup2018.player.SimpleMaxPlayer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -29,8 +30,9 @@ public class GameHost {
         //Player p1 = new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles());
         
         //Player p1 = new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_5000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 50000);
-        Player p1 = new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4);
-        Player p2 = new RandomPlayer("Rando", new AllMoves());
+        //Player p1 = new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4);
+        //Player p2 = new RandomPlayer("Rando", new AllMoves());
+        //Player p2 = new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles());
         
         
         
@@ -44,7 +46,16 @@ public class GameHost {
         //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationTablePlayer("AsT_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3), false);
         //GameHost.runGameThreaded(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4));
         
-        GameHost.runGame(p1, p2, false);
+        //GameHost.runGame(p1, p2, false);
+        
+        //while (true) {
+            long seed = -4501800762309174636L;//rand.nextLong();
+            setRandom(new Random(seed));
+            System.err.println("Seed: " + seed);
+            Player p1 = new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4);
+            Player p2 = new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles());
+            GameHost.runGame(p1, p2, true);
+        //}
     }
 
     public static void setRandom(Random rand) {

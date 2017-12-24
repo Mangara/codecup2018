@@ -57,7 +57,7 @@ public abstract class Player {
             int move = move();
 
             if (TIMING) {
-                System.err.printf("Move %d took %d ms.%n", turn, System.currentTimeMillis() - start);
+                System.err.printf("Move %d took %d ms.%n", turn - 1, System.currentTimeMillis() - start);
             }
 
             out.println(Board.moveToString(move));

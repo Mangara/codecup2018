@@ -47,7 +47,8 @@ public class RandomGamePerformanceTest {
             //new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_50000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 50000)
             new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
             new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5),
-            new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_LM_6", new IncrementalExpectedValue(), new LikelyMoves(), 6)
+            new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_LM_6", new IncrementalExpectedValue(), new LikelyMoves(), 6),
+            new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_7", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 7)
     );
 
     @Test
