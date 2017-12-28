@@ -17,13 +17,13 @@ public abstract class StandardPlayer extends Player {
 
     @Override
     public void initialize(Board currentBoard) {
-        board = currentBoard;
+        super.initialize(currentBoard);
         evaluator.initialize(currentBoard);
     }
 
     @Override
     public void block(byte pos) {
-        board.block(pos);
+        super.block(pos);
         evaluator.block(pos);
     }
 

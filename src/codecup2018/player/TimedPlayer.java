@@ -24,9 +24,9 @@ public abstract class TimedPlayer extends StandardPlayer {
     protected int selectMove() {
         controller.startMove();
         int time = controller.getMillisecondsForMove(turn);
-        //if (TIMING) {
+        if (TIMING) {
             System.err.printf("%d ms for this move.%n", time);
-        //}
+        }
         int move = selectMove(time);
         controller.endMove();
         return move;

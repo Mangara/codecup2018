@@ -22,12 +22,11 @@ public abstract class TimeController {
     public void endMove() {
         int duration = (int) Math.ceil((System.nanoTime() - moveStartTime) / 1000000.0);
         timeRemainingMilliseconds -= duration;
-        System.err.printf("That move took %d ms.%n", duration);
     }
     
     public abstract int getMillisecondsForMove(int turn);
     
     protected int getTurnsRemaining(int turn) {
-        return 15 - turn / 2;
+        return 15 - (turn - 1) / 2;
     }
 }
