@@ -107,6 +107,10 @@ public abstract class Board {
     public static final int negateEval(int move) {
         return (move & MOVE_NOT_EVAL_MASK) | ((-(move >> 11) << 11) & MOVE_EVAL_MASK);
     }
+    
+    public static final int clearEval(int move) {
+        return move & MOVE_NOT_EVAL_MASK;
+    }
 
     public static final int buildMove(byte pos, byte val, int eval) {
         return (eval << 11) | (val + 15 << 6) | pos;

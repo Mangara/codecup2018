@@ -16,6 +16,7 @@ import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.RankSelectPlayer;
+import codecup2018.player.RaveUCBPlayer;
 import codecup2018.player.SimpleMaxPlayer;
 import codecup2018.player.UpperConfidenceBoundsPlayer;
 import java.util.Arrays;
@@ -24,20 +25,19 @@ import java.util.Random;
 
 public class ExplorationConstantExperiment {
 
-    private static final int N_GAMES = 250;
+    private static final int N_GAMES = 400;
 
     private static List<Integer> initialHeuristicWeight = Arrays.asList(
-            //1, 2, 3, 
-            //4, 5, 6, 7, 8, 9, 10, 15, 20, 30, 
-            40, 50, 100, 200, 500, 1000
-            //, 2000, 5000
+            //10, 25, 
+            50, 75, 100
     );
 
+    private static List<Integer> moveAverageWeight = Arrays.asList(
+            10, 25, 50, 75, 100, 250, 500, 750, 1000
+    );
+    
     private static List<Double> ucbParameter = Arrays.asList(
-            0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9,
-            1.0, 1.1, 1.2, 1.5, 1.75, 2.0,
-            2.25, 2.5, 2.75, 3.0, 3.5, 4.0,
-            4.5, 5.0
+            0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1.0
     );
 
     public void runTest() throws NoSuchFieldException, IllegalAccessException {
@@ -49,17 +49,18 @@ public class ExplorationConstantExperiment {
                 + "Average score vs 3,Min score vs 3,1st Quartile score vs 3,Median score vs 3,3rd Quartile score vs 3,Max score vs 3,"
                 + "Average score vs 4,Min score vs 4,1st Quartile score vs 4,Median score vs 4,3rd Quartile score vs 4,Max score vs 4");
         for (Integer weight : initialHeuristicWeight) {
+            for (Integer weight2 : moveAverageWeight) {
             for (Double ucb : ucbParameter) {
-                UpperConfidenceBoundsPlayer.INITIAL_HEURISTIC_WEIGHT = weight;
-                UpperConfidenceBoundsPlayer.UCB_PARAMETER = ucb;
-                UpperConfidenceBoundsPlayer player = new UpperConfidenceBoundsPlayer(String.format("UCB_ME_BSM1_20000_%d_%f", weight, ucb), new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 20000);
+                RaveUCBPlayer.HEURISTIC_WEIGHT = weight;
+                RaveUCBPlayer.MOVE_AVERAGE_WEIGHT = weight2;
+                RaveUCBPlayer.UCB_PARAMETER = ucb;
+                RaveUCBPlayer player = new RaveUCBPlayer(String.format("Rave_Mix_BSM1_20000_%d_%d_%f", weight, weight2, ucb), new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 20000);
 
                 List<Player> opponents = Arrays.<Player>asList(
-                        /*new RankSelectPlayer("Ranky_MI_0.8", new MaxInfluenceMoves(), 0.8, new Random(256745367354L)),
                         new RandomPlayer("Rando", new AllMoves(), new Random(1567245267354L)),
                         new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
-                        new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4)*/
-                        new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)
+                        new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10),
+                        new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4)
                 );
 
                 int[] scores = new int[N_GAMES];
@@ -165,6 +166,7 @@ public class ExplorationConstantExperiment {
                         System.out.println();
                     }
                 }
+            }
             }
         }
     }
