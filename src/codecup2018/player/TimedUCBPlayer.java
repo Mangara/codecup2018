@@ -45,10 +45,10 @@ public class TimedUCBPlayer extends TimedPlayer {
         lineOfPlay[0] = root;
         long nsToMove = 1000000 * (long) millisecondsToMove;
         int iterationsUntilMeasurement = ITERATIONS_PER_MEASUREMENT;
-        int totalIterations = 0;
+        //int totalIterations = 0;
 
         while (iterationsUntilMeasurement > 0 || System.nanoTime()- start < nsToMove) {
-            totalIterations++;
+            //totalIterations++;
             navigateTree();
             
             if (DEBUG_UCB) {
@@ -84,7 +84,7 @@ public class TimedUCBPlayer extends TimedPlayer {
             System.err.println("Root moves: " + Arrays.toString(root.moves));
         }
         
-        System.err.printf("%d iterations in %d ms. Average iterations per ms: %d.%n", totalIterations, (System.nanoTime() - start) / 1000000, (int) Math.round(totalIterations / (double) millisecondsToMove));
+        //System.err.printf("%d iterations in %d ms. Average iterations per ms: %d.%n", totalIterations, (System.nanoTime() - start) / 1000000, (int) Math.round(totalIterations / (double) millisecondsToMove));
 
         return root.getMostVisitedChild().getMove();
     }

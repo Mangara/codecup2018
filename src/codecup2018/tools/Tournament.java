@@ -1,26 +1,13 @@
 package codecup2018.tools;
 
 import codecup2018.Pair;
-import codecup2018.evaluator.ExpectedValue;
-import codecup2018.evaluator.IncrementalExpectedValue;
-import codecup2018.evaluator.MedianExpected;
-import codecup2018.evaluator.MedianFree;
 import codecup2018.evaluator.MixedEvaluator;
-import codecup2018.movegenerator.AllMoves;
-import codecup2018.movegenerator.BucketSortMaxMoves;
 import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
-import codecup2018.movegenerator.LikelyMoves;
-import codecup2018.movegenerator.MaxInfluenceMinMoves;
-import codecup2018.movegenerator.MaxInfluenceMoves;
-import codecup2018.movegenerator.MostFreeMax;
-import codecup2018.movegenerator.NoHoles;
-import codecup2018.player.KillerMultiAspirationTableCutoffPlayer;
-import codecup2018.player.MultiAspirationTableCutoffPlayer;
-import codecup2018.player.NegaMaxPlayer;
 import codecup2018.player.Player;
-import codecup2018.player.RandomPlayer;
-import codecup2018.player.SimpleMaxPlayer;
-import codecup2018.player.UpperConfidenceBoundsPlayer;
+import codecup2018.player.TimedUCBPlayer;
+import codecup2018.timecontrol.EqualTimeController;
+import codecup2018.timecontrol.ProportionalController;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,14 +17,14 @@ import java.util.List;
 
 public class Tournament {
 
-    private static final int GAMES = 1000;
+    private static final int GAMES = 100;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         runTournament(Arrays.<Player>asList(
-                new RandomPlayer("Rando", new AllMoves()),
-                new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
-                new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10),
-                new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4),
+                //new RandomPlayer("Rando", new AllMoves()),
+                //new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()),
+                //new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10),
+                //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_4", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 4),
                 //new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6),
                 //new MultiAspirationTablePlayer("MAsT_EV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3),
@@ -47,24 +34,30 @@ public class Tournament {
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6),
                 //new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6),
-                new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_7", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 7), // (best so far)
-                new KillerMultiAspirationTableCutoffPlayer("KMAsTC_ME_BSM1_7", new MedianExpected(), new BucketSortMaxMovesOneHole(), 7),
+                //new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_7", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 7) // (best so far)
+                //new KillerMultiAspirationTableCutoffPlayer("KMAsTC_ME_BSM1_7", new MedianExpected(), new BucketSortMaxMovesOneHole(), 7),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MIN_6", new IncrementalExpectedValue(), new MaxInfluenceMinMoves(), 6),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_3", new IncrementalExpectedValue(), new LikelyMoves(), 3)
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
                 //new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_LM_4", new IncrementalExpectedValue(), new LikelyMoves(), 4),
-                new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5),
-                new KillerMultiAspirationTableCutoffPlayer("KMAsTC_ME_LM_5", new MedianExpected(), new LikelyMoves(), 5),
+                //new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5),
+                //new KillerMultiAspirationTableCutoffPlayer("KMAsTC_ME_LM_5", new MedianExpected(), new LikelyMoves(), 5),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_5", new IncrementalExpectedValue(), new LikelyMoves(), 5)
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_LM_6", new IncrementalExpectedValue(), new LikelyMoves(), 6)
                 //new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_500", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 500),
                 //new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_5000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 5000),
-                new UpperConfidenceBoundsPlayer("UCB_Mix_BSM1_50000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 50000),
-                new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_50000", new MedianExpected(), new BucketSortMaxMovesOneHole(), 50000)
+                //new UpperConfidenceBoundsPlayer("UCB_Mix_BSM1_50000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 50000),
+                //new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_50000", new MedianExpected(), new BucketSortMaxMovesOneHole(), 50000)
+                new TimedUCBPlayer("TUCB_Mix_BSM1_Eq0.1s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(100)),
+                new TimedUCBPlayer("TUCB_Mix_BSM1_Eq0.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(500)),
+                new TimedUCBPlayer("TUCB_Mix_BSM1_Eq2.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(2500)),
+                new TimedUCBPlayer("TUCB_Mix_BSM1_Pr0.1s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(100)),
+                new TimedUCBPlayer("TUCB_Mix_BSM1_Pr0.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(500)),
+                new TimedUCBPlayer("TUCB_Mix_BSM1_Pr2.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(2500))
         ));
     }
 
-    public static void runTournament(List<Player> players) {
+    public static void runTournament(List<Player> players) throws IOException {
         int n = players.size();
         int[][] wins = new int[n][n];
         double[][] avgScore = new double[n][n];
