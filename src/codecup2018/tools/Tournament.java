@@ -49,11 +49,11 @@ public class Tournament {
                 //new UpperConfidenceBoundsPlayer("UCB_Mix_BSM1_50000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 50000),
                 //new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_50000", new MedianExpected(), new BucketSortMaxMovesOneHole(), 50000)
                 new TimedUCBPlayer("TUCB_Mix_BSM1_Eq0.1s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(100)),
-                new TimedUCBPlayer("TUCB_Mix_BSM1_Eq0.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(500)),
-                new TimedUCBPlayer("TUCB_Mix_BSM1_Eq2.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(2500)),
-                new TimedUCBPlayer("TUCB_Mix_BSM1_Pr0.1s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(100)),
-                new TimedUCBPlayer("TUCB_Mix_BSM1_Pr0.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(500)),
-                new TimedUCBPlayer("TUCB_Mix_BSM1_Pr2.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(2500))
+                //new TimedUCBPlayer("TUCB_Mix_BSM1_Eq0.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(500)),
+                //new TimedUCBPlayer("TUCB_Mix_BSM1_Eq2.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(2500))
+                new TimedUCBPlayer("TUCB_Mix_BSM1_Pr0.1s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(100))
+                //new TimedUCBPlayer("TUCB_Mix_BSM1_Pr0.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(500)),
+                //new TimedUCBPlayer("TUCB_Mix_BSM1_Pr2.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(2500))
         ));
     }
 
