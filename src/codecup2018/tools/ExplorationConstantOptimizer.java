@@ -23,15 +23,15 @@ import java.util.Random;
 
 public class ExplorationConstantOptimizer {
 
-    private static final int N_GAMES = 6;
+    private static final int N_GAMES = 300;
 
-    private static final int minInitialHeuristicWeight = 1;
-    private static final int maxInitialHeuristicWeight = 1000;
-    private int initialHeuristicWeight = 500;
+    private static final int minInitialHeuristicWeight = 100;
+    private static final int maxInitialHeuristicWeight = 600;
+    private int initialHeuristicWeight = 400;
 
     private static final double minUcbParameter = 0;
-    private static final double maxUcbParameter = 5;
-    private double ucbParameter = 1;
+    private static final double maxUcbParameter = 0.5;
+    private double ucbParameter = 0.2;
 
     public void optimize() throws NoSuchFieldException, IllegalAccessException {
         double temperature = 1;
@@ -39,86 +39,142 @@ public class ExplorationConstantOptimizer {
         while (temperature > 0.00001) {
             optimizeIHW(temperature);
             optimizeUCB(temperature);
-            temperature *= 0.98;
+            temperature *= 0.8;
         }
     }
 
     private void optimizeIHW(double temperature) {
         List<Integer> values = getValuesInIHWWindow(temperature);
 
-        int bestValue = -1;
-        double bestQuality = Double.NEGATIVE_INFINITY;
+        System.out.println("Testing IHW = " + values);
 
-        for (Integer value : values) {
-            initialHeuristicWeight = value;
-            double quality = test();
+        double[][] scores = new double[values.size()][];
 
-            if (quality > bestQuality) {
-                bestQuality = quality;
-                bestValue = value;
-            }
+        for (int i = 0; i < values.size(); i++) {
+            initialHeuristicWeight = values.get(i);
+            scores[i] = test();
         }
 
-        initialHeuristicWeight = bestValue;
+        int bestI = findBestScoreIndex(scores);
+        initialHeuristicWeight = values.get(bestI);
+
+        System.out.println("Best: " + initialHeuristicWeight);
+        System.out.println();
     }
-    
+
     private void optimizeUCB(double temperature) {
         List<Double> values = getValuesInUCBWindow(temperature);
 
-        double bestValue = -1;
-        double bestQuality = Double.NEGATIVE_INFINITY;
+        System.out.println("Testing UCB = " + values);
 
-        for (Double value : values) {
-            ucbParameter = value;
-            double quality = test();
+        double[][] scores = new double[values.size()][];
 
-            if (quality > bestQuality) {
-                bestQuality = quality;
-                bestValue = value;
-            }
+        for (int i = 0; i < values.size(); i++) {
+            ucbParameter = values.get(i);
+            scores[i] = test();
         }
 
-        ucbParameter = bestValue;
+        int bestI = findBestScoreIndex(scores);
+        ucbParameter = values.get(bestI);
+
+        System.out.println("Best: " + ucbParameter);
+        System.out.println();
     }
-    
+
     private static final int N_SAMPLES = 5;
-    
+
     private List<Integer> getValuesInIHWWindow(double temperature) {
-        int windowSize = Math.min((int) Math.ceil(0.5 * temperature * (maxInitialHeuristicWeight - minInitialHeuristicWeight)), 
-                Math.min(initialHeuristicWeight - minInitialHeuristicWeight, maxInitialHeuristicWeight - initialHeuristicWeight));
+        int windowSize = (int) Math.ceil(0.5 * temperature * (maxInitialHeuristicWeight - minInitialHeuristicWeight));
         List<Integer> values = new ArrayList<>();
-        
+
         values.add(initialHeuristicWeight);
         for (int i = 0; i < N_SAMPLES; i++) {
             int offset = (int) Math.round(((i + 1) / (double) N_SAMPLES) * windowSize);
-            values.add(initialHeuristicWeight - offset);
-            values.add(initialHeuristicWeight + offset);
+
+            if (initialHeuristicWeight - offset > minInitialHeuristicWeight) {
+                values.add(initialHeuristicWeight - offset);
+            }
+            if (initialHeuristicWeight + offset < maxInitialHeuristicWeight) {
+                values.add(initialHeuristicWeight + offset);
+            }
         }
-        
+
         Collections.sort(values);
         return values;
     }
-    
+
     private List<Double> getValuesInUCBWindow(double temperature) {
-        double windowSize = Math.min(0.5 * temperature * (maxUcbParameter - minUcbParameter),
-                Math.min(ucbParameter - minUcbParameter, maxUcbParameter - ucbParameter));
+        double windowSize = 0.5 * temperature * (maxUcbParameter - minUcbParameter);
         List<Double> values = new ArrayList<>();
-        
+
         values.add(ucbParameter);
         for (int i = 0; i < N_SAMPLES; i++) {
             double offset = ((i + 1) / (double) N_SAMPLES) * windowSize;
-            values.add(ucbParameter - offset);
-            values.add(ucbParameter + offset);
+
+            if (ucbParameter - offset > minUcbParameter) {
+                values.add(ucbParameter - offset);
+            }
+            if (ucbParameter + offset < maxUcbParameter) {
+                values.add(ucbParameter + offset);
+            }
         }
-        
+
         Collections.sort(values);
         return values;
+    }
+
+    private int findBestScoreIndex(double[][] scores) {
+        // Compute maxima
+        double[] max = new double[scores[0].length];
+
+        for (int j = 0; j < scores[0].length; j++) {
+            max[j] = 0;
+
+            for (int i = 0; i < scores.length; i++) {
+                max[j] = Math.max(max[j], Math.abs(scores[i][j]));
+            }
+        }
+
+        // Normalize
+        for (int j = 0; j < scores[0].length; j++) {
+            if (max[j] != 0) {
+                for (int i = 0; i < scores.length; i++) {
+                    scores[i][j] /= max[j];
+                }
+            }
+        }
+
+        // Average
+        double[] average = new double[scores.length];
+
+        for (int i = 0; i < scores.length; i++) {
+            average[i] = 0;
+
+            for (int j = 0; j < scores[i].length; j++) {
+                average[i] += scores[i][j];
+            }
+
+            average[i] /= scores[i].length;
+        }
+
+        // Find best
+        int bestI = -1;
+        double bestAverage = Double.NEGATIVE_INFINITY;
+
+        for (int i = 0; i < scores.length; i++) {
+            if (average[i] > bestAverage) {
+                bestAverage = average[i];
+                bestI = i;
+            }
+        }
+
+        return bestI;
     }
 
     private double[] test() {
         TimedUCBPlayer.INITIAL_HEURISTIC_WEIGHT = initialHeuristicWeight;
         TimedUCBPlayer.UCB_PARAMETER = ucbParameter;
-        TimedUCBPlayer player = new TimedUCBPlayer(String.format("TUCB_Mix_BSM1_Eq0.1_%d_%f", initialHeuristicWeight, ucbParameter), new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(100));
+        TimedUCBPlayer player = new TimedUCBPlayer(String.format("TUCB_Mix_BSM1_Eq1_%d_%f", initialHeuristicWeight, ucbParameter), new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(1000));
 
         List<Player> opponents = Arrays.<Player>asList(
                 new RandomPlayer("Rando", new AllMoves(), new Random(1567245267354L)),
@@ -156,7 +212,7 @@ public class ExplorationConstantOptimizer {
                 for (int turn = 0; turn < 15; turn++) {
                     int p1Move = opponent.move();
                     player.processMove(p1Move, false);
-                    
+
                     int p2Move = player.move();
                     if (turn < 14) {
                         opponent.processMove(p2Move, false);
@@ -168,24 +224,21 @@ public class ExplorationConstantOptimizer {
 
             vsScores[i % opponents.size()][i / opponents.size()] = score;
         }
-        
-        double[] averageScore = new double[opponents.size()];
-        
-        for (int i = 0; i < opponents.size(); i++) {
-            double max = maxVsScore[i];
-            double totalNormalizedScore = 0;
-            
-            for (int j = 0; j < vsScores[i].length; j++) {
-                totalNormalizedScore += vsScores[i][j] / max;
-            }
-            
-            averageNormalizedScores += totalNormalizedScore / vsScores[i].length;
-        }
-        
-        averageNormalizedScores /= opponents.size();
 
-        System.out.println(player.getName() + " - " + averageNormalizedScores);
-        
+        double[] averageScore = new double[opponents.size()];
+
+        for (int i = 0; i < opponents.size(); i++) {
+            double totalScore = 0;
+
+            for (int j = 0; j < vsScores[i].length; j++) {
+                totalScore += vsScores[i][j];
+            }
+
+            averageScore[i] = totalScore / vsScores[i].length;
+        }
+
+        System.out.println(player.getName() + " - " + Arrays.toString(averageScore));
+
         return averageScore;
     }
 
