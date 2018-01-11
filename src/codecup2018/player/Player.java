@@ -71,7 +71,7 @@ public abstract class Player {
 
     public void initialize(Board currentBoard) {
         board = currentBoard;
-        turn = Math.max(1, 31 - currentBoard.getNFreeSpots());
+        turn = Math.max(1, 32 - currentBoard.getNFreeSpots());
     }
 
     public void block(byte pos) {
