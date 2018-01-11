@@ -1,12 +1,12 @@
 package codecup2018.tools;
 
 import codecup2018.Pair;
-import codecup2018.evaluator.MixedEvaluator;
+import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
+import codecup2018.player.IterativeDFSPlayer;
+import codecup2018.player.KillerMultiAspirationTableCutoffPlayer;
 import codecup2018.player.Player;
-import codecup2018.player.TimedUCBPlayer;
 import codecup2018.timecontrol.EqualTimeController;
-import codecup2018.timecontrol.ProportionalController;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class Tournament {
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM_6", new IncrementalExpectedValue(), new BucketSortMaxMoves(), 6),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_4", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 4),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6),
-                //new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6),
+                new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 6),
                 //new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_7", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 7) // (best so far)
                 //new KillerMultiAspirationTableCutoffPlayer("KMAsTC_ME_BSM1_7", new MedianExpected(), new BucketSortMaxMovesOneHole(), 7),
                 //new MultiAspirationTableCutoffPlayer("MAsTC_IEV_MIN_6", new IncrementalExpectedValue(), new MaxInfluenceMinMoves(), 6),
@@ -48,12 +48,13 @@ public class Tournament {
                 //new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_5000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 5000),
                 //new UpperConfidenceBoundsPlayer("UCB_Mix_BSM1_50000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 50000),
                 //new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_50000", new MedianExpected(), new BucketSortMaxMovesOneHole(), 50000)
-                new TimedUCBPlayer("TUCB_Mix_BSM1_Eq0.1s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(100)),
+                //new TimedUCBPlayer("TUCB_Mix_BSM1_Eq0.1s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(100)),
                 //new TimedUCBPlayer("TUCB_Mix_BSM1_Eq0.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(500)),
                 //new TimedUCBPlayer("TUCB_Mix_BSM1_Eq2.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(2500))
-                new TimedUCBPlayer("TUCB_Mix_BSM1_Pr0.1s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(100))
+                //new TimedUCBPlayer("TUCB_Mix_BSM1_Pr0.1s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(100))
                 //new TimedUCBPlayer("TUCB_Mix_BSM1_Pr0.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(500)),
                 //new TimedUCBPlayer("TUCB_Mix_BSM1_Pr2.5s", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(2500))
+                new IterativeDFSPlayer("ID_IEV_BSM1_6", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), new EqualTimeController(400))
         ));
     }
 

@@ -7,6 +7,7 @@ import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.evaluator.MixedEvaluator;
 import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
 import codecup2018.movegenerator.NoHoles;
+import codecup2018.player.IterativeDFSPlayer;
 import codecup2018.player.KillerMultiAspirationTableCutoffPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.SimpleMaxPlayer;
@@ -47,9 +48,10 @@ public class GameHost {
         long seed = -4501800762309174636L;//rand.nextLong();
         setRandom(new Random(seed));
         System.err.println("Seed: " + seed);
-        Player p1 = new TimedUCBPlayer("TUCB_ME_BSM1_1000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(1000));
+        //Player p1 = new TimedUCBPlayer("TUCB_ME_BSM1_1000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(1000));
+        Player p1 = new IterativeDFSPlayer("ID_IEV_BSM1_400", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), new EqualTimeController(4000));
         Player p2 = new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles());
-        GameHost.runGame(p1, p2, false);
+        GameHost.runGame(p1, p2, true);
         //}
     }
 
