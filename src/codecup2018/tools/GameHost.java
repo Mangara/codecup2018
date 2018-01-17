@@ -45,13 +45,13 @@ public class GameHost {
         //GameHost.runGameThreaded(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4));
         //GameHost.runGame(p1, p2, false);
         //while (true) {
-        long seed = -4501800762309174636L;//rand.nextLong();
+        long seed = rand.nextLong();
         setRandom(new Random(seed));
         System.err.println("Seed: " + seed);
         //Player p1 = new TimedUCBPlayer("TUCB_ME_BSM1_1000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(1000));
-        Player p1 = new IterativeDFSPlayer("ID_IEV_BSM1_400", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), new EqualTimeController(4000));
+        Player p1 = new IterativeDFSPlayer("ID_IEV_BSM1_400", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), new EqualTimeController(400));
         Player p2 = new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles());
-        GameHost.runGame(p1, p2, true);
+        GameHost.runGame(p1, p2, false);
         //}
     }
 
