@@ -12,7 +12,7 @@ import java.util.Arrays;
 public class IterativeDFSPlayer extends TimedPlayer {
 
     public static boolean DEBUG_FINAL_VALUE = true;
-    private static final boolean DEBUG_AB = true;
+    private static final boolean DEBUG_AB = false;
     private static final boolean DEBUG_BETA = false;
     private static final int DEBUG_TURN = -1;
 
@@ -29,6 +29,7 @@ public class IterativeDFSPlayer extends TimedPlayer {
 
     private int prevScore = 0;
     private long turnStartTime;
+    private long nsToMove;
     private int maxDepth;
     private int depthToTurnBase;
 
@@ -53,29 +54,34 @@ public class IterativeDFSPlayer extends TimedPlayer {
     @Override
     protected int selectMove(int millisecondsToMove) {
         turnStartTime = System.nanoTime();
+        timeUp = false;
+        callsToCheck = 100;
 
         if (board.isGameInEndGame()) {
             endgamePlayer.initialize(board);
             return endgamePlayer.selectMove();
         }
 
-        long nsToMove = 1000000 * (long) millisecondsToMove;
+        nsToMove = 1000000 * (long) millisecondsToMove;
         maxDepth = 0;
         int movesLeft = 30 - turn;
-        int move = Board.ILLEGAL_MOVE;
+        int bestMove = Board.ILLEGAL_MOVE;
 
         do {
-            move = searchForBestMove();
-            maxDepth++;
-        } while (maxDepth <= movesLeft && !timeIsUp(nsToMove));
+            int move = searchForBestMove();
+            if (move != Board.ILLEGAL_MOVE) {
+                bestMove = move;
+            }
+            maxDepth += 2; // Increase by 2 to avoid score instability based on side to move
+        } while (maxDepth <= movesLeft && !timeIsUp());
 
-        int eval = Board.getMoveEval(move);
+        int eval = Board.getMoveEval(bestMove);
 
         if (DEBUG_AB || DEBUG_FINAL_VALUE || turn == DEBUG_TURN) {
             System.err.println("Turn " + turn + " final: " + eval);
         }
-
-        return move;
+        
+        return bestMove;
     }
 
     private int searchForBestMove() {
@@ -92,6 +98,11 @@ public class IterativeDFSPlayer extends TimedPlayer {
             }
 
             move = negamax((byte) 1, (byte) (maxDepth + 1), alpha, beta);
+            
+            if (move == Board.ILLEGAL_MOVE) {
+                return move; // Search interrupted due to time limit
+            }
+            
             eval = Board.getMoveEval(move);
 
             if (DEBUG_AB || DEBUG_FINAL_VALUE || turn == DEBUG_TURN) {
@@ -107,6 +118,10 @@ public class IterativeDFSPlayer extends TimedPlayer {
             } else {
                 break;
             }
+            
+            if (maxDepth > 0 && timeIsUp()) {
+                return Board.ILLEGAL_MOVE; // No new move found before time limit was reached
+            }
 
             if (failLow && failHigh) {
                 System.err.println("Search is unstable on turn " + turn + " with depth " + maxDepth);
@@ -117,11 +132,11 @@ public class IterativeDFSPlayer extends TimedPlayer {
 
             window *= WINDOW_FACTOR;
         }
-        
+
         if (DEBUG_AB || DEBUG_FINAL_VALUE || turn == DEBUG_TURN) {
             System.err.println("Turn " + turn + " depth " + maxDepth + " value: " + eval);
         }
-        
+
         prevScore = eval;
 
         return move;
@@ -134,6 +149,10 @@ public class IterativeDFSPlayer extends TimedPlayer {
 
         if (board.isGameInEndGame()) {
             return Board.buildMove((byte) 0, (byte) 0, player * (endgameEvaluator.evaluate(board) + evaluator.evaluate(board) / 100));
+        }
+        
+        if (maxDepth > 0 && timeIsUp()) {
+            return Board.ILLEGAL_MOVE;
         }
 
         if (DEBUG_AB || turn == DEBUG_TURN) {
@@ -202,16 +221,11 @@ public class IterativeDFSPlayer extends TimedPlayer {
             } else {
                 // Try the stored best move first
                 bestMove = evaluateMove(entry.bestMove, player, depth, myAlpha, myBeta, " stored");
-                /*///PROFILING
-                int move = entry.bestMove;
-                board.applyMove(move);
-                evaluator.applyMove(move);
-
-                bestMove = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -myBeta, -myAlpha)));
-
-                board.undoMove(move);
-                evaluator.undoMove(move);
-                //*/
+                
+                if (bestMove == Board.ILLEGAL_MOVE) {
+                    return bestMove; // Time up
+                }
+                
                 bestEval = Board.getMoveEval(bestMove);
 
                 if (bestEval > myAlpha) {
@@ -225,16 +239,11 @@ public class IterativeDFSPlayer extends TimedPlayer {
             for (int move : killerMoves[depthToTurnBase - depth]) {
                 if (board.isLegalMove(move) && !(tableMatch && Board.equalMoves(move, entry.bestMove))) {
                     move = evaluateMove(move, player, depth, myAlpha, myBeta, " killer");
+                    
+                    if (move == Board.ILLEGAL_MOVE) {
+                        return move; // Time up
+                    }
 
-                    /*///PROFILING
-                    board.applyMove(move);
-                    evaluator.applyMove(move);
-
-                    move = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -myBeta, -myAlpha)));
-
-                    board.undoMove(move);
-                    evaluator.undoMove(move);
-                    //*/
                     if (move > bestMove) {
                         int eval = Board.getMoveEval(move);
 
@@ -274,15 +283,10 @@ public class IterativeDFSPlayer extends TimedPlayer {
                 }
 
                 move = evaluateMove(move, player, depth, myAlpha, myBeta, "");
-                /*///PROFILING
-                board.applyMove(move);
-                evaluator.applyMove(move);
-
-                move = Board.setMoveEval(move, -Board.getMoveEval(negamax((byte) -player, (byte) (depth - 1), -myBeta, -myAlpha)));
-
-                board.undoMove(move);
-                evaluator.undoMove(move);
-                //*/
+                
+                if (move == Board.ILLEGAL_MOVE) {
+                    return move; // Time up
+                }
 
                 if (move > bestMove) {
                     int eval = Board.getMoveEval(move);
@@ -397,8 +401,18 @@ public class IterativeDFSPlayer extends TimedPlayer {
         return Board.equalMoves(move, killers[0]) || Board.equalMoves(move, killers[1]);
     }
 
-    private boolean timeIsUp(long nsToMove) {
-        return System.nanoTime() - turnStartTime >= nsToMove;
+    private boolean timeUp;
+    private int callsToCheck;
+    
+    private boolean timeIsUp() {
+        if (callsToCheck == 0) {
+            callsToCheck = 100;
+            timeUp = System.nanoTime() - turnStartTime >= nsToMove;
+        } else {
+            callsToCheck--;
+        }
+        
+        return timeUp;
     }
 
     private class TranspositionEntry {
