@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 public class IterativeDFSPlayer extends TimedPlayer {
 
-    public static boolean DEBUG_FINAL_VALUE = true;
+    public static boolean DEBUG_FINAL_VALUE = false;
     private static final boolean DEBUG_AB = false;
     private static final boolean DEBUG_BETA = false;
     private static final int DEBUG_TURN = -1;
@@ -49,6 +49,9 @@ public class IterativeDFSPlayer extends TimedPlayer {
         prevScore = evaluator.evaluate(board);
         turn = 1;
         Arrays.fill(transpositionTable, null);
+        for (int[] killers : killerMoves) {
+            Arrays.fill(killers, Board.ILLEGAL_MOVE);
+        }
     }
 
     @Override
@@ -57,7 +60,7 @@ public class IterativeDFSPlayer extends TimedPlayer {
         timeUp = false;
         callsToCheck = 100;
 
-        if (board.isGameInEndGame()) {
+        if (board.isGameInEndGame() || millisecondsToMove <= 0) {
             endgamePlayer.initialize(board);
             return endgamePlayer.selectMove();
         }
