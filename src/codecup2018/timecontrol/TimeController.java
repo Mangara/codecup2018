@@ -1,5 +1,7 @@
 package codecup2018.timecontrol;
 
+import codecup2018.player.Player;
+
 public abstract class TimeController {
     
     protected final int totalTimeMilliseconds;
@@ -22,6 +24,11 @@ public abstract class TimeController {
     public void endMove() {
         int duration = (int) Math.ceil((System.nanoTime() - moveStartTime) / 1000000.0);
         timeRemainingMilliseconds -= duration;
+        
+        //// DEBUG
+        if (Player.TIMING) {
+            System.err.println("Move took " + duration + " ms.");
+        }
     }
     
     public abstract int getMillisecondsForMove(int turn);
