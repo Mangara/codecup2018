@@ -1,13 +1,12 @@
 package codecup2018.tools;
 
 import codecup2018.evaluator.ExpectedValue;
-import codecup2018.evaluator.MixedEvaluator;
+import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
+import codecup2018.player.IterativeDFSPlayer;
 import codecup2018.player.Player;
-import codecup2018.player.RandomPlayer;
 import codecup2018.player.SimpleMaxPlayer;
-import codecup2018.player.TimedUCBPlayer;
 import codecup2018.timecontrol.ProportionalController;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,18 +14,18 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import mga.GeneticAlgorithm;
 import mga.Pair;
+import mga.crossover.Crossover;
 import mga.crossover.OnePointCrossover;
 import mga.mutation.Mutation;
 import mga.quality.QualityFunction;
-import mga.selection.RankSelection;
 import mga.selection.RouletteSelection;
 
 public class TimeControlGA {
 
     private static final int TIME_PER_GAME = 400;
-    private static final int POPULATION_SIZE = 20; // 40
-    private static final int ITERATIONS = 100; // 200?
-    private static final int GAMES_PER_EVALUATION = 25; // 100
+    private static final int POPULATION_SIZE = 20;
+    private static final int ITERATIONS = 100;
+    private static final int GAMES_PER_EVALUATION = 25;
     private static final List<Player> OPPONENTS = Arrays.<Player>asList(
             //new RandomPlayer("Rando", new AllMoves()),
             new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves())
@@ -35,8 +34,8 @@ public class TimeControlGA {
 
     public static void main(String[] args) {
         estimateTime();
-        
-        GeneticAlgorithm<List<Double>> ga = new GeneticAlgorithm<>(new DuelQuality(), new OnePointCrossover<Double>(), new TimeMutation(), new RouletteSelection());
+
+        GeneticAlgorithm<List<Double>> ga = new GeneticAlgorithm<>(new DuelQuality(), new TimeCrossover(), new TimeMutation(), new RouletteSelection());
         ga.setElitistFraction(0.001); // Carry over the best individual each generation
         //ga.setDebugLevel(GeneticAlgorithm.DebugLevel.EVERYTHING);
         ga.setParallelEvaluation(false);
@@ -58,7 +57,7 @@ public class TimeControlGA {
         return population;
     }
 
-    private static List<Double> equalTime() {
+    public static List<Double> equalTime() {
         List<Double> equalTime = new ArrayList<>(15);
 
         for (int i = 0; i < 15; i++) {
@@ -68,7 +67,7 @@ public class TimeControlGA {
         return equalTime;
     }
 
-    private static List<Double> randomTime() {
+    public static List<Double> randomTime() {
         List<Double> randomTime = new ArrayList<>(15);
 
         for (int i = 0; i < 15; i++) {
@@ -77,11 +76,19 @@ public class TimeControlGA {
 
         return randomTime;
     }
-    
+
+    public static double[] toArray(List<Double> individual) {
+        final double[] times = new double[individual.size()];
+        for (int i = 0; i < times.length; i++) {
+            times[i] = individual.get(i);
+        }
+        return times;
+    }
+
     private static void estimateTime() {
         long milliseconds = ITERATIONS * POPULATION_SIZE * OPPONENTS.size() * GAMES_PER_EVALUATION * TIME_PER_GAME;
         String duration;
-        
+
         if (milliseconds < 1000) {
             duration = String.format("%d ms", milliseconds);
         } else if (milliseconds < 60 * 1000) {
@@ -91,7 +98,7 @@ public class TimeControlGA {
         } else {
             duration = String.format("%.1f h", milliseconds / (1000.0 * 60 * 60));
         }
-        
+
         System.out.println("Estimated duration: " + duration);
     }
 
@@ -99,12 +106,8 @@ public class TimeControlGA {
 
         @Override
         public double computeQuality(List<Double> individual) {
-            final double[] times = new double[individual.size()];
-            for (int i = 0; i < times.length; i++) {
-                times[i] = individual.get(i);
-            }
-
-            Player p = new TimedUCBPlayer("TUCB", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(TIME_PER_GAME, times));
+            //Player p = new TimedUCBPlayer("TUCB", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new ProportionalController(TIME_PER_GAME, times));
+            Player p = new IterativeDFSPlayer("ID_IEV_BSM1", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), new ProportionalController(TIME_PER_GAME, toArray(individual)));
             double weightedScore = 0;
 
             for (int i = 0; i < OPPONENTS.size(); i++) {
@@ -145,8 +148,37 @@ public class TimeControlGA {
                 double newVal = result.get(i) + 0.2 * (ThreadLocalRandom.current().nextDouble() - 0.5);
                 result.set(i, Math.min(Math.max(newVal, 0), 1));
             }
-            
+
             return result;
+        }
+
+    }
+
+    private static class TimeCrossover implements Crossover<List<Double>> {
+
+        private final Crossover<List<Double>> onePoint = new OnePointCrossover<>();
+
+        @Override
+        public Pair<List<Double>, List<Double>> crossover(List<Double> parent1, List<Double> parent2) {
+            if (ThreadLocalRandom.current().nextDouble() < 0.7) {
+                // Weighted average
+                int chromosomeLength = parent1.size();
+                double weight1 = ThreadLocalRandom.current().nextDouble();
+                double weight2 = 1 - weight1;
+
+                List<Double> child1 = new ArrayList<>(chromosomeLength);
+                List<Double> child2 = new ArrayList<>(chromosomeLength);
+
+                for (int i = 0; i < chromosomeLength; i++) {
+                    child1.add(weight1 * parent1.get(i) + weight2 * parent2.get(i));
+                    child2.add(weight2 * parent1.get(i) + weight1 * parent2.get(i));
+                }
+
+                return new Pair<>(child1, child2);
+            } else {
+                // 1-point
+                return onePoint.crossover(parent1, parent2);
+            }
         }
 
     }

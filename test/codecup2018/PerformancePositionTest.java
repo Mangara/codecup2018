@@ -71,7 +71,7 @@ public class PerformancePositionTest {
         return boards;
     }
     
-    private static Object movesToBoard(String moves, boolean player1) {
+    public static Board movesToBoard(String moves, boolean player1) {
         Board board = new BitBoard();
         String[] ms = moves.split(",");
         
