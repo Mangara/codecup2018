@@ -4,21 +4,19 @@ import codecup2018.data.Board;
 import codecup2018.data.BitBoard;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.IncrementalExpectedValue;
-import codecup2018.evaluator.MixedEvaluator;
+import codecup2018.movegenerator.AllMoves;
 import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
-import codecup2018.movegenerator.NoHoles;
 import codecup2018.player.IterativeDFSPlayer;
-import codecup2018.player.KillerMultiAspirationTableCutoffPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.SimpleMaxPlayer;
-import codecup2018.player.TimedUCBPlayer;
-import codecup2018.timecontrol.EqualTimeController;
+import codecup2018.timecontrol.ProportionalController;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -29,7 +27,7 @@ public class GameHost {
     public static void main(String[] args) throws IOException {
         //setRandom(new Random());
         //setRandom(new Random(614944651));
-        setRandom(new Random(35945216316303L));
+        //setRandom(new Random(35945216316303L));
 
         //Player p1 = new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles());
         //Player p1 = new UpperConfidenceBoundsPlayer("UCB_ME_BSM1_5000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), 50000);
@@ -44,15 +42,23 @@ public class GameHost {
         //GameHost.runGame(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationTablePlayer("AsT_IEV_MI_3", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 3), false);
         //GameHost.runGameThreaded(new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles()), new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4));
         //GameHost.runGame(p1, p2, false);
-        //while (true) {
-        long seed = rand.nextLong();
-        setRandom(new Random(seed));
-        System.err.println("Seed: " + seed);
-        //Player p1 = new TimedUCBPlayer("TUCB_ME_BSM1_1000", new MixedEvaluator(), new BucketSortMaxMovesOneHole(), new EqualTimeController(1000));
-        Player p1 = new IterativeDFSPlayer("ID_IEV_BSM1_400", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), new EqualTimeController(400));
-        Player p2 = new SimpleMaxPlayer("Expy_NH", new ExpectedValue(), new NoHoles());
-        GameHost.runGame(p1, p2, false);
-        //}
+        
+        Player p1 = new IterativeDFSPlayer("ID_IEV_BSM1", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), new ProportionalController(100, TimeControlGA.toArray(TimeControlGA.equalTime())));
+        Player p2 = new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves());
+
+        while (true) {
+            long seed = -526892008154150350L;//rand.nextLong();
+            setRandom(new Random(seed));
+            System.err.println("Seed: " + seed);
+
+            for (int k = 0; k < 6; k++) {
+                if (k % 2 == 0) {
+                    GameHost.runGame(p1, p2, false);
+                } else {
+                    GameHost.runGame(p2, p1, false);
+                }
+            }
+        }
     }
 
     public static void setRandom(Random rand) {
