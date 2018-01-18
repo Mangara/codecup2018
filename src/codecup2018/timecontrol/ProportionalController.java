@@ -2,6 +2,24 @@ package codecup2018.timecontrol;
 
 public class ProportionalController extends TimeController {
 
+    public static final double[] LINEAR_DECAY = new double[] {
+        0.164444444444444,
+        0.1796875, 
+        0.198176291793313, 
+        0.221127116502401, 
+        0.250486696950032, 
+        0.28961038961039,  
+        0.344911639244363, 
+        0.430697674418605, 
+        0.588235294117647, 
+        0.428571428571429, 
+        0.5, 
+        0.4, 
+        0.5, 
+        0.666666666666667, 
+        1
+    };
+    
     private final double[] fractionOfRemaining;
 
     public ProportionalController(int totalTimeMilliseconds) {
