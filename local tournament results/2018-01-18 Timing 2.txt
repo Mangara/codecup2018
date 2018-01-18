@@ -1,0 +1,53 @@
+Players:
+0: Rando
+1: Expy_NH
+2: NM_MF_MFM_10
+3: MAsTC_IEV_MI_4
+4: KMAsTC_IEV_BSM1_6
+5: ID_IEV_BSM1_Eq400
+6: ID_IEV_BSM1_LD400
+
+Number of wins:
+         0    1    2    3    4    5    6
+    0    0    1    1    0    0    0    0
+    1  499    0   80  102   66   56   56
+    2  499  368    0  102   59   67   54
+    3  500  303  339    0  138  178  164
+    4  500  355  384  228    0  222  213
+    5  500  389  399  235  181    0  195
+    6  500  390  417  238  182  228    0
+
+Average score:
+            0      1      2      3      4      5      6 
+     0      0  -26.8  -27.0  -26.3  -25.5  -25.8  -25.9 
+     1   26.8      0  -2.54  -1.40  -2.03  -2.90  -2.75 
+     2   27.0   2.54      0  -1.78  -2.50  -3.14  -3.16 
+     3   26.3   1.40   1.78      0 -0.460 -0.318 -0.252 
+     4   25.5   2.03   2.50  0.460      0  0.232  0.268 
+     5   25.8   2.90   3.14  0.318 -0.232      0 -0.260 
+     6   25.9   2.75   3.16  0.252 -0.268  0.260      0 
+
+Comparisons:
+    Expy_NH > Rando with p = 0.000000
+    NM_MF_MFM_10 > Rando with p = 0.000000
+    MAsTC_IEV_MI_4 > Rando with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > Rando with p = 0.000000
+    ID_IEV_BSM1_Eq400 > Rando with p = 0.000000
+    ID_IEV_BSM1_LD400 > Rando with p = 0.000000
+    NM_MF_MFM_10 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_4 > Expy_NH with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > Expy_NH with p = 0.000000
+    ID_IEV_BSM1_Eq400 > Expy_NH with p = 0.000000
+    ID_IEV_BSM1_LD400 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_4 > NM_MF_MFM_10 with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > NM_MF_MFM_10 with p = 0.000000
+    ID_IEV_BSM1_Eq400 > NM_MF_MFM_10 with p = 0.000000
+    ID_IEV_BSM1_LD400 > NM_MF_MFM_10 with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > MAsTC_IEV_MI_4 with p = 0.000000
+    ID_IEV_BSM1_Eq400 > MAsTC_IEV_MI_4 with p = 0.000801
+    KMAsTC_IEV_BSM1_6 > ID_IEV_BSM1_LD400 with p = 0.003132
+    ID_IEV_BSM1_LD400 > MAsTC_IEV_MI_4 with p = 0.006364
+    KMAsTC_IEV_BSM1_6 > ID_IEV_BSM1_Eq400 with p = 0.008104
+    ID_IEV_BSM1_LD400 > ID_IEV_BSM1_Eq400 with p = 0.020603
+
+KMAsTC_IEV_BSM1_6 > ID_IEV_BSM1_LD400 > ID_IEV_BSM1_Eq400 > MAsTC_IEV_MI_4 > NM_MF_MFM_10 > Expy_NH > Rando

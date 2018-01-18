@@ -1,0 +1,73 @@
+0: Rando
+1: Expy_NH
+2: NM_MF_MFM_10
+3: MAsTC_IEV_MI_4
+4: KMAsTC_IEV_BSM1_6
+5: ID_IEV_BSM1_Eq400
+6: ID_IEV_BSM1_Pr1
+7: ID_IEV_BSM1_Pr2
+8: ID_IEV_BSM1_Pr3
+
+Number of wins:
+         0    1    2    3    4    5    6    7    8
+    0    0    3    2    0    0    1    0    1    0
+    1  496    0   71   84   59   59  117   65   67
+    2  497  375    0   90   71   60   78   56   63
+    3  500  324  350    0  144  166  190  165  159
+    4  500  372  384  220    0  220  210  198  208
+    5  499  388  400  246  196    0  227  169  214
+    6  500  300  360  215  178  188    0  168  181
+    7  499  385  406  247  205  257  242    0  234
+    8  500  375  392  241  206  217  241  207    0
+
+Average score:
+            0      1      2      3      4      5      6      7      8 
+     0      0  -26.2  -27.4  -25.6  -25.1  -26.0  -26.0  -25.4  -25.5 
+     1   26.2      0  -2.43  -1.58  -2.31  -2.72  -1.28  -2.66  -2.48 
+     2   27.4   2.43      0  -1.81  -2.42  -3.18  -2.11  -3.33  -3.00 
+     3   25.6   1.58   1.81      0 -0.414 -0.300 -0.154 -0.408 -0.478 
+     4   25.1   2.31   2.42  0.414      0  0.274  0.266  0.174  0.076 
+     5   26.0   2.72   3.18  0.300 -0.274      0  0.184 -0.476  0.064 
+     6   26.0   1.28   2.11  0.154 -0.266 -0.184      0 -0.286 -0.394 
+     7   25.4   2.66   3.33  0.408 -0.174  0.476  0.286      0  0.032 
+     8   25.5   2.48   3.00  0.478 -0.076 -0.064  0.394 -0.032      0 
+
+Comparisons:
+    Expy_NH > Rando with p = 0.000000
+    NM_MF_MFM_10 > Rando with p = 0.000000
+    MAsTC_IEV_MI_4 > Rando with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > Rando with p = 0.000000
+    ID_IEV_BSM1_Eq400 > Rando with p = 0.000000
+    ID_IEV_BSM1_Pr1 > Rando with p = 0.000000
+    ID_IEV_BSM1_Pr2 > Rando with p = 0.000000
+    ID_IEV_BSM1_Pr3 > Rando with p = 0.000000
+    NM_MF_MFM_10 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_4 > Expy_NH with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > Expy_NH with p = 0.000000
+    ID_IEV_BSM1_Eq400 > Expy_NH with p = 0.000000
+    ID_IEV_BSM1_Pr1 > Expy_NH with p = 0.000000
+    ID_IEV_BSM1_Pr2 > Expy_NH with p = 0.000000
+    ID_IEV_BSM1_Pr3 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_4 > NM_MF_MFM_10 with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > NM_MF_MFM_10 with p = 0.000000
+    ID_IEV_BSM1_Eq400 > NM_MF_MFM_10 with p = 0.000000
+    ID_IEV_BSM1_Pr1 > NM_MF_MFM_10 with p = 0.000000
+    ID_IEV_BSM1_Pr2 > NM_MF_MFM_10 with p = 0.000000
+    ID_IEV_BSM1_Pr3 > NM_MF_MFM_10 with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > MAsTC_IEV_MI_4 with p = 0.000000
+    ID_IEV_BSM1_Pr3 > MAsTC_IEV_MI_4 with p = 0.000001
+    ID_IEV_BSM1_Pr2 > MAsTC_IEV_MI_4 with p = 0.000038
+    ID_IEV_BSM1_Pr3 > ID_IEV_BSM1_Pr1 with p = 0.000106
+    ID_IEV_BSM1_Pr2 > ID_IEV_BSM1_Eq400 with p = 0.000115
+    KMAsTC_IEV_BSM1_6 > ID_IEV_BSM1_Pr1 with p = 0.001436
+    ID_IEV_BSM1_Eq400 > MAsTC_IEV_MI_4 with p = 0.001635
+    KMAsTC_IEV_BSM1_6 > ID_IEV_BSM1_Eq400 with p = 0.002390
+    ID_IEV_BSM1_Pr2 > ID_IEV_BSM1_Pr1 with p = 0.004236
+    ID_IEV_BSM1_Eq400 > ID_IEV_BSM1_Pr1 with p = 0.036844
+    KMAsTC_IEV_BSM1_6 > ID_IEV_BSM1_Pr2 with p = 0.044417
+    ID_IEV_BSM1_Pr1 > MAsTC_IEV_MI_4 with p = 0.053577
+    KMAsTC_IEV_BSM1_6 > ID_IEV_BSM1_Pr3 with p = 0.194100
+    ID_IEV_BSM1_Eq400 > ID_IEV_BSM1_Pr3 with p = 0.277650
+    ID_IEV_BSM1_Pr2 > ID_IEV_BSM1_Pr3 with p = 0.386582
+
+    KMAsTC_IEV_BSM1_6 > [ID_IEV_BSM1_Pr2, ID_IEV_BSM1_Eq400, ID_IEV_BSM1_Pr3] > ID_IEV_BSM1_Pr1 > MAsTC_IEV_MI_4 > NM_MF_MFM_10 > Expy_NH > Rando
