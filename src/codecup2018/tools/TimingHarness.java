@@ -3,12 +3,13 @@ package codecup2018.tools;
 import codecup2018.evaluator.ExpectedValue;
 import codecup2018.evaluator.IncrementalExpectedValue;
 import codecup2018.movegenerator.AllMoves;
-import codecup2018.movegenerator.MaxInfluenceMoves;
-import codecup2018.player.AspirationPlayer;
-import codecup2018.player.MultiAspirationTablePlayer;
+import codecup2018.movegenerator.BucketSortMaxMovesOneHole;
+import codecup2018.player.IterativeDFSPlayer;
+import codecup2018.player.KillerMultiAspirationTableCutoffPlayer;
 import codecup2018.player.Player;
 import codecup2018.player.RandomPlayer;
 import codecup2018.player.SimpleMaxPlayer;
+import codecup2018.timecontrol.ProportionalController;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -30,7 +31,7 @@ public class TimingHarness {
         //evaluateTiming(new AspirationPlayer("As_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4)); // ~0.5s per game
         //evaluateTiming(new AspirationPlayer("As_EV_MI_5", new ExpectedValue(), new MaxInfluenceMoves(), 5)); // ~0.5s per game
         //evaluateTiming(new AspirationPlayer("As_EV_MI_6", new ExpectedValue(), new MaxInfluenceMoves(), 6)); // ~2s per game
-        evaluateTiming(new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)); // ~0.1s per game
+        //evaluateTiming(new AspirationPlayer("As_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)); // ~0.1s per game
         //evaluateTiming(new MaxComponentPlayer(new NegaMaxPlayer("NM_EV_NHM_4", new ExpectedValue(), new NoHolesMax(), 4))); // ~1s per game
         //evaluateTiming(new AlphaBetaPlayer("AB_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)); // ~1s per game
         //evaluateTiming(new NegaMaxPlayer("NM_MF_MFM_10", new MedianFree(), new MostFreeMax(), 10)); // ~1s per game
@@ -38,8 +39,10 @@ public class TimingHarness {
         //evaluateTiming(new AspirationPlayer("As_MF_MFM_11", new MedianFree(), new MostFreeMax(), 11)); // ~2.5s per game
         //evaluateTiming(new SimpleMaxPlayer("Expy", new ExpectedValue(), new AllMoves()));
         //evaluateTiming(new MultiAspirationTablePlayer("MAsT_IEV_MI_5", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 5)); // ~0.1s per game
-        evaluateTiming(new MultiAspirationTablePlayer("MAsT_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6)); // ~0.5-0.7s per game
+        //evaluateTiming(new MultiAspirationTablePlayer("MAsT_IEV_MI_6", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 6)); // ~0.5-0.7s per game
         //evaluateTiming(new MultiAspirationTablePlayer("MAsT_IEV_MI_7", new IncrementalExpectedValue(), new MaxInfluenceMoves(), 7)); // ~2.3-3.3s per game
+        //evaluateTiming(new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_7", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), 7)); // ~0.7-0.9s per game
+        evaluateTiming(new IterativeDFSPlayer("ID_IEV_BSM1_LD1s", new IncrementalExpectedValue(), new BucketSortMaxMovesOneHole(), new ProportionalController(1000, ProportionalController.LINEAR_DECAY))); // ~0.9-1s per game
     }
 
     private static void evaluateTiming(Player player) {

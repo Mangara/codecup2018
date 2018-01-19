@@ -1,0 +1,51 @@
+Players:
+0: Rando
+1: Expy_NH
+2: NM_MF_MFM_10
+3: MAsTC_IEV_MI_4
+4: KMAsTC_IEV_BSM1_6
+5: ID_IEV_BSM1_LD1s
+6: ID_ME_BSM1_LD1s
+
+Number of wins:
+         0    1    2    3    4    5    6
+    0    0    3    2    0    0    2    0
+    1  495    0   82   85   53   48  108
+    2  498  361    0   99   72   58   75
+    3  500  324  335    0  158  171  216
+    4  500  368  364  203    0  208  251
+    5  498  402  412  251  202    0  227
+    6  500  304  357  201  150  190    0
+
+Average score:
+            0      1      2      3      4      5      6 
+     0      0  -26.8  -27.4  -25.6  -26.0  -25.4  -22.7 
+     1   26.8      0  -2.32  -1.58  -2.35  -2.96  -1.31 
+     2   27.4   2.32      0  -1.60  -2.36  -3.33  -2.31 
+     3   25.6   1.58   1.60      0 -0.308 -0.408  0.236 
+     4   26.0   2.35   2.36  0.308      0  0.190  0.734 
+     5   25.4   2.96   3.33  0.408 -0.190      0  0.212 
+     6   22.7   1.31   2.31 -0.236 -0.734 -0.212      0 
+
+Comparisons:
+    Expy_NH > Rando with p = 0.000000
+    NM_MF_MFM_10 > Rando with p = 0.000000
+    MAsTC_IEV_MI_4 > Rando with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > Rando with p = 0.000000
+    ID_IEV_BSM1_LD1s > Rando with p = 0.000000
+    ID_ME_BSM1_LD1s > Rando with p = 0.000000
+    NM_MF_MFM_10 > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_4 > Expy_NH with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > Expy_NH with p = 0.000000
+    ID_IEV_BSM1_LD1s > Expy_NH with p = 0.000000
+    ID_ME_BSM1_LD1s > Expy_NH with p = 0.000000
+    MAsTC_IEV_MI_4 > NM_MF_MFM_10 with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > NM_MF_MFM_10 with p = 0.000000
+    ID_IEV_BSM1_LD1s > NM_MF_MFM_10 with p = 0.000000
+    ID_ME_BSM1_LD1s > NM_MF_MFM_10 with p = 0.000000
+    KMAsTC_IEV_BSM1_6 > ID_ME_BSM1_LD1s with p = 0.000000
+    ID_IEV_BSM1_LD1s > MAsTC_IEV_MI_4 with p = 0.000075
+    KMAsTC_IEV_BSM1_6 > MAsTC_IEV_MI_4 with p = 0.000106
+    MAsTC_IEV_MI_4 > ID_ME_BSM1_LD1s with p = 0.012123
+    KMAsTC_IEV_BSM1_6 > ID_IEV_BSM1_LD1s with p = 0.027749
+    ID_IEV_BSM1_LD1s > ID_ME_BSM1_LD1s with p = 0.039459

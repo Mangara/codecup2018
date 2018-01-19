@@ -1,0 +1,27 @@
+Players:
+0: Rando
+1: Expy_NH
+2: ID_IEV_BSM1_LD1s
+3: ID_IEV_LM_LD1s
+
+Number of wins:
+         0    1    2    3
+    0    0    1    0    0
+    1  499    0   45   82
+    2  500  408    0  251
+    3  500  358  173    0
+
+Average score:
+            0      1      2      3 
+     0      0  -27.3  -25.6  -25.1 
+     1   27.3      0  -3.09  -2.02 
+     2   25.6   3.09      0  0.548 
+     3   25.1   2.02 -0.548      0 
+
+Comparisons:
+    Expy_NH > Rando with p = 0.000000
+    ID_IEV_BSM1_LD1s > Rando with p = 0.000000
+    ID_IEV_LM_LD1s > Rando with p = 0.000000
+    ID_IEV_BSM1_LD1s > Expy_NH with p = 0.000000
+    ID_IEV_LM_LD1s > Expy_NH with p = 0.000000
+    ID_IEV_BSM1_LD1s > ID_IEV_LM_LD1s with p = 0.000015
