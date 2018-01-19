@@ -9,12 +9,12 @@ import java.util.Random;
 public class Messier31 {
 public static void main(String[]args)throws IOException{
 Player.TIMING=true;
-KillerMultiAspirationTableCutoffPlayer.DEBUG_FINAL_VALUE=true;
+IterativeDFSPlayer.DEBUG_FINAL_VALUE=true;
 Player p=getPlayer();
 p.play(new BufferedReader(new InputStreamReader(System.in)),System.out);
 }
 public static Player getPlayer(){
-return new KillerMultiAspirationTableCutoffPlayer("KMAsTC_IEV_BSM1_7",new IncrementalExpectedValue(),new BucketSortMaxMovesOneHole(),7);
+return new IterativeDFSPlayer("ID_IEV_BSM1_LD4700",new IncrementalExpectedValue(),new BucketSortMaxMovesOneHole(),new ProportionalController(4700,ProportionalController.LINEAR_DECAY));
 }
 }
 abstract class Board {
@@ -84,6 +84,9 @@ return(move&MOVE_NOT_EVAL_MASK)|(eval<<11);
 public static final int negateEval(int move){
 return(move&MOVE_NOT_EVAL_MASK)|((-(move>>11)<<11)&MOVE_EVAL_MASK);
 }
+public static final int clearEval(int move){
+return move&MOVE_NOT_EVAL_MASK;
+}
 public static final int buildMove(byte pos,byte val,int eval){
 return(eval<<11)|(val+15<<6)|pos;
 }
@@ -99,13 +102,13 @@ public static final boolean isValidPos(int pos){
 return(pos&0b111)+(pos>>>3)<8;
 }
 public static final byte[]getCoordinates(byte pos){
-return new byte[]{(byte)(pos/8),(byte)(pos%8)};
+return new byte[]{(byte)(pos/8),(byte)(pos %8)};
 }
 public static final byte parsePos(String location){
 return(byte)(8*(location.charAt(0)-'A')+location.charAt(1)-'1');
 }
 public static final String posToString(byte pos){
-return Character.toString((char)('A'+pos/8))+Character.toString((char)('1'+pos%8));
+return Character.toString((char)('A'+pos/8))+Character.toString((char)('1'+pos %8));
 }
 public static final String coordinatesToString(byte a,byte b){
 return Character.toString((char)('A'+a))+Character.toString((char)('1'+b));
@@ -394,7 +397,7 @@ byte pos=Board.parsePos(in.readLine());
 block(pos);
 }
 if(TIMING){
-System.err.printf("Initialization took%d ms.%n",System.currentTimeMillis()-start);
+System.err.printf("Initialization took %d ms.%n",System.currentTimeMillis()-start);
 }
 for(String input=in.readLine();!(input==null||"Quit".equals(input));input=in.readLine()){
 if(TIMING){
@@ -405,7 +408,7 @@ processMove(Board.parseMove(input),false);
 }
 int move=move();
 if(TIMING){
-System.err.printf("Move%d took%d ms.%n",turn,System.currentTimeMillis()-start);
+System.err.printf("Move %d took %d ms.%n",turn-1,System.currentTimeMillis()-start);
 }
 out.println(Board.moveToString(move));
 }
@@ -416,7 +419,7 @@ turn=1;
 }
 public void initialize(Board currentBoard){
 board=currentBoard;
-turn=Math.max(1,31-currentBoard.getNFreeSpots());
+turn=Math.max(1,32-currentBoard.getNFreeSpots());
 }
 public void block(byte pos){
 board.block(pos);
@@ -442,12 +445,12 @@ this.generator=generator;
 }
 @Override
 public void initialize(Board currentBoard){
-board=currentBoard;
+super.initialize(currentBoard);
 evaluator.initialize(currentBoard);
 }
 @Override
 public void block(byte pos){
-board.block(pos);
+super.block(pos);
 evaluator.block(pos);
 }
 @Override
@@ -457,6 +460,30 @@ board.applyMove(m);
 evaluator.applyMove(m);
 turn++;
 }
+}
+abstract class TimedPlayer extends StandardPlayer {
+protected final TimeController controller;
+public TimedPlayer(String name,Evaluator evaluator,MoveGenerator generator,TimeController controller){
+super(name,evaluator,generator);
+this.controller=controller;
+}
+@Override
+public void initialize(Board currentBoard){
+super.initialize(currentBoard);
+controller.reset();
+}
+@Override
+protected int selectMove(){
+controller.startMove();
+int time=controller.getMillisecondsForMove(turn);
+if(TIMING){
+System.err.printf("%d ms for this move.%n",time);
+}
+int move=selectMove(time);
+controller.endMove();
+return move;
+}
+protected abstract int selectMove(int millisecondsToMove);
 }
 class SimpleMaxPlayer extends StandardPlayer {
 public SimpleMaxPlayer(String name,Evaluator evaluator,MoveGenerator generator){
@@ -482,15 +509,13 @@ bestMove=move;
 return bestMove;
 }
 }
-class KillerMultiAspirationTableCutoffPlayer extends StandardPlayer {
+class IterativeDFSPlayer extends TimedPlayer {
 public static boolean DEBUG_FINAL_VALUE=false;
 private static final boolean DEBUG_AB=false;
 private static final boolean DEBUG_BETA=false;
 private static final int DEBUG_TURN=-1;
 private final static int INITIAL_WINDOW_SIZE=5000;
 private final static double WINDOW_FACTOR=1.75;
-private final static int NUM_KILLERS=2;
-private final byte maxDepth;
 private final Evaluator endgameEvaluator=new MedianFree();
 private final Player endgamePlayer=new SimpleMaxPlayer("Expy",new ExpectedValue(),new AllMoves());
 private final static int TABLE_SIZE_POWER=20;
@@ -498,11 +523,14 @@ private final static int TABLE_SIZE=1<<TABLE_SIZE_POWER;
 private final static int TABLE_KEY_MASK=TABLE_SIZE-1;
 private final TranspositionEntry[]transpositionTable=new TranspositionEntry[TABLE_SIZE];
 private int prevScore=0;
+private long turnStartTime;
+private long nsToMove;
+private int maxDepth;
+private int depthToTurnBase;
 private final int[][]killerMoves;
-public KillerMultiAspirationTableCutoffPlayer(String name,Evaluator evaluator,MoveGenerator generator,int depth){
-super(name,evaluator,generator);
-this.maxDepth=(byte)depth;
-killerMoves=new int[maxDepth+2][NUM_KILLERS];
+public IterativeDFSPlayer(String name,Evaluator evaluator,MoveGenerator generator,TimeController controller){
+super(name,evaluator,generator,controller);
+killerMoves=new int[30][2];
 for(int[]killers:killerMoves){
 Arrays.fill(killers,Board.ILLEGAL_MOVE);
 }
@@ -513,58 +541,79 @@ super.initialize(currentBoard);
 prevScore=evaluator.evaluate(board);
 turn=1;
 Arrays.fill(transpositionTable,null);
+for(int[]killers:killerMoves){
+Arrays.fill(killers,Board.ILLEGAL_MOVE);
+}
 }
 @Override
-protected int selectMove(){
-if(board.isGameInEndGame()){
+protected int selectMove(int millisecondsToMove){
+turnStartTime=System.nanoTime();
+timeUp=false;
+callsToCheck=100;
+if(board.isGameInEndGame()||millisecondsToMove<=0){
 endgamePlayer.initialize(board);
 return endgamePlayer.selectMove();
 }
+nsToMove=1000000*(long)millisecondsToMove;
+maxDepth=0;
+int movesLeft=30-turn;
+int bestMove=Board.ILLEGAL_MOVE;
+do{
+int move=searchForBestMove();
+if(move!=Board.ILLEGAL_MOVE){
+bestMove=move;
+}
+maxDepth+=2;
+}while(maxDepth<=movesLeft&&!timeIsUp());
+int eval=Board.getMoveEval(bestMove);
+if(DEBUG_AB||DEBUG_FINAL_VALUE||turn==DEBUG_TURN){
+System.err.println("Turn "+turn+" final:"+eval);
+}
+return bestMove;
+}
+private int searchForBestMove(){
+depthToTurnBase=turn+maxDepth;
 int window=INITIAL_WINDOW_SIZE;
 int alpha=prevScore-window/2,beta=prevScore+window/2;
 int move,eval;
 boolean failLow=false;
 boolean failHigh=false;
 while(true){
-if(DEBUG_AB||DEBUG_FINAL_VALUE){
+if(DEBUG_AB||DEBUG_FINAL_VALUE||turn==DEBUG_TURN){
 System.err.printf("Searching[%d,%d]",alpha,beta);
 }
 move=negamax((byte)1,(byte)(maxDepth+1),alpha,beta);
+if(move==Board.ILLEGAL_MOVE){
+return move;
+}
 eval=Board.getMoveEval(move);
-if(DEBUG_AB||DEBUG_FINAL_VALUE){
+if(DEBUG_AB||DEBUG_FINAL_VALUE||turn==DEBUG_TURN){
 System.err.printf("=>%d%n",eval);
 }
 if(eval<=alpha){
 failLow=true;
-beta=eval+1;
-alpha=beta-window;
+alpha=eval-window;
 }else if(eval>=beta){
 failHigh=true;
-alpha=eval-1;
-beta=alpha+window;
+beta=eval+window;
 }else{
 break;
 }
+if(maxDepth>0&&timeIsUp()){
+return Board.ILLEGAL_MOVE;
+}
 if(failLow&&failHigh){
-System.err.println("Search is unstable");
+System.err.println("Search is unstable on turn "+turn+" with depth "+maxDepth);
 move=negamax((byte)1,(byte)(maxDepth+1),Board.MIN_EVAL,Board.MAX_EVAL);
 eval=Board.getMoveEval(move);
 break;
 }
 window*=WINDOW_FACTOR;
 }
-if(DEBUG_AB||DEBUG_FINAL_VALUE){
-System.err.println("Turn "+turn+" final:"+eval);
+if(DEBUG_AB||DEBUG_FINAL_VALUE||turn==DEBUG_TURN){
+System.err.println("Turn "+turn+" depth "+maxDepth+" value:"+eval);
 }
 prevScore=eval;
-for(int i=killerMoves.length-1;i>=0;i--){
-if(i>1){
-killerMoves[i]=killerMoves[i-2];
-}else{
-killerMoves[i]=new int[NUM_KILLERS];
-Arrays.fill(killerMoves[i],Board.ILLEGAL_MOVE);
-}
-}
 return move;
 }
 private int negamax(byte player,byte depth,int alpha,int beta){
@@ -574,8 +623,11 @@ return Board.buildMove((byte)0,(byte)0,player*evaluator.evaluate(board));
 if(board.isGameInEndGame()){
 return Board.buildMove((byte)0,(byte)0,player*(endgameEvaluator.evaluate(board)+evaluator.evaluate(board)/100));
 }
+if(maxDepth>0&&timeIsUp()){
+return Board.ILLEGAL_MOVE;
+}
 if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sRunning negamax with%d plies left,interval=[%d,%d]and board state:%n",getName(),"",depth,alpha,beta);
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sRunning negamax with %d plies left,interval=[%d,%d]and board state:%n",getName(),"",depth,alpha,beta);
 Board.print(board);
 }
 int bestMove=Board.MIN_EVAL_MOVE;
@@ -622,8 +674,17 @@ break;
 if(depth==1){
 bestMove=entry.bestMove;
 bestEval=entryEval;
+if(DEBUG_AB||turn==DEBUG_TURN){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sInitializing best move from transposition table:%s=>%d%n",getName(),"",Board.moveToString(bestMove),bestEval);
+}
+if(bestEval>myAlpha){
+myAlpha=bestEval;
+}
 }else{
-bestMove=evaluateMove(entry.bestMove,player,depth,myAlpha,myBeta);
+bestMove=evaluateMove(entry.bestMove,player,depth,myAlpha,myBeta," stored");
+if(bestMove==Board.ILLEGAL_MOVE){
+return bestMove;
+}
 bestEval=Board.getMoveEval(bestMove);
 if(bestEval>myAlpha){
 myAlpha=bestEval;
@@ -631,11 +692,11 @@ myAlpha=bestEval;
 }
 }
 if(myAlpha<myBeta){
-for(int move:killerMoves[depth]){
+for(int move:killerMoves[depthToTurnBase-depth]){
 if(board.isLegalMove(move)&&!(tableMatch&&Board.equalMoves(move,entry.bestMove))){
-move=evaluateMove(move,player,depth,myAlpha,myBeta);
-if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBefore processing killer move:bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n",getName(),"",Board.moveToString(bestMove),bestEval,myAlpha,myBeta);
+move=evaluateMove(move,player,depth,myAlpha,myBeta," killer");
+if(move==Board.ILLEGAL_MOVE){
+return move;
 }
 if(move>bestMove){
 int eval=Board.getMoveEval(move);
@@ -646,7 +707,7 @@ if(eval>myAlpha){
 myAlpha=eval;
 if(myBeta<=myAlpha){
 if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta-cutoff from killer move%s%n",getName(),"",Board.moveToString(bestMove));
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta-cutoff from killer move %s%n",getName(),"",Board.moveToString(bestMove));
 }
 updateKillerMoves(depth,bestMove);
 break;
@@ -654,14 +715,11 @@ break;
 }
 }
 }
-if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sAfter processing killer move:bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n",getName(),"",Board.moveToString(bestMove),bestEval,myAlpha,myBeta);
-}
 }
 }
 }else{
 if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta-cutoff from stored move%s%n",getName(),"",Board.moveToString(bestMove));
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta-cutoff from stored move %s%n",getName(),"",Board.moveToString(bestMove));
 }
 updateKillerMoves(depth,bestMove);
 }
@@ -671,9 +729,9 @@ for(int move:moves){
 if((tableMatch&&Board.equalMoves(move,entry.bestMove))||matchesKiller(move,depth)){
 continue;
 }
-move=evaluateMove(move,player,depth,myAlpha,myBeta);
-if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBefore processing move:bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n",getName(),"",Board.moveToString(bestMove),bestEval,myAlpha,myBeta);
+move=evaluateMove(move,player,depth,myAlpha,myBeta,"");
+if(move==Board.ILLEGAL_MOVE){
+return move;
 }
 if(move>bestMove){
 int eval=Board.getMoveEval(move);
@@ -684,16 +742,13 @@ if(eval>myAlpha){
 myAlpha=eval;
 if(myBeta<=myAlpha){
 if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta cut-off from move%s%n",getName(),"",Board.moveToString(bestMove));
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sBeta cut-off from move %s%n",getName(),"",Board.moveToString(bestMove));
 }
 updateKillerMoves(depth,bestMove);
 break;
 }
 }
 }
-}
-if(DEBUG_AB||turn==DEBUG_TURN||DEBUG_BETA){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sAfter processing move:bestMove=%s bestEval=%d myAlpha=%d myBeta=%d%n",getName(),"",Board.moveToString(bestMove),bestEval,myAlpha,myBeta);
 }
 }
 }
@@ -713,9 +768,12 @@ entry.type=(bestEval>alpha?(bestEval<beta?TranspositionEntry.EXACT:Transposition
 }
 return bestMove;
 }
-private int evaluateMove(int move,byte player,byte depth,int alpha,int beta){
+private int evaluateMove(int move,byte player,byte depth,int alpha,int beta,String type){
 if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sEvaluating move%s%n",getName(),"",Board.moveToString(move));
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sEvaluating%s move %s",getName(),"",type,Board.moveToString(move));
+if(depth>1){
+System.err.println();
+}
 }
 board.applyMove(move);
 evaluator.applyMove(move);
@@ -723,23 +781,24 @@ int result=Board.setMoveEval(move,-Board.getMoveEval(negamax((byte)-player,(byte
 board.undoMove(move);
 evaluator.undoMove(move);
 if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sGot back a score of%d%n",getName(),"",Board.getMoveEval(result));
+if(depth>1){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sGot back a score of %d%n",getName(),"",Board.getMoveEval(result));
+}else{
+System.err.printf("=>%d%n",Board.getMoveEval(result));
+}
 }
 return result;
 }
 private void updateKillerMoves(byte depth,int move){
-if(DEBUG_AB||turn==DEBUG_TURN){
-System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sUpdating killer moves with new move%s. Old:%s",getName(),"",Board.moveToString(move),killersToString());
-}
-int[]killers=killerMoves[depth];
-for(int i=0;i<NUM_KILLERS;i++){
+int[]killers=killerMoves[depthToTurnBase-depth];
 if(Board.equalMoves(killers[0],move)){
-break;
+return;
 }
-int temp=killers[i];
-killers[i]=move;
-move=temp;
+if(DEBUG_AB||turn==DEBUG_TURN){
+System.err.printf("%s:%"+(2*(maxDepth-depth+1)+1)+"sUpdating killer moves with new move %s. Old:%s",getName(),"",Board.moveToString(move),killersToString());
 }
+killers[1]=killers[0];
+killers[0]=move;
 if(DEBUG_AB||turn==DEBUG_TURN){
 System.err.printf(" New:%s%n",killersToString());
 }
@@ -759,12 +818,19 @@ sb.append(']');
 return sb.toString();
 }
 private boolean matchesKiller(int move,byte depth){
-for(int i=0;i<NUM_KILLERS;i++){
-if(Board.equalMoves(move,killerMoves[depth][i])){
-return true;
+int[]killers=killerMoves[depthToTurnBase-depth];
+return Board.equalMoves(move,killers[0])||Board.equalMoves(move,killers[1]);
 }
+private boolean timeUp;
+private int callsToCheck;
+private boolean timeIsUp(){
+if(callsToCheck==0){
+callsToCheck=100;
+timeUp=System.nanoTime()-turnStartTime>=nsToMove;
+}else{
+callsToCheck--;
 }
-return false;
+return timeUp;
 }
 private class TranspositionEntry{
 static final byte EXACT=3,LOWER_BOUND=4,UPPER_BOUND=5;
@@ -1035,5 +1101,65 @@ return(byte)-v;
 }
 }
 throw new IllegalArgumentException();
+}
+}
+abstract class TimeController {
+protected final int totalTimeMilliseconds;
+protected int timeRemainingMilliseconds;
+protected long moveStartTime;
+public TimeController(int totalTimeMilliseconds){
+this.totalTimeMilliseconds=totalTimeMilliseconds;
+timeRemainingMilliseconds=totalTimeMilliseconds;
+}
+public void reset(){
+timeRemainingMilliseconds=totalTimeMilliseconds;
+}
+public void startMove(){
+moveStartTime=System.nanoTime();
+}
+public void endMove(){
+int duration=(int)Math.ceil((System.nanoTime()-moveStartTime)/1000000.0);
+timeRemainingMilliseconds-=duration;
+if(Player.TIMING){
+System.err.println("Move took "+duration+" ms.");
+}
+}
+public abstract int getMillisecondsForMove(int turn);
+protected int getTurnsRemaining(int turn){
+return 15-(turn-1)/2;
+}
+}
+class ProportionalController extends TimeController {
+public static final double[]LINEAR_DECAY=new double[]{
+0.164444444444444,
+0.1796875,
+0.198176291793313,
+0.221127116502401,
+0.250486696950032,
+0.28961038961039,
+0.344911639244363,
+0.430697674418605,
+0.588235294117647,
+0.428571428571429,
+0.5,
+0.4,
+0.5,
+0.666666666666667,
+1
+};
+private final double[]fractionOfRemaining;
+public ProportionalController(int totalTimeMilliseconds){
+super(totalTimeMilliseconds);
+fractionOfRemaining=new double[]{
+0.275,0.275,0.325,0.350,0.420,0.480,0.560,0.440,0.170,0.165,0.2,0.25,0.333,0.5,1
+};
+}
+public ProportionalController(int totalTimeMilliseconds,double[]fractionOfRemaining){
+super(totalTimeMilliseconds);
+this.fractionOfRemaining=fractionOfRemaining;
+}
+@Override
+public int getMillisecondsForMove(int turn){
+return(int)Math.round(timeRemainingMilliseconds*fractionOfRemaining[(turn-1)/2]);
 }
 }
