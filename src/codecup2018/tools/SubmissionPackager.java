@@ -23,8 +23,10 @@ public class SubmissionPackager {
                 Paths.get("src", "codecup2018", "data", "BitBoard.java"),
                 Paths.get("src", "codecup2018", "player", "Player.java"),
                 Paths.get("src", "codecup2018", "player", "StandardPlayer.java"),
+                Paths.get("src", "codecup2018", "player", "TimedPlayer.java"),
                 Paths.get("src", "codecup2018", "player", "SimpleMaxPlayer.java"),
-                Paths.get("src", "codecup2018", "player", "KillerMultiAspirationTableCutoffPlayer.java"),
+                //Paths.get("src", "codecup2018", "player", "KillerMultiAspirationTableCutoffPlayer.java"),
+                Paths.get("src", "codecup2018", "player", "IterativeDFSPlayer.java"),
                 Paths.get("src", "codecup2018", "evaluator", "Evaluator.java"),
                 Paths.get("src", "codecup2018", "evaluator", "ExpectedValue.java"),
                 Paths.get("src", "codecup2018", "evaluator", "MedianFree.java"),
@@ -32,6 +34,8 @@ public class SubmissionPackager {
                 Paths.get("src", "codecup2018", "movegenerator", "MoveGenerator.java"),
                 Paths.get("src", "codecup2018", "movegenerator", "AllMoves.java"),
                 Paths.get("src", "codecup2018", "movegenerator", "BucketSortMaxMovesOneHole.java"),
+                Paths.get("src", "codecup2018", "timecontrol", "TimeController.java"),
+                Paths.get("src", "codecup2018", "timecontrol", "ProportionalController.java"),
                 mainClass
         );
         Path outputFile = Paths.get("src", "Messier31.java");
