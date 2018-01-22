@@ -1,0 +1,23 @@
+Players:
+0: TUCB_Mix_BSM1_Eq1.0s
+1: TUCB_Mix_BSM1_LD1.0s
+2: ID_IEV_BSM1_LD1s
+
+Number of wins:
+         0    1    2
+    0    0  287  527
+    1  335    0  552
+    2  271  256    0
+
+Average score:
+            0      1      2 
+     0      0 -0.091  0.681 
+     1  0.091      0  0.761 
+     2 -0.681 -0.761      0 
+
+Comparisons:
+    TUCB_Mix_BSM1_Eq1.0s > ID_IEV_BSM1_LD1s with p = 0.000000
+    TUCB_Mix_BSM1_LD1.0s > ID_IEV_BSM1_LD1s with p = 0.000000
+    TUCB_Mix_BSM1_LD1.0s > TUCB_Mix_BSM1_Eq1.0s with p = 0.014288
+
+TUCB_Mix_BSM1_LD1.0s > TUCB_Mix_BSM1_Eq1.0s > ID_IEV_BSM1_LD1s
