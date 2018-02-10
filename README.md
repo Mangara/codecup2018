@@ -1,6 +1,6 @@
 # CodeCup 2018 Bot
 
-This is my code for the 2018 CodeCup. My final submission came in 14th out of 109 competitors.
+This is my code for the [2018 CodeCup](https://www.codecup.nl/intro.php). My final submission came in 14th out of 109 competitors.
 
 ## Strategy
 
