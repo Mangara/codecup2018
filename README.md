@@ -1,6 +1,6 @@
 # CodeCup 2018 Bot
 
-This is my code for the [2018 CodeCup](https://www.codecup.nl/intro.php). My final submission came in 14th out of 109 competitors.
+This is my code for the [2018 CodeCup](https://archive.codecup.nl/2018/). My final submission came in 14th out of 109 competitors.
 
 ## Strategy
 
@@ -22,7 +22,7 @@ To build the project, run `ant jar`, or open it with a recent version of [NetBea
 
 ## Authors
 
-* **Sander Verdonschot** - [Mangara](https://bitbucket.org/Mangara/)
+* **Sander Verdonschot** - [Mangara](https://github.com/Mangara)
 
 ## License
 
