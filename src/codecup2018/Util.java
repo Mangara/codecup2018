@@ -1,9 +1,6 @@
 package codecup2018;
 
-import codecup2018.data.Board;
-
 public class Util {
-
 
     private static String spaces(int n) {
         switch (n) {
